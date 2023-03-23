@@ -1,0 +1,79 @@
+{% macro prototype_ligne_ts(form) %}
+    <div class="list-tranche-had-cat-val"  data-prototype="{{ _self.ligne_ts(form.lignes.vars.prototype)|e }}"></div>
+  
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Libellé</th>
+                <th width="15%">Montant</th>
+                <th width="10%">Nature</th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in form.lignes %}
+                {{ _self.ligne_ts(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+        
+{% endmacro %}
+
+{% macro ligne_ts(ligne) %}
+    {% set sortie_ts = ligne.vars.value %}
+    <tr class="prototype_ligne_ts even pointer">
+        <td>
+            <div style="display:none">{{ form_widget(ligne.libelle) }}</div>
+            {{ ligne.vars.value.libelle|default('') }}
+        </td>
+        <td>{{ form_widget(ligne.montant) }}</td>
+        <td>
+           {{ sortie_ts.code|default('') }}
+        </td>
+        <td>
+            {% set id = ligne.vars.value.id|default(0) %}
+            {% if id %}
+            <a href="{{ path('comptabilite_sortie_ts_delete_validation', {id: id, etat: sortie_ts.etat}) }}" title="Supprimer la ligne" class="btn btn-danger btn-remove-ts btn-xs" title="Supprimer la ligne">
+                <span class="flaticon2-delete"></span>
+                <span class="sr-only">Supprimer la ligne</span>
+            </a>
+            {% endif %}
+        </td>
+    </div>
+{% endmacro %}
+
+
+{% macro prototype_ligne_rubrique_ts(form) %}
+    <div class="list-ligne-rubrique-ts"  data-prototype="{{ _self.ligne_rubrique_ts(form.lignes.vars.prototype)|e }}"></div>
+    <button type="button" class="btn btn-default add_ligne btn-sm" id="add_ligne">
+        <i class="fa fa-plus"></i> Ajouter une ligne
+    </button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="25%">Type de dossier</th>
+                <th width="25%">Marchandise</th>
+                <th width="15%">Cond.</th>
+                <th width="15%">Montant</th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody class="collection ls_ligne_rubrique_ts">
+            {% for item in form.lignes %}
+                {{ _self.ligne_rubrique_ts(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+        
+{% endmacro %}
+
+{% macro ligne_rubrique_ts(ligne) %}
+    
+    <tr class="prototype_ligne_rubrique_ts even pointer">
+        <td>{{ form_widget(ligne.typeDossiers) }}</td>
+        <td>{{ form_widget(ligne.natureMarchandises) }}</td>
+        <td>{{ form_widget(ligne.conditionnements) }}</td>
+        <td>{{ form_widget(ligne.montant) }}</td>
+        <td class="del-col text-center"></td>
+    </tr>
+{% endmacro %}

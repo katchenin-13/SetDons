@@ -1,0 +1,108 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}
+    Stock et magasin
+{% endblock %}
+{% block header %}
+    {{ block('title') }}
+{% endblock %}
+
+
+
+{% block inline_stylesheets %}
+   
+    <style type="text/css" media="screen">
+      
+        .card-header {
+            padding: 2rem 2.25rem;
+            margin-bottom: 0;
+            background-color: var(--color-main);
+          
+        }
+
+        .card.card-custom > .card-header{
+            min-height: 0px;
+        }
+
+        .card.card-custom>.card-header.card-header-tabs-line .nav .nav-link{
+            padding-bottom: 1rem; 
+            padding-top: 1rem;
+        }
+        .card.card-custom.card-sticky>.card-header {
+            min-height: 50px;
+        }
+        .card-header-nav {
+            padding-left: 0;
+        }
+
+        .nav.nav-tabs .nav-item {
+            margin-right: 0.25rem;
+        }
+
+
+        
+        /*.sw-nav-tabs .nav-link:not(.active) {
+            border: 1px solid #ddd;
+           
+        }
+
+
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #E4E6EF;
+        }
+
+        
+        .card .card-header .card-toolbar {
+            margin-top: 0;
+            margin-bottom: 0;
+        }*/
+    </style>
+{% endblock %}
+{% block body %}
+<div class="card card-tabs card-custom card-sticky">  
+    <div class="card-header card-header-stretch card-header-custom">
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs  nav-stretch fs-6 nav-custom sw-nav-tabs"  id="parametre-tabs">
+                {% for key, module in modules %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if key == 0 %}active{% endif %}" data-bs-toggle="tab"
+                            href="#{{ module.name|default('module'~ key) }}" data-href="{{ module.href }}">
+                            <span class="nav-icon"><i class="{{ module.icon }}"></i></span>
+                            <span class="nav-text">
+                                {{ module.label }}
+                            </span>
+
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+             {% for key, module in modules %}
+                    {% set id =  module.name|default('module'~ key)  %}
+                <div class="tab-pane fade {% if key == 0 %}show active{% endif %}" 
+                    id="{{ id }}" role="tabpanel" aria-labelledby="{{ id }}">
+                    
+                </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block java %}
+    <script>
+        $(document).ready(function () {
+            load_tab('parametre-tabs');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="canonical" href="{{ absolute_url(path('app_default')) }}" />
+        <!--begin::Fonts-->
+        
+        <!--end::Fonts-->
+        <link href="{{ asset('assets/css/font.css') }}" rel="stylesheet" type="text/css" />
+
+        {% block stylesheets %}
+            <!--begin::Page Vendors Styles(used by this page)-->
+            {#<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle-v=7.1.2.css') }}" rel="stylesheet" type="text/css" />#}
+            <!--end::Page Vendors Styles-->
+            <!--begin::Global Theme Styles(used by all pages)-->
+            <link href="{{ asset('assets/plugins/global/plugins.css') }}" rel="stylesheet" type="text/css" />
+            {#<link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle-v=7.1.2.css') }}" rel="stylesheet" type="text/css" />#}
+            <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+            <!--end::Global Theme Styles-->
+            <!--begin::Layout Themes(used by all pages)-->
+            <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" /> 
+            <link href="{{ asset('assets/plugins/datagrid/grid.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('assets/css/spectrum.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('assets/css/admin.css') }}" rel="stylesheet" type="text/css" />
+            
+             <style>
+                 .separateur{
+                     margin-top:-7px !important;
+                 }
+            .form-group select + .select2-container, .select2-container .select2-selection {
+                width: 100%!important;
+                height: calc(1.5em + 1.3rem + 2px);
+            }
+
+            .form-group select.form-control-sm + .select2-container, .select2-container .select2-selection {
+                width: 100%!important;
+                height: calc(1.5em + 1.1rem + 2px);
+            }
+
+
+            .form-group select.select2_multiple + .select2-container, .select2-container .select2-selection {
+                min-height: calc(1.5em + 1.3rem + 2px);
+                height: auto;
+            }
+
+            .input-group select + .select2-container {
+                position: relative;
+                -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
+                width: 1%!important;
+                min-width: 0;
+                margin-bottom: 0;
+            }
+
+            .select2-container--default .select2-results__option {
+                word-break: break-all;
+            }
+
+            .disabled-select {
+                background-color: #d5d5d5;
+                opacity: 0.5;
+                border-radius: 3px;
+                cursor: not-allowed;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+            }
+
+            select[readonly].select2-hidden-accessible + .select2-container {
+                pointer-events: none;
+                touch-action: none;
+            }
+
+            select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+                background: #eee;
+                box-shadow: none;
+            }
+
+            select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow,
+            select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+                display: none;
+            }
+
+           
+        </style>
+            <!--end::Layout Themes-->
+            <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+        {% endblock %}
+        {% block inline_stylesheets %}{% endblock %}
+        <script>
+            var asset_base_path = "{{ asset('assets') }}";
+            var current_user_id = "{{ app.user.id|default(0) }}";
+        </script>
+        
+
+        
+        <!-- Hotjar Tracking Code for keenthemes.com -->
+        {# <script>
+            (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:1070954,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        </script> #}
+        
+    </head>
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px" data-current-menu="{% block linked_menu %}{% endblock %}">
+        <div class="setwork-page-loading display-none" id="page-loader">Chargement&#8230;</div>
+    	<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
+			<!--begin::Logo-->
+			<a href="{{ path('app_default') }}" class="brand-logo">
+			    <img alt="Logo" src="{{ asset('assets/media/logos/logo.jpg')}}" width="131" />
+		    </a>
+			<!--end::Logo-->
+			<!--begin::Toolbar-->
+			<div class="d-flex align-items-center">
+				<!--begin::Aside Mobile Toggle-->
+				<!--<button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
+					<span></span>
+				</button>
+				<!--end::Aside Mobile Toggle-->
+				<!--begin::Header Menu Mobile Toggle-->
+				<button class="btn p-0 burger-icon ml-4" id="kt_aside_mobile_toggle">
+					<span></span>
+				</button>
+				<!--end::Header Menu Mobile Toggle-->
+				<!--begin::Topbar Mobile Toggle-->
+				<button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
+					<span class="svg-icon svg-icon-xl">
+						<!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/General/User.svg-->
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<polygon points="0 0 24 0 24 24 0 24" />
+								<path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+								<path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+							</g>
+						</svg>
+						<!--end::Svg Icon-->
+					</span>
+				</button>
+				<!--end::Topbar Mobile Toggle-->
+			</div>
+			<!--end::Toolbar-->
+		</div>
+    {% block body %}{% endblock %}
+    <div class="modal fade" id="exampleModalSizeSm1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalBordereau" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalSizeLg1"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalSizeLg4"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalSizeLg2"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalSizeSm2"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+        <div class="modal-dialog  modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalSizeNormal"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Chargement des données... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="infoSousDossierModal"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="infoSousDossierModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                       <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                        <span> &nbsp;&nbsp;Chargement des données... </span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+     
+        <div class="modal fade" id="infoConteneurImModal"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="infoConteneurIm" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="infoConteneurIm"></h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                       <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                        <span> &nbsp;&nbsp;Chargement des données... </span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="fullscreen"  data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="infoConteneurIm" aria-hidden="true">
+            <div class="modal-dialog  modal-fullscreen" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="fullscreen-label"></h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                       <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                        <span> &nbsp;&nbsp;Chargement des données... </span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+   
+    {% block javascripts %}
+            {#  <script>var HOST_URL = "/metronic/theme/html/tools/preview";</script> #}
+            <!--begin::Global Config(global Config for global JS scripts)-->
+            <script>
+                
+            </script>
+            <!--end::Global Config-->
+            <!--begin::Global Theme Bundle(used by all pages)-->
+            <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+            {#<script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle-v=7.1.2.js') }}"></script>#}
+            <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script> 
+            <!--end::Global Theme Bundle-->
+            <!--begin::Page Vendors(used by this page)-->
+            {#<script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle-v=7.1.2.js') }}"></script>#}
+            {# <script src="{{ asset('assets/js/pages/features/calendar/external-events1ff3.js?v=7.1.2') }}"></script> #}
+           
+            <!--end::Page Vendors-->
+            <!--begin::Page Scripts(used by this page)-->
+            <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
+            <script src="{{ asset('assets/plugins/global/jquery.form.js') }}"></script>
+            <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+            {#<script src="{{ asset('assets/js/pages/crud/datatables/basic/paginations1ff3.js?v=7.1.2') }}"></script>#}
+            <script src="{{ asset('assets/js/pages/crud/forms/widgets/select21ff3.js?v=7.1.2') }}"></script>
+
+           {#<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
+            <script src="{{ asset('assets/scripts/admin.js') }}"></script>
+            <script src="{{ asset('assets/js/spectrum.js') }}"></script>
+            <script src="{{ asset('assets/scripts/init.js') }}"></script>
+            <script src="{{ asset('assets/scripts/thousand-sep.js') }}"></script>
+            <script src="{{ asset('assets/js/tab-load.js') }}"></script>
+
+        {% endblock %}
+    {% block java %}{% endblock %}
+
+    </body>
+</html>

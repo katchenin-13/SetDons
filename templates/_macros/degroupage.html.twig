@@ -1,0 +1,166 @@
+{% macro prototype_ligne_conteneur(form) %}
+    <div class="list-ligne-conteneur"  data-prototype="{{ _self.ligne_conteneur(form.ligneDegroupages.vars.prototype)|e }}"></div>
+    <div class="text-right">
+        <button type="button" class="btn btn-primary add_line btn-sm" id="add_line">
+            <i class="fa fa-plus"></i>
+            Ajouter un conteneur
+        </button>
+    </div>
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                
+                <th>N° TC</th>
+                <th>N° Plomb</th>
+                <th width="15%">Taille TC</th>
+                <th width="15%">Poids TC</th>
+                <th width="15%">Nbre Colis</th>
+                <th width="15%">Nbre Clients</th>
+                <th width="3%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody id="list_ligne_conteneur" class="collection list_ligne_conteneur">
+            {% for item in form.ligneDegroupages %}
+                {{ _self.ligne_conteneur(item|e) }}
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Totaux</td>
+                <td class="col-poids text-right font-weight-bolder">0</td>
+                <td class="col-colis text-right font-weight-bolder">0</td>
+                <td class="col-client text-right font-weight-bolder">0</td>
+                <td></td>
+            </tr>
+
+        </tfoot>
+    </table>
+    
+{% endmacro %}
+
+{% macro ligne_conteneur(ligneDegroupage) %}
+    
+    <tr class="prototype_ligne_conteneur even pointer table-light">
+        <td>{{ form_widget(ligneDegroupage.numeroTc) }}</td>
+        <td>{{ form_widget(ligneDegroupage.numeroPlomb) }}</td>
+        <td>{{ form_widget(ligneDegroupage.tailleTc) }}</td>
+        <td>{{ form_widget(ligneDegroupage.poidsTc) }}</td>
+        <td>{{ form_widget(ligneDegroupage.nbreColis) }}</td>
+        <td>{{ form_widget(ligneDegroupage.nbreClient) }}</td>
+        <td class="del-col"></td>
+    </tr>
+{% endmacro %}
+
+
+{% macro prototype_emplacement(emplacements) %}
+    <div class="card">
+        <div class="card-header" id="heading3">
+            <div class="card-title" data-toggle="collapse" data-target="#collapse3">
+                <i class="flaticon-pie-chart-1"></i> Gestion des emplacements
+            </div>
+        </div>
+        <div id="collapse3" class="collapse show" data-parent="#accordionExample6">
+            <div class="card-body">
+                 <table class="table table-bordered table-ligne-facture">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                               Marchandise
+                            </th>
+                            <th  style="width:20%">Emplacement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in emplacements %}
+                        {{ _self.dgr_emplacement(item|e) }}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    
+{% endmacro %}
+
+{% macro dgr_emplacement(emplacement) %}
+    <tr class="prototype_tranche_had_cat_val even pointer">
+        {% set data = emplacement.vars.data %}
+        {% set clientDegroupage = data.clientDegroupage|default(null) %}
+        {% set marchandise = clientDegroupage ? clientDegroupage.infoMarchandise: null %}
+        <td>
+            <div style="display:none">{{ form_widget(emplacement.clientDegroupage) }}</div>
+            <strong>({{ clientDegroupage.reference|default('') }})</strong>{{ marchandise.marchandise.libelle|default('') }} de quantité  {{ marchandise.nbreColis|default(0) }}   pour client {{ clientDegroupage.raisonSociale|default('') }}
+        </td>
+         <td>{{ form_widget(emplacement.emplacement) }}</td>
+    </tr>
+{% endmacro %}
+
+
+{% macro prototype_ligne_info_client(form, type) %}
+    {% if type == 'maritime' %}
+    <div class="list-ligne-conteneur"  data-prototype="{{ _self.info_client(form.infoClients.vars.prototype)|e }}"></div>
+    <div class="text-right">
+        <button type="button" class="btn btn-primary add_line btn-sm" id="add_line">
+            <i class="fa fa-plus"></i>
+            Ajouter un conteneur
+        </button>
+    </div>
+    {% endif %}
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                {% if type == 'maritime' %}
+                <th>N° TC</th>
+                <th>N° Plomb</th>
+                <th width="15%">Taille TC</th>
+                <th width="15%">Poids TC</th>
+                <th width="15%">Nbre Colis</th>
+                <th width="15%">Nbre Clients</th>
+                {% else %}
+                <th width="32%">Poids</th>
+                <th width="32%">Nbre Colis</th>
+                <th width="32%">Nbre Clients</th>
+                {% endif %}
+                 {% if type == 'maritime' %}
+                <th width="3%">&nbsp;</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody id="list_ligne_conteneur" class="collection list_ligne_conteneur">
+            {% for item in form.infoClients %}
+                {{ _self.info_client(item|e) }}
+            {% endfor %}
+        </tbody>
+        {% if type == 'maritime' %}
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Totaux</td>
+                <td class="col-poids text-right font-weight-bolder">0</td>
+                <td class="col-colis text-right font-weight-bolder">0</td>
+                <td class="col-client text-right font-weight-bolder">0</td>
+                <td></td>
+            </tr>
+
+        </tfoot>
+        {% endif %}
+    </table>
+    
+{% endmacro %}
+
+{% macro info_client(infoClient) %}
+    
+    <tr class="prototype_ligne_conteneur even pointer table-light">
+        {% if infoClient.tailleTc is defined %}
+        <td>{{ form_widget(infoClient.numeroTc) }}</td>
+        <td>{{ form_widget(infoClient.numeroPlomb) }}</td>
+        <td>{{ form_widget(infoClient.tailleTc) }}</td>
+        {% endif %}
+        <td>{{ form_widget(infoClient.poids) }}</td>
+        <td>{{ form_widget(infoClient.nbreColis) }}</td>
+        <td>{{ form_widget(infoClient.nbreClient) }}</td>
+        {% if infoClient.tailleTc is defined %}
+        <td class="del-col"></td>
+        {% endif %}
+    </tr>
+{% endmacro %}

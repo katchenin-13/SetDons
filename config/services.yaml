@@ -1,0 +1,85 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    locale: fr
+    upload_dir: "%kernel.project_dir%/public/uploads"
+services:
+    # default Config for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit Config is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Maker\MakeCrudController:
+        arguments:
+            $doctrineHelper: '@maker.doctrine_helper'
+            $formTypeRenderer: '@maker.renderer.form_type_renderer'
+        tags: ['maker.command']
+
+    
+    App\Service\FormErrorsSerializer:
+        public: true
+
+    App\Service\FormError:
+        arguments:
+            - '@App\Service\FormErrorSerializer'
+
+    App\Service\RouterInfo:
+        autowire: true
+
+
+    App\Twig\CustomTwigExtension:
+        arguments:
+            $renderer: '@twig.form.renderer'
+
+    App\Menu\HomeMenuBuilder:
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: home }
+
+    App\Menu\ConfigMenuBuilder:
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: Config }
+
+
+    App\Menu\DemandeMenuBuilder:
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: demande }
+
+    App\Menu\RhMenuBuilder:
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: rh }
+
+
+
+
+
+    App\Service\StockUpdateListener:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist ,}
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postRemove }
+
+
+    #datadog.event_subscriber.audit:
+    #    class: App\EventSubscriber\AuditSubscriber
+    #    arguments: ["@security.token_storage"]
+    #    tags:
+    #    - { name: doctrine.event_subscriber }

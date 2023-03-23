@@ -1,0 +1,53 @@
+{% extends '_includes/initie.html.twig' %}
+
+{% block title %}
+   
+{% endblock %}
+
+{% block style %}
+    {{ parent() }}
+    <style type="text/css" media="screen">
+      
+        .card-header {
+            padding: 2rem 2.25rem;
+            margin-bottom: 0;
+            background-color: #F3F6F9;
+            /* border-bottom: 2px solid #EBEDF3; */
+        }
+        .card.card-custom>.card-header{
+            min-height: 0px;
+        }
+        .card.card-custom>.card-header.card-header-tabs-line .nav .nav-link{
+            padding-bottom: 1rem; 
+            padding-top: 1rem;
+        }
+        .card.card-custom.card-sticky>.card-header {
+            min-height: 50px;
+        }
+        .card-header-nav {
+            padding-left: 0;
+        }
+    </style>
+{% endblock %}
+{% block page_content %}
+    <div class="d-flex flex-column flex-root">
+			<!--begin::Error-->
+			<div class="d-flex flex-row-fluid flex-column text-center bgi-size-cover bgi-position-center bgi-no-repeat p-10 p-sm-30" style="background-image: url(../../../../theme/html/demo1/dist/assets/media/error/bg1.jpg);">
+				<!--begin::Content-->
+				<h1 class="font-weight-boldest text-dark-75 mt-15" style="font-size: 10rem">404</h1>
+				<p class="font-size-h3 text-muted font-weight-normal">OOPS! La page que vous demandez n'existe pas</p>
+                <p class="font-size-h3 text-muted font-weight-normal">Veuillez contacter les administrateurs du système si l'erreur persiste</p>
+                <a href="{{ path('default') }}">Retourner à la page d'accueil</a>
+				<!--end::Content-->
+			</div>
+			<!--end::Error-->
+		</div>
+{% endblock %}
+
+{% block java %}
+    <script>
+        $(document).ready(function () {
+           
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% macro ligne_conteneur(bordereau) %}
+  <div class="fact-container prototype_ligne_conteneur">
+    {% if bordereau.infoEssence is defined %}
+    <div class="row">
+        <div class="col-md-4">{{ form_row(bordereau.infoEssence.nomEssence) }}</div>
+        <div class="col-md-4">{{ form_row(bordereau.infoEssence.nature) }}</div>
+        <div class="col-md-4">{{ form_row(bordereau.nomenclature) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">{{ form_row(bordereau.infoEssence.nomBotanique) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">{{ form_row(bordereau.numeroTc) }}</div>
+        <div class="col-md-2">{{ form_row(bordereau.typeTc) }}</div>
+        <div class="col-md-2">{{ form_row(bordereau.natureTc) }}</div>
+        <div class="col-md-3">{{ form_row(bordereau.numeroPlomb) }}</div>
+        
+    </div>
+    <div class="row">
+        <p>( listez ci dessous les numéros des eventuels tiroirs contenants ce lot, séparés par des point-virgules ";" )</p>
+        <div class="col-md-12">{{ form_row(bordereau.infoEssence.tiroir) }}</div>
+    </div>
+    {# <p class="m-0">Quantité</p> #}
+    <div class="form-row">
+        <div class="col">
+        {{ form_row(bordereau.nbreColis)}}
+        </div>
+        <div class="col">
+        {{ form_row(bordereau.libColis)}}
+        </div>
+        <div class="col">
+        {{ form_row(bordereau.nbreElement)}}
+        </div>
+        <div class="col">
+        {{ form_row(bordereau.libElement)}}
+        </div>
+  </div>
+
+     <div class="row">
+        <div class="col-md-4 text-left">{{ form_row(bordereau.poidsTc) }}</div>
+        <div class="col-md-4 text-left">{{ form_row(bordereau.volume) }}</div>
+        <div class="col-md-4 text-left">{{ form_row(bordereau.numeroFacture) }}</div>
+    </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-2">{{ form_row(bordereau.numeroTc) }}</div>
+            <div class="col-md-2">{{ form_row(bordereau.numeroPlomb) }}</div>
+            <div class="col-md-2">{{ form_row(bordereau.typeTc) }}</div>
+            <div class="col-md-2">{{ form_row(bordereau.natureTc) }}</div>
+            <div class="col-md-2">{{ form_row(bordereau.poidsTc) }}</div>
+            <div class="col-md-2">{{ form_row(bordereau.volume) }}</div>
+        </div>
+        
+        <div class="form-row">
+            <div class="col">
+                {{ form_row(bordereau.nbreColis)}}
+            </div>
+            <div class="col">
+                {{ form_row(bordereau.libColis)}}
+            </div>
+            <div class="col">
+                {{ form_row(bordereau.nbreElement)}}
+            </div>
+            <div class="col">
+                {{ form_row(bordereau.libElement)}}
+            </div>
+        </div>
+       
+         <div class="row">
+            <div class="col-md-6">{{ form_row(bordereau.nomenclature) }}</div>
+        </div>
+    {% endif %}
+    </div>
+{% endmacro %}

@@ -1,0 +1,44 @@
+{% macro prototype_ligne_debours_fournisseur(form, edit=false) %}
+    <div class="list-ligne-debours-fournisseur"  data-prototype="{{ _self.ligne_debours_fournisseur(form.deboursFournisseurLignes.vars.prototype)|e }}"></div>
+    
+    <button type="button" class="btn btn-light-primary add_ligne btn-sm" id="add_ligne">
+        <i class="fa fa-plus"></i> Ajouter une ligne
+    </button>
+  
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="40%">Dossier</th>
+                <th width="30%">Code</th>
+                <th width="20%">Montant</th>
+                <th width="10%"></th>
+            </tr>
+        </thead>
+        <tbody class="collection ls_ligne_debours_fournisseur">
+            {% for item in form.deboursFournisseurLignes %}
+                {{ _self.ligne_debours_fournisseur(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+        
+{% endmacro %}
+
+{% macro ligne_debours_fournisseur(ligne) %}
+    {% set old_data = ligne.dossier.vars.data %}
+    
+          
+    {% if old_data %}
+        {% set value = {id: old_data.id, text: old_data.numero} %}
+        {% if old_data.infoTransit.numeroTransport is defined %}
+            {% set value = value|merge({numero_transport: old_data.infoTransit.numeroTransport}) %}
+        {% endif %}
+    {% else %}
+        {% set value = {} %}
+    {% endif %}
+    <tr class="prototype_ligne_debours_fournisseur even pointer">
+        <td>{{ form_widget(ligne.dossier, {attr: {'data-value': value|json_encode}}) }}</td>
+        <td>{{ form_widget(ligne.code) }}</td>
+        <td>{{ form_widget(ligne.montant) }}</td>
+        <td class="del-col text-center"></td>
+    </tr>
+{% endmacro %}

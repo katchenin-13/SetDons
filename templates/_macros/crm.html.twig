@@ -1,0 +1,75 @@
+
+{% macro param_document(document, key, documents) %}
+    
+    <tr class="prototype_param_document even pointer">
+        <td>    
+           
+            <div class="form-group form-check">
+                <input name="{{ document.vars.full_name }}" type="checkbox" class="form-check-input" id="{{ document.vars.id }}" value="{{ document.vars.value.document.id }}">
+                <label class="form-check-label" for="{{ document.vars.id }}">{{ document.vars.value.document.libelle }}</label>
+            </div>
+        </td>
+        <td>    
+            {{ form_widget(document.etapes) }}
+        </td>
+        
+        <td class="del-col"></td>
+    </tr>
+{% endmacro %}
+
+{% macro prototype_param_document(form, documents) %}
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="75%">Document</th>
+            <th>Requis (avant étapes)</th>
+            <th></th>
+        </tr>
+</thead>
+    <tbody id="list_param_document" class="collection list_param_document">
+        {% for key, item in form.documents %}
+            {{ _self.param_document(item|e, key, documents) }}
+        {% endfor %}
+    </tbody>
+   </table>
+{% endmacro %}
+
+
+
+{% macro liste_document(document) %}
+    
+    <tr class="prototype_liste_document even pointer">
+        <td>    
+           <div style="display:none">{{ form_widget(document.document) }}</div>
+           {{ document.vars.value.document.libelle }}
+        </td>
+        <td>    
+            {{ form_widget(document.fichier) }}
+        </td>
+         <td>    
+            {{ form_widget(document.dateReception) }}
+        </td>
+        
+        <td class="del-col"></td>
+    </tr>
+{% endmacro %}
+
+{% macro prototype_liste_document(form, documents) %}
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="50%">Libellé du Document</th>
+            <th>Fichier</th>
+            <th width="20%">Date de réception</th>
+            <th></th>
+        </tr>
+</thead>
+    <tbody id="list_liste_document" class="collection list_liste_document">
+        {% for key, item in form.documents %}
+            {{ _self.liste_document(item) }}
+        {% endfor %}
+    </tbody>
+   </table>
+{% endmacro %}

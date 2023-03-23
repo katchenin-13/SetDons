@@ -1,0 +1,67 @@
+{% macro employe_service(offre) %}
+    <div class="row-colonne mb3">
+     {#{{ dump(redaction.children.path.vars.data) }}#}
+        <div class="row">
+            <div class="col-md-11">
+                {{ form_row(offre.service) }}
+            </div>
+            <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+        </div>
+    </div>
+{% endmacro  %}
+
+
+{% macro prototype_employe_service(form) %}
+ <div class="list-colonne"  data-prototype="{{ _self.employe_service(form.services.vars.prototype)|e }}"></div>
+  <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter un service
+    </button>
+    <div class="column-container" data-childclass="">
+        {% for item in form.services %}
+            {{ _self.employe_service(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{% macro attribution(attribution) %}
+    <div class="row-colonne mb3">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_widget(attribution.employe) }}
+            </div>
+              <div class="col-md-2">
+                {{ form_widget(attribution.dateDebut) }}
+            </div>
+              <div class="col-md-2">
+                {{ form_widget(attribution.dateFin) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(attribution.fichier) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_widget(attribution.heurePrevue) }}
+            </div>
+             <div class="col-md-4">
+                {{ form_widget(attribution.montantHoraire) }}
+            </div>
+            
+        </div>
+        <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+    </div>
+{% endmacro  %}
+
+
+{% macro prototype_attribution_personne(form) %}
+ <div class="list-colonne"  data-prototype="{{ _self.attribution(form.attributions.vars.prototype)|e }}"></div>
+  <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter un employé
+    </button>
+    <div class="column-container" data-childclass="">
+        {% for item in form.attributions %}
+            {{ _self.attribution(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}

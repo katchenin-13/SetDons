@@ -1,0 +1,15 @@
+{% macro prototype_option_devis_dem(form, options) %}
+    {% for key, item in form.options %}
+        <div class="row">
+            {{ _self.option_devis_dem(item|e, options) }}
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro option_devis_dem(option, options) %}
+    <div class="col-md-6">
+        {% set label = options[option.code.vars.value]|default('') %}
+        <div style="display:none">{{ form_row(option.code) }}</div>
+        {{ form_widget(option.valeur, {label: label}) }}
+    </div>
+{% endmacro %}

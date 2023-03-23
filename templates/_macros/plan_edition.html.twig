@@ -1,0 +1,61 @@
+
+{% macro ligne_groupe(form, key) %}
+    <div class="fact-groupe-ct prototype_ligne_groupe" data-key="{{ key }}">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-xl-2">
+                {{ form_row(form.ordre) }}
+            </div>
+            <div class="col-xl-8">
+                {{ form_row(form.libelle)}}
+            </div>
+            <div class="col-1 del-groupe"  data-container=".prototype_ligne_groupe">
+                <button class="btn btn-remove btn-danger btn-remove-groupe">
+                    <span class="fa fa-trash"></span>
+                </button>
+            </div>
+            
+        </div>
+       
+        <div class="card card-custom card-stretch gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Libellés de facturation du groupe</h3>
+                </div>
+                <div class="card-toolbar">
+                    <button class="add_libelle add_line btn btn-default btn-sm btn-primary" type="button">Ajouter une ligne</button>
+                </div>
+            </div>
+            <div class="card-body" style="padding-left:1rem;padding-right:1rem">
+                {{ _self.prototype_libelle_groupe(form) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro prototype_libelle_groupe(form) %}
+    <div class="list-libelle-groupe"  data-prototype="{{ _self.libelle_groupe(form.libelles.vars.prototype, 0)|e }}"></div>
+  
+    <div class="row row-lines">
+        <div class="col-2">Ordre</div>
+        <div class="col-8">Libellé</div>
+        <div class="col-1"></div>
+    </div>
+    <div class="collection list_libelles">
+        {% for key, item in form.libelles %}
+            {{ _self.libelle_groupe(item|e, key) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro libelle_groupe(libelle, key) %}
+    <div class="prototype_libelle_groupe" style="margin-bottom: 3px;position:relative;" data-key="{{ key }}">
+        <div class="row">
+             <div class="col-2 col-ordre">{{ form_widget(libelle.ordre) }}</div>
+            <div class="col-8">
+               {{ form_widget(libelle.libelle)}}
+            </div>
+            <div class="col-1 del-pos"  data-container=".prototype_libelle_groupe"></div>
+        </div>
+    </div>
+{% endmacro %}
