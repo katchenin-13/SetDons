@@ -76,6 +76,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Agenda::class)]
     private Collection $agendas;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Contact::class)]
+    private Collection $contacts;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Audience::class)]
+    private Collection $audiences;
+
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
@@ -89,6 +95,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
         $this->missions = new ArrayCollection();
         $this->rapportmissions = new ArrayCollection();
         $this->agendas = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->audiences = new ArrayCollection();
        
     }
 
@@ -708,6 +716,66 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
             // set the owning side to null (unless already changed)
             if ($agenda->getUtilisateur() === $this) {
                 $agenda->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getUtilisateur() === $this) {
+                $contact->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Audience>
+     */
+    public function getAudiences(): Collection
+    {
+        return $this->audiences;
+    }
+
+    public function addAudience(Audience $audience): self
+    {
+        if (!$this->audiences->contains($audience)) {
+            $this->audiences->add($audience);
+            $audience->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudience(Audience $audience): self
+    {
+        if ($this->audiences->removeElement($audience)) {
+            // set the owning side to null (unless already changed)
+            if ($audience->getUtilisateur() === $this) {
+                $audience->setUtilisateur(null);
             }
         }
 

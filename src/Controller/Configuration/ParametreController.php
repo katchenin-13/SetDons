@@ -21,11 +21,11 @@ class ParametreController extends AbstractController
                 'icon' => 'bi bi-list',
                 'href' => $this->generateUrl('app_config_parametre_ls', ['module' => 'config'])
             ],
-            [
-                'label' => 'Ressource humaine',
-                'icon' => 'bi bi-truck',
-                'href' => $this->generateUrl('app_config_parametre_ls', ['module' => 'rh'])
-            ],
+            // [
+            //     'label' => 'Ressource humaine',
+            //     'icon' => 'bi bi-truck',
+            //     'href' => $this->generateUrl('app_config_parametre_ls', ['module' => 'rh'])
+            // ],
 
 
         ];
@@ -57,61 +57,59 @@ class ParametreController extends AbstractController
 
 
 
-            'rh'=>[
-                [
-                    'label' => 'Fonction',
-                    'id' => 'param_categorie',
-                    'href' => $this->generateUrl('app_parametre_fonction_index')
-                ],
-                [
-                    'label' => 'Entreprise',
-                    'id' => 'param_entreprise',
-                    'href' => $this->generateUrl('app_parametre_entreprise_index')
-                ],
-                [
-                    'label' => 'Direction',
-                    'id' => 'param_direction',
-                    'href' => $this->generateUrl('app_parametre_service_index')
-                ],
+            // 'rh'=>[
+            //     [
+            //         'label' => 'Catégories',
+            //         'id' => 'param_categorie',
+            //         'href' => $this->generateUrl('app_parametre_fonction_index')
+            //     ],
+            //     [
+            //         'label' => 'Localité',
+            //         'id' => 'param_entreprise',
+            //         'href' => $this->generateUrl('app_parametre_entreprise_index')
+            //     ],
+            //     [
+            //         'label' => 'Direction',
+            //         'id' => 'param_direction',
+            //         'href' => $this->generateUrl('app_parametre_service_index')
+            //     ],
 
-                [
-                    'label' => 'Employé',
-                    'id' => 'param_client',
-                    'href' => $this->generateUrl('app_utilisateur_employe_index')
-                ],
-              /*  [
-                    'label' => 'Fournisseur',
-                    'id' => 'param_fournisseur',
-                    'href' => $this->generateUrl('app_rh_fournisseur_index')
-                ],*/
+            //     [
+            //         'label' => 'Employé',
+            //         'id' => 'param_client',
+            //         'href' => $this->generateUrl('app_utilisateur_employe_index')
+            //     ],
+            //   [
+            //         'label' => 'Fournisseur',
+            //         'id' => 'param_fournisseur',
+            //         'href' => $this->generateUrl('app_rh_fournisseur_index')
+            //     ],
 
 
-            ],
+            // ],
 
             'config' => [
                 [
-                    'label' => 'Civilité',
-                    'id' => 'param_article',
-                    'href' => $this->generateUrl('app_parametre_civilite_index')
+                    'label' => 'Catégories',
+                    'id' => 'param_categorie',
+                    'href' => $this->generateUrl('app_parametre_categorie_index')
                 ] ,
-                // [
-                //     'label' => 'Categorie avis',
-                //     'id' => 'param_cm',
-                //     'href' => $this->generateUrl('app_parametre_categorie_avis_index')
-                // ],
-                // [
-                //     'label' => 'Avis',
-                //     'id' => 'param_la',
-                //     'href' => $this->generateUrl('app_parametre_element_avis_index')
-                // ],
-                // [
-                //     'label' => 'Motifs',
-                //     'id' => 'param_direction',
-                //     'href' => $this->generateUrl('app_parametre_element_motif_index')
-                // ]
-
+                [
+                    'label' => 'Localités',
+                    'id' => 'param_localite',
+                    'href' => $this->generateUrl('app_parametre_localite_index')
+                ] ,
+                [
+                    'label' => 'Type de dons',
+                    'id' => 'param_type_don',
+                    'href' => $this->generateUrl('app_parametre_typedon_index')
+                ] ,
+                [
+                    'label' => 'Communautés',
+                    'id' => 'param_communaute',
+                    'href' => $this->generateUrl('app_parametre_communaute_index')
+                ] ,
             ],
-
 
         ];
 

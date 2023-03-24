@@ -46,10 +46,18 @@ class Communaute
     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Rapportmission::class)]
     private Collection $rapportmissions;
 
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Contact::class)]
+    private Collection $contacts;
+
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Audience::class)]
+    private Collection $audiences;
+
     public function __construct()
     {
         $this->beneficiaires = new ArrayCollection();
         $this->rapportmissions = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->audiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +215,66 @@ class Communaute
             // set the owning side to null (unless already changed)
             if ($rapportmission->getCommunaute() === $this) {
                 $rapportmission->setCommunaute(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setCommunaute($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getCommunaute() === $this) {
+                $contact->setCommunaute(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Audience>
+     */
+    public function getAudiences(): Collection
+    {
+        return $this->audiences;
+    }
+
+    public function addAudience(Audience $audience): self
+    {
+        if (!$this->audiences->contains($audience)) {
+            $this->audiences->add($audience);
+            $audience->setCommunaute($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudience(Audience $audience): self
+    {
+        if ($this->audiences->removeElement($audience)) {
+            // set the owning side to null (unless already changed)
+            if ($audience->getCommunaute() === $this) {
+                $audience->setCommunaute(null);
             }
         }
 

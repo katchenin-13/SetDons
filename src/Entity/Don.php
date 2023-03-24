@@ -38,6 +38,12 @@ class Don
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?Fieldon $fieldon = null;
 
+    #[ORM\Column]
+    private ?bool $statusdon = null;
+
+    #[ORM\Column]
+    private ?bool $mentions = null;
+
     
 
     public function getId(): ?int
@@ -137,6 +143,30 @@ class Don
     public function setFieldon(?Fieldon $fieldon): self
     {
         $this->fieldon = $fieldon;
+
+        return $this;
+    }
+
+    public function isStatusdon(): ?bool
+    {
+        return $this->statusdon;
+    }
+
+    public function setStatusdon(bool $statusdon): self
+    {
+        $this->statusdon = $statusdon;
+
+        return $this;
+    }
+
+    public function isMentions(): ?bool
+    {
+        return $this->mentions;
+    }
+
+    public function setMentions(bool $mentions): self
+    {
+        $this->mentions = $mentions;
 
         return $this;
     }
