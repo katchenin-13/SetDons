@@ -24,7 +24,6 @@ class TypedonController extends AbstractController
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Libellé'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Typedon::class,
         ])

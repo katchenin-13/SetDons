@@ -26,6 +26,14 @@
                     <th>Libelle</th>
                     <td>{{ localite.libelle }}</td>
                 </tr>
+                            <tr>
+                    <th>CreatedAt</th>
+                    <td>{{ localite.CreatedAt ? localite.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                            <tr>
+                    <th>UpdatedAt</th>
+                    <td>{{ localite.UpdatedAt ? localite.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
                     </tbody>
     </table>
     </div>

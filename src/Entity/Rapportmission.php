@@ -32,6 +32,13 @@ class Rapportmission
     #[ORM\ManyToOne(inversedBy: 'rapportmissions')]
     private ?Utilisateur $utilisateur = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $UpdatedAt = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,4 +115,30 @@ class Rapportmission
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->CreatedAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    {
+        $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    {
+        $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+    
 }

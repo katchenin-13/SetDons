@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Repository\AgendaRepository;
 use Doctrine\DBAL\Types\Types;
+use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: AgendaRepository::class)]
 class Agenda
@@ -17,17 +19,16 @@ class Agenda
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $datedebut = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $datefin = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'agendas')]
     private ?Utilisateur $utilisateur = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $UpdatedAt = null;
 
     public function getId(): ?int
     {
@@ -46,29 +47,7 @@ class Agenda
         return $this;
     }
 
-    public function getDatedebut(): ?\DateTimeInterface
-    {
-        return $this->datedebut;
-    }
-
-    public function setDatedebut(\DateTimeInterface $datedebut): self
-    {
-        $this->datedebut = $datedebut;
-
-        return $this;
-    }
-
-    public function getDatefin(): ?\DateTimeInterface
-    {
-        return $this->datefin;
-    }
-
-    public function setDatefin(\DateTimeInterface $datefin): self
-    {
-        $this->datefin = $datefin;
-
-        return $this;
-    }
+   
 
     public function getDescription(): ?string
     {
@@ -93,4 +72,31 @@ class Agenda
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->CreatedAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    {
+        $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    {
+        $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+    
 }

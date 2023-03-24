@@ -6,6 +6,7 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
@@ -22,18 +23,19 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdup = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedup = null;
-
     #[ORM\ManyToOne(inversedBy: 'categories')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Communaute::class)]
     private Collection $communautes;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $UpdatedAt = null;
+
+    
     public function __construct()
     {
         $this->communautes = new ArrayCollection();
@@ -67,31 +69,7 @@ class Categorie
 
         return $this;
     }
-
-    public function getCreatedup(): ?\DateTimeInterface
-    {
-        return $this->createdup;
-    }
-
-    public function setCreatedup(\DateTimeInterface $createdup): self
-    {
-        $this->createdup = $createdup;
-
-        return $this;
-    }
-
-    public function getUpdatedup(): ?\DateTimeInterface
-    {
-        return $this->updatedup;
-    }
-
-    public function setUpdatedup(\DateTimeInterface $updatedup): self
-    {
-        $this->updatedup = $updatedup;
-
-        return $this;
-    }
-
+     
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
@@ -133,4 +111,30 @@ class Categorie
 
         return $this;
     }
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->CreatedAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    {
+        $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    {
+        $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+
+   
 }

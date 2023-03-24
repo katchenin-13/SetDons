@@ -7,7 +7,6 @@ use App\Form\CommunauteType;
 use App\Repository\CommunauteRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
-use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -25,21 +24,8 @@ class CommunauteController extends AbstractController
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Nom '])
-        ->add('nompointfocal', TextColumn::class, ['label' => 'Piont focal '])
-        ->add('numero', TextColumn::class, ['label' => 'Téléphone '])
-        ->add('email', TextColumn::class, ['label' => 'Adresse mail '])
-        ->add('localite', TextColumn::class, ['label' => 'Localité','field' => 'l.libelle'])
-        // ->add('categorie', TextColumn::class, ['label' => 'Localité','field' => 'ca.libelle'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Communaute::class,
-            'query'=> function(QueryBuilder $req){
-              $req->select('c,l,ca')
-                  ->from(Communaute::class,'c')
-                  ->join('c.localite', 'l')
-                  ->join('c.categorie', 'ca')
-                ;
-            }
         ])
         ->setName('dt_app_parametre_communaute');
 

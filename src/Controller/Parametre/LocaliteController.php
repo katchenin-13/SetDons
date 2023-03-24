@@ -24,7 +24,6 @@ class LocaliteController extends AbstractController
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Libellé'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Localite::class,
         ])

@@ -24,7 +24,6 @@ class CategorieController extends AbstractController
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Libellé'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Categorie::class,
         ])
@@ -68,7 +67,6 @@ class CategorieController extends AbstractController
                             , 'attrs' => ['class' => 'btn-default']
                             , 'render' => $renders['edit']
                         ],
-                        
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
                             'url' => $this->generateUrl('app_parametre_categorie_delete', ['id' => $value])

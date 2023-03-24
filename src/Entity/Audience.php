@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AudienceRepository;
 use Doctrine\DBAL\Types\Types;
+use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AudienceRepository::class)]
@@ -38,12 +39,6 @@ class Audience
     #[ORM\ManyToOne(inversedBy: 'audiences')]
     private ?Communaute $communaute = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdup = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedup = null;
-
     #[ORM\ManyToOne(inversedBy: 'audiences')]
     private ?Utilisateur $utilisateur = null;
 
@@ -52,6 +47,15 @@ class Audience
 
     #[ORM\Column]
     private ?bool $mentions = null;
+
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $UpdatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $CreatedAt = null;
+
+    
 
     public function getId(): ?int
     {
@@ -152,31 +156,7 @@ class Audience
         $this->communaute = $communaute;
 
         return $this;
-    }
-
-    public function getCreatedup(): ?\DateTimeInterface
-    {
-        return $this->createdup;
-    }
-
-    public function setCreatedup(\DateTimeInterface $createdup): self
-    {
-        $this->createdup = $createdup;
-
-        return $this;
-    }
-
-    public function getUpdatedup(): ?\DateTimeInterface
-    {
-        return $this->updatedup;
-    }
-
-    public function setUpdatedup(\DateTimeInterface $updatedup): self
-    {
-        $this->updatedup = $updatedup;
-
-        return $this;
-    }
+    }    
 
     public function getUtilisateur(): ?Utilisateur
     {
@@ -213,4 +193,32 @@ class Audience
 
         return $this;
     }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    {
+        $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->CreatedAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    {
+        $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+
+    
+
 }

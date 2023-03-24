@@ -14,21 +14,7 @@
     {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
     <div class="modal-body">
         {{ include('_includes/ajax/response.html.twig') }}
-        {# {{ form_widget(form) }} #}
-         {# {{ form_widget(form) }} #}
-        {# <div class ="rouge" >  
-           Information sur la communauté
-        </div> #}
-    
-        <div class="row">
-            <div class="col-md-4">{{ form_row(form.libelle) }}</div>
-            <div class="col-md-4">{{ form_row(form.categorie) }}</div>
-            <div class="col-md-4">{{ form_row(form.localite) }}</div>
-            <div class="col-md-9">{{ form_row(form.nombreestimatifmemb) }}</div>
-            <div class="col-md-4">{{ form_row(form.nompointfocal) }}</div>
-            <div class="col-md-4">{{ form_row(form.numero) }}</div>
-            <div class="col-md-4">{{ form_row(form.email) }}</div>
-       </div> 
+        {{ form_widget(form) }}
     </div>
     <div class="modal-footer">
         {# {{ include('_includes/ajax/loader.html.twig') }} #}
