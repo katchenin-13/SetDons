@@ -1,0 +1,203 @@
+{% macro contact(contact) %}
+    <div class="form-group row line">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="flaticon2-user"></i>
+                    </span>
+                </div>
+                {{ form_widget(contact.nomPrenom, {attr: {'placeholder':'Nom & Prénom'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-chain"></i>
+                    </span>
+                </div>
+                {% if contact.fonctions is defined %}
+                    {{ form_widget(contact.fonctions, {attr: {'placeholder':'Fonction'}}) }}
+                {% else %}
+                    {{ form_widget(contact.fonction, {attr: {'placeholder':'Fonction'}}) }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-phone"></i>
+                    </span>
+                </div>
+                {{ form_widget(contact.telephone, {attr: {'placeholder':'Téléphone'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-envelope"></i>
+                    </span>
+                </div>
+                {{ form_widget(contact.email, {attr: {'placeholder':'Email'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-1 delete"></div>
+    </div>
+{% endmacro %}
+
+{% macro banque(reference) %}
+    <div class="form-group row line">
+        
+        {% if reference.gestionnaire is defined %}
+            <div class="col-lg-2">
+                {{ form_widget(reference.banque, {attr: {'placeholder':'Nom de la banque'}}) }}
+            </div>
+            <div class="col-lg-3">
+                {{ form_widget(reference.agence, {attr: {'placeholder':'Agence'}}) }}
+            </div>
+            <div class="col-lg-3">
+                {{ form_widget(reference.compte, {attr: {'placeholder':'Compte'}}) }}
+            </div>
+            <div class="col-lg-3">
+                {{ form_widget(reference.gestionnaire, {attr: {'placeholder':'Gestionnaire'}}) }}
+            </div>
+        {% else %}
+            <div class="col-lg-4">
+                {{ form_widget(reference.banque, {attr: {'placeholder':'Nom de la banque'}}) }}
+            </div>
+            <div class="col-lg-4">
+                {{ form_widget(reference.agence, {attr: {'placeholder':'Agence'}}) }}
+            </div>
+            <div class="col-lg-3">
+                {{ form_widget(reference.compte, {attr: {'placeholder':'Compte'}}) }}
+            </div>
+        {% endif %}
+        <div class="col-lg-1 delete"></div>
+    </div>
+{% endmacro %}
+
+{% macro prototype_cc(form, client) %}
+    {% for key, item in form.conditionCommerciales %}
+        {{ _self.conditionCommerciale(item|e, client, key) }}
+    {% endfor %}
+    {% if form.plafond is defined %}
+        <div class="form-group row line">
+        <div class="col-lg-2">
+            
+           Plafond Echu
+           
+        </div>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="far fa-money-bill-alt"></i>
+                    </span>
+                </div>
+                {{ form_widget(form.plafond) }}
+            </div>
+        </div>
+        <div class="col-lg-5">
+           
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro conditionCommerciale(condition, client, key) %}
+    {% set value = client.conditionCommerciales[key] %}
+    
+    {% set nature =  value.nature.libelle|default('') %}
+    {% set reglement = value ? value.reglement : null %}
+    {% set blocage = value and value.blocage is defined ? value.blocage : null %}
+    
+
+    <div class="form-group row line">
+        <div class="col-lg-2">
+            
+            <div style="display:none">
+                {{ form_widget(condition.nature) }}
+            </div>
+            {{ nature }}
+           
+        </div>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="flaticon2-calendar"></i>
+                    </span>
+                </div>
+                {{ form_widget(condition.reglement, {attr: {'placeholder':'Reglement'}}) }}
+            </div>
+        </div>
+        {% if condition.blocage is defined %}
+        <div class="col-lg-5">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="far fa-money-bill-alt"></i>
+                    </span>
+                </div>
+                {{ form_widget(condition.blocage, {attr: {'placeholder':'Montant blocage'}}) }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro ligne_facture_litige(ligneFacture, old_lignes) %}
+    {% set value = ligneFacture.vars.value %}
+    
+    {% set montant =  value.montant | default(0) %}
+    {% set ligne_facture = value ? value.ligneFacture : null %}
+    {% set libelle = ligne_facture ? ligne_facture.libelle : null %}
+    <tr>
+        <td>
+            <div class="mt-2">{{ form_widget(ligneFacture.value, {attr: {'data-montant': montant, class: 'ck-ligne-fac'}, label: false, value: ligne_facture.id | default(0) }) }}</div>
+            <div style="display:none">
+                {{ form_widget(ligneFacture.ligneFacture, {label: false}) }}
+            </div>
+        </td>
+        <td>
+            {{ libelle }}
+        </td>
+        <td class="col-pourcentage">
+            {{ form_widget(ligneFacture.pourcentageClient) }}
+        </td>
+        <td class="col-mnt" data-montant="{{ montant }}">
+             <div style="display:none">
+                {{ form_widget(ligneFacture.montant) }}
+            </div>
+            {{ form_widget(ligneFacture.montantInitial) }}
+        </td>
+        <td class="text-right">
+            {{ montant  | format_number }}
+        </td>
+    </tr>
+    {#<div class="form-group row line">
+        <div class="col-lg-1">
+            <div class="mt-2">{{ form_widget(ligneFacture.value, {attr: {'data-montant': montant, class: 'ck-ligne-fac'}, label: false, value: ligne_facture.id | default(0) }) }}</div>
+            <div style="display:none">
+                {{ form_widget(ligneFacture.ligneFacture, {label: false}) }}
+            </div>
+        </div>
+         <div class="col-lg-6">
+            <div class="mt-2">{{ libelle }}</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="mt-2">{{ form_widget(ligneFacture.pourcentageClient) }}</div>
+        </div>
+         <div class="col-lg-2">
+            <div style="display:none">
+                {{ form_widget(ligneFacture.montant) }}
+            </div>
+            <div class="mt-2">{{ montant | format_number }}</div>
+        </div>
+    </div>#}
+{% endmacro %}
+

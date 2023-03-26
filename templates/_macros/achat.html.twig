@@ -1,0 +1,62 @@
+{% macro attribution(form) %}
+    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+        <thead>
+            <tr class="fw-bold text-muted bg-light">
+                <th>Articles</th>
+                <th>Fournisseurs</th>
+                <th class="min-w-50px text-end">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in form.articles %}
+                {{ _self.ligne_article(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro ligne_article(item) %}
+    <tr>
+        <td>{{ item.article.vars.data.designation }} <div style="display:none">{{ form_widget(item.article) }}</div></td>
+        <td>{{ form_widget(item.fournisseurs) }}</td>
+        <td>&nbsp;</td>
+    </tr>
+{% endmacro  %}
+
+
+
+{% macro cout_fournisseur(form, fournisseurs, articles) %}
+    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+        <thead>
+            <tr class="fw-bold text-muted bg-light">
+                <th>&nbsp;</th>
+                {% for fournisseur in fournisseurs %}
+                    <th>{{ fournisseur.raisonSociale }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.designation }}</td>
+                     {% for fournisseur in fournisseurs %}
+                        {% for item in form.demandes %}
+                            {% if item.vars.value.fournisseur == fournisseur and item.vars.value.article == article %}
+                                {{ _self.ligne_cout(item|e) }}
+                            {% endif %}
+                        {% endfor %}
+                     {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro ligne_cout(item) %}
+   
+        <td>
+            {{ form_widget(item.montant) }}
+            <div style="display:none">{{ form_widget(item.article) }} {{ form_widget(item.fournisseur) }}</div>
+        </td>
+        
+{% endmacro  %}

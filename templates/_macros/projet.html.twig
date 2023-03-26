@@ -1,0 +1,278 @@
+{% macro colonne(colonne) %}
+    <div class="row-colonne  my-3 py-2" style="border-bottom:3px solid #000">
+     {#{{ dump(redaction.children.path.vars.data) }}#}
+        <div class="row">
+            <div class="col-md-2 ">
+                {{ form_row(colonne.code) }}
+            </div>
+            <div class="col-md-6 ">
+                {{ form_row(colonne.libelle) }}
+            </div>
+            <div class="col-md-4 ">
+                {{ form_row(colonne.typeDonnee) }}
+            </div>
+        </div>
+        <div class="row">
+             
+            <div class="col-md-5 source d-none">
+                {{ form_row(colonne.source) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 valeurs d-none">
+                {{ form_row(colonne.valeurs) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(colonne.required) }}</div>
+            <div class="col-md-4">{{ form_row(colonne.chiffrable) }}</div>
+            {{ form_widget(colonne.hash) }}
+        </div>
+        <div class="row">
+            <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+        </div>
+    </div>
+
+{% endmacro  %}
+
+
+{% macro prototype_ligne_colonne(form) %}
+ <div class="list-colonne"  data-prototype="{{ _self.colonne(form.colonnes.vars.prototype)|e }}"></div>
+  <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter une colonne
+    </button>
+    <div class="column-container proto-container" data-childclass="">
+        {% for item in form.colonnes %}
+            {{ _self.colonne(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{% macro groupe_specialite(groupe) %}
+    <div class="row-colonne mb-3 row">
+        {% set lib_groupe = groupe.vars.value.groupe.libelle | default('') %}
+     {#{{ dump(redaction.children.path.vars.data) }}#}
+        <div class="col-md-10">{{ form_widget(groupe.groupe) }}</div>
+        <div class="col-md-2 del-col" data-parent=".row-colonne"></div>
+    </div>
+
+{% endmacro  %}
+
+
+{% macro prototype_groupe_specialite(form) %}
+ <div class="list-colonne"  data-prototype="{{ _self.groupe_specialite(form.groupes.vars.prototype)|e }}"></div>
+    <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter un groupe
+    </button>
+    <div class="column-container" data-childclass="">
+        {% for item in form.groupes %}
+            {{ _self.groupe_specialite(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{% macro prototype_niveau(form) %}
+<div class="list-groupe"  data-prototype="{{ _self.niveau_groupe_specialite(form.groupes.vars.prototype)|e }}"></div>
+<div class="column-container" data-childclass="">
+    {% for item in form.groupes %}
+        {{ _self.niveau_groupe_specialite(item|e) }}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro niveau_groupe_specialite(groupe) %}
+    <div style="display:none">{{ form_widget(groupe.groupe) }}</div>
+    <div style="display:none">{{ form_widget(groupe.specialite) }}</div>
+    {% set groupe_id = groupe.vars.value.groupe.id | default(0) %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title">{{ groupe.vars.value.groupe.libelle | default('') }}</h3>
+            <div class="card-toolbar">
+                <button type="button" class="btn btn-sm btn-light add_line" data-groupe="{{ groupe_id }}" data-protoname="__niveau__" data-protoclass=".list-niveau-{{ groupe_id }}" data-container=".niveau-container">
+                    Ajouter un niveau
+                </button>
+            </div>
+        </div>
+        <div class="list-niveau-{{ groupe_id }}"  data-prototype="{{ _self.niveau_specialite(groupe.niveaux.vars.prototype, groupe_id)|e }}"></div>
+          
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">Ordre</div>
+                <div class="col-8">Libellé</div>
+                <div class=""></div>
+            </div>
+            <div class="niveau-container niveau-container-{{ groupe_id }}" data-groupe="{{ groupe_id }}">
+                {% for item in groupe.niveaux %}
+                    {{ _self.niveau_specialite(item|e, groupe_id) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro  %}
+
+
+{% macro niveau_specialite(niveau, groupe_id) %}
+     {% form_theme niveau 'widget/fields-block.html.twig' %}
+    <div class="row row-niveau row-niveau-{{ groupe_id }} mb-3">
+        <div class="col-3">{{ form_widget(niveau.ordre) }}</div>
+        <div class="col-8">{{ form_widget(niveau.libelle) }}</div>
+        <div class="col-md-1 del-col" data-parent=".row-niveau-{{ groupe_id }}"></div>
+    </div>
+{% endmacro  %}
+
+
+{% macro element_colonne(item, colonnes) %}
+    <div class="row-colonne row mb-3">
+        {% set rendered = [] %}
+        {% set col_length = (11 / (item.children|length)) | round(0, 'floor') %}
+        {% for children in item.children %}
+            
+            <div class="col-md-{{ col_length }}">
+                {{ form_widget(children) }}
+            </div>
+        {% endfor %}
+        <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+    </div>
+{% endmacro  %}
+
+
+
+{% macro prototype_element_colonne(form, colonnes, edit = false) %}
+    <div class="list-colonne"  data-prototype="{{ _self.element_colonne(form.colonnes.vars.prototype, colonnes)|e }}"></div>
+    {% if not edit %}
+    <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter une occurence
+    </button>
+    {% endif %}
+    <div class="row row-header">
+        {% set col_length = (11 / (colonnes|length)) | round(0, 'floor') %}
+        {% for colonne in colonnes %}
+            <div class="col-md-{{ col_length }}">
+                {{ colonne.libelle }}
+            </div>
+        {% endfor %}
+        <div class="col-1">
+    </div>
+    <div class="column-container row" data-childclass="">
+        {% for item in form.colonnes %}
+            {{ _self.element_colonne(item|e, colonnes) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{% macro offre_specialite(offre) %}
+    <div class="row-colonne mb3">
+     {#{{ dump(redaction.children.path.vars.data) }}#}
+        <div class="row">
+            <div class="col-md-11">
+                {{ form_row(offre.specialite) }}
+            </div>
+            <div class="col-md-1 del-col" data-parent=".row-colonne"></div>
+        </div>
+    </div>
+
+{% endmacro  %}
+
+
+{% macro prototype_offre_specialite(form) %}
+ <div class="list-colonne"  data-prototype="{{ _self.offre_specialite(form.specialites.vars.prototype)|e }}"></div>
+  <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter une spécialité
+    </button>
+    <div class="column-container" data-childclass="">
+        {% for item in form.specialites %}
+            {{ _self.offre_specialite(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+
+{% macro chiffrage(form, _groupe) %}
+    {% set groupe = _groupe.groupe %}
+    {% set cols_chiffrables = [] %}
+    <thead>
+        <tr class="fw-bold text-muted bg-light">
+            {% for colonne in groupe.colonnes %}
+                <th class=" {% if loop.first %}ps-4 rounded-start{% endif %}">{{ colonne.libelle }}</th>
+                {% if colonne.chiffrable %}
+                    {% set cols_chiffrables = cols_chiffrables|merge([colonne.id]) %}
+                {% endif %}
+            {% endfor %}
+            <th class="min-w-50px text-end">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key, item in form.elements %}
+        {% set value = item.vars.value %}
+        {% set element = value.elementObj %}
+            <tr class="row-{{ element.id }}">
+            {% for key, element_colonne in element.colonnes %}
+                {% set colonne = element_colonne.colonne %}
+                <td class="col-parent">
+                    {{ element_colonne.valeur|to_label(colonne.typeDonnee, colonne.source) }}
+                     <input type="hidden" class="val_qte" name="parent[__index__]" value="{{ element_colonne.valeur }}" />
+                </td>
+               
+            {% endfor %}
+            
+            {% for id_colonne in cols_chiffrables %}
+                <td>{{ _self.element_chiffrable(item|e, id_colonne) }}</td>
+            {% endfor %}
+            <td>
+                <button type="button" class="btn btn-icon btn-main btn-active-color-white btn-sm del-col" data-parent=".row-{{element.id}}">
+																
+					<span class="svg-icon svg-icon-3" style="color:#fff;">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                            <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                            <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+					    </svg>
+					</span>											<!--end::Svg Icon-->
+				</button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+                
+{% endmacro %}
+
+
+{% macro element_chiffrable(item, id_colonne) %}
+   {% for child in item.children %}
+        
+        {% set item_id_colonne = child.vars.name|split('_')[1] %}
+        {% if item_id_colonne == id_colonne %}
+            {{ form_widget(child) }}
+        {% endif %}
+    {% endfor %}
+
+{% endmacro  %}
+
+
+
+{% macro groupe_service(service) %}
+    <div class="row-colonne mb-3 row">
+        <div class="col-md-10">{{ form_widget(service.service) }}</div>
+        <div class="col-md-2 del-col" data-parent=".row-colonne"></div>
+    </div>
+
+{% endmacro  %}
+
+
+{% macro prototype_groupe_service(form) %}
+    <div class="mb-3">
+        <div class="list-service"  data-prototype="{{ _self.groupe_service(form.services.vars.prototype)|e }}"></div>
+        <button type="button" data-protoname="__service__" class="btn btn-primary add_line btn-xs" id="add_ligne"  data-protoclass=".list-service" data-container=".container-service">
+            <i class="fa fa-plus"></i> Ajouter un service
+        </button>
+        <div class="container-service proto-container" data-childclass="">
+            {% for item in form.services %}
+                {{ _self.groupe_service(item|e) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}

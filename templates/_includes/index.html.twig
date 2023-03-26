@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% block style %}
+    {% endblock %}
+{% endblock %}
+{% block title %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% set __vars = {title: block('title'), breadcrumb: block('breadcrumb')} %}
+{% block body %}
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+            {% include '_includes/side.html.twig' %}
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                {% include '_includes/header.html.twig' with __vars %}
+                
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <div class="d-flex flex-column-fluid page-content-inner" >
+                        <div class="container-fluid" id="page-content-wrapper">
+                            {% set flashes = app.flashes %}
+                            {% set flashes_keys = flashes|keys %}
+                           
+                            {% set is_valid_flash = ('flash_success' in flashes_keys) or ('flash_warning' in flashes_keys) or ('flash_error' in flashes_keys) or ('tmp_flash_success') in flashes_keys %}
+                            {% if is_valid_flash %}
+                                {% set messageMap = {'alertClass': 'alert-outline-success', 'icon': 'far fa-check-circle'} %}
+                                {% if 'flash_error' in flashes|keys %}
+                                    {% set messageMap = {'alertClass': 'alert-outline-danger', 'icon': 'flaticon-warning'} %}
+                                {% elseif 'flash_warning' in flashes|keys %}
+                                    {% set messageMap = {'alertClass': 'alert-outline-warning', 'icon': 'flaticon-warning'} %}
+                                {% endif %}
+                                <div class="alert alert-custom alert-outline-2x {{ messageMap.alertClass }} fade show mb-5 {% if flashes|length == 0 %}d-none{% endif %}" role="alert">
+                                    <div class="alert-icon"><i class="{{ messageMap.icon }}"></i></div>
+                                    
+                                    {% for label, messages in flashes %}
+                                        {% if label in ['flash_success', 'flash_warning', 'flash_error', 'tmp_flash_success'] %}
+                                            <div class="alert-text {% if label == 'tmp_flash_success' %}alert-tmp{% endif %}">
+                                            {% for message in messages %}
+                                                {% if message is not iterable %}
+                                                <p class="mb-0">{{ message | raw }}</p>
+                                                {% else %}
+                                                    <p class="mb-0">{{ message | last | raw }}</p>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="alert-close">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                       
+
+                            {% block page_content %}
+
+
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                {# {% include '_includes/footer.html.twig' %} #}
+            </div>
+        </div>
+    </div>
+    {% include '_includes/user.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

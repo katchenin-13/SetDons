@@ -1,0 +1,15 @@
+<input id="{{ datatable.name }}-column-{{ column.index }}"
+        data-search-column-index="{{ column.index }}"
+        {% if column.filter.placeholder != null %}
+            placeholder="{{ column.filter.placeholder|trans }}"
+        {% endif %}
+        value="{{ column.searchValue | default('') }}" class="form-control form-control-sm d-block date-filter"
+        data-index="{{ column.index }}"
+        >
+
+ <script>
+    $(function () {
+        
+    });
+    
+</script>

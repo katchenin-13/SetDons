@@ -1,0 +1,33 @@
+
+{% block form_widget_simple -%}
+
+        {% set type = type|default('text') %}
+        <input class="{% if type != 'file' %}form-control {% endif %} {% if attr %}{% for attrname, attrvalue in attr %}{% if attrname == 'class' %}{{attrvalue}}{% endif %}{% endfor %}{% endif %}"
+               type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+
+{%- endblock form_widget_simple %}
+
+
+{% block form_label -%}
+
+    {%- if label is same as(false) -%}
+        
+    {%- else -%}
+        <label class="control-label sr-only" for="{{ id }}">{{ label }}</label>
+    {%- endif -%}
+{%- endblock form_label %}
+
+{%- block form_row -%}
+    <div class="form-group">
+         {{- form_label(form) -}}
+        <div class="input-group">
+            {{- form_widget(form) -}}
+            <div class="input-group-append">
+                <button class="btn btn-suivi btn-primary btn-ajax" type="submit">
+                    <span class="fa fa-search btn-icon"></span>
+                    <span class="fa fa-spinner fa-spin loader d-none"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+{%- endblock form_row -%}

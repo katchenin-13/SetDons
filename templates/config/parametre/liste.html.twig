@@ -1,0 +1,32 @@
+<div class="row row-10px">
+    <div class="col-xl-3 col-12">
+        <ul class="nav flex-column nav-pills  sw-nav-tabs-vertical" id="subParamLinksTab">
+            {% for key, _parametre in links %}
+                 <li class="nav-item">
+                    <a class="nav-link {% if key == 0 %}active{% endif %}" data-bs-toggle="tab"
+                        href="#{{ _parametre.id }}" data-href="{{ _parametre.href }}">
+                        <span class="nav-text">{{ _parametre.label }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-xl-9 col-12">
+        <div class="tab-content" id="paramChildContent">
+            {% for key, _parametre in links %}
+                    {% set id =  _parametre.id  %}
+                <div class="tab-pane fade {% if key == 0 %}show active{% endif %}" 
+                    id="{{ id }}" role="tabpanel" aria-labelledby="{{ id }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% block java %}
+    <script>
+        $(document).ready(function () {
+            load_tab('subParamLinksTab');
+
+        });
+    </script>
+{% endblock %}

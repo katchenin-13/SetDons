@@ -1,0 +1,207 @@
+
+{% macro ligne_facture(form, sens, k) %}
+    <div class="fact-container prototype_ligne_facture">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-xl-3">
+                {{ form_row(form.numero) }}
+            </div>
+            <div class="col-xl-6">
+                {{ form_row(form.fournisseur)}}
+            </div>
+             <div class="col-xl-3">
+                {{ form_row(form.origine)}}
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-xl-3 col-mnt-dev">
+                {{ form_row(form.montantDevise) }}
+            </div>
+           
+            <div class="col-xl-3">
+                {{ form_row(form.montantCfa) }}
+            </div>
+            <div class="col-xl-3 col-fob-dev">
+                {{ form_row(form.miseFob) }}
+            </div>
+            <div class="col-xl-3 col-fob-xof">
+                {{ form_row(form.miseFobCfa) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3">
+                {{ form_row(form.poidsBrut)}}
+            </div>
+            <div class="col-xl-3">
+                {{ form_row(form.poidsNet) }}
+            </div>
+            <div class="col-xl-3">
+                {{ form_row(form.montantAssurance) }}
+            </div>
+            <div class="col-xl-3">
+                {{ form_row(form.montantFret) }}
+            </div>
+        </div>
+       
+        <div class="row">
+             
+            {# <div class="col-xl-2">
+                {{ form_row(form.miseFob) }}
+            </div> #}
+            
+        </div>
+        <div class="row">
+            <div class="col-xl-4">
+                {{ form_row(form.infoRfcv.date) }}
+            </div>
+            <div class="col-xl-8">
+                {{ form_row(form.infoRfcv.numero) }}
+            </div>
+        </div>
+        <div class="card card-custom card-stretch gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Positions tarifaires</h3>
+                </div>
+                <div class="card-toolbar">
+                    <button class="add_position add_line btn btn-default btn-sm btn-primary" type="button">Ajouter une ligne</button>
+                </div>
+            </div>
+            <div class="card-body card-position-tarifaires" style="padding-left:1rem;padding-right:1rem">
+                {{ _self.prototype_position_tarifaire(form,sens,k) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro prototype_position_tarifaire(form,sens,key_fac) %}
+    <div class="list-position-tarifaire"  data-prototype="{{ _self.position_tarifaire(form.positionTarifaires.vars.prototype,0,sens,key_fac)|e }}"></div>
+  
+    <div class="row row-lines">
+        <div class="col-1">N° Art</div>
+        <div class="col-3">Code Tarif</div>
+        <div class="col-1">Origine</div>
+        <div class="col-1">Nb. Col.</div>
+        <div class="col-2">FOB (Dev)</div>
+        <div class="col-2">FOB (XOF)</div>
+        <div class="col-2">Frais F. (Dev)</div>
+        <div class="col-1"></div>
+    </div>
+    <div class="collection list_positions">
+        {% for key, item in form.positionTarifaires %}
+            {{ _self.position_tarifaire(item|e, key, sens, key_fac) }}
+        {% endfor %}
+    </div>
+    <div class="row row-total row-{{ key_fac }}">
+        <div class="col-md-2">PB: <span class="total-pb"></span></div>
+        <div class="col-md-2">PN: <span class="total-pn"></span></div>
+        <div class="col-md-2">FOB (dev): <span class="total-fob"></span></div>
+    </div>
+{% endmacro %}
+
+{% macro position_tarifaire(positionTarifaire, key, sens, key_fac) %}
+    {% set fields = ['dd', 'dus', 'pcc', 'pcs', 'psv', 'pua', 'rst', 'tai', 'tsb', 'tuf', 'tva', 'tub', 'tss', 'tab', 'tfs'] %}
+  
+    <div class="prototype_position_tarifaire even pointer clearfix" data-index="{{ key_fac }}_{{key}}" style="margin-bottom: 8px;border-bottom:2px solid #3699FF;position:relative">
+         <span class="pos-counter"></span>
+        <div class="row">
+             <div class="col-1 col-num-article">{{ form_row(positionTarifaire.numeroArticle) }}</div>
+            <div class="col-3">
+                {% set old_data = positionTarifaire.codeTarifaire.vars.data %}
+            
+                {% if old_data %}
+                    {% set value = {id: old_data.id, text: old_data.code} %}
+                    {% set value = value|merge_attrs(old_data, fields) %}
+                {% else %}
+                    {% set value = {} %}
+                {% endif %}
+                {{ form_widget(positionTarifaire.codeTarifaire, {attr: {'data-value': value|json_encode}}) }}
+                <div style="margin-top:3px">
+                
+                </div>
+            </div>
+            <div class="col-1 pl-0 pr-0">{{ form_widget(positionTarifaire.origine) }}</div>
+            <div class="col-1 col-valeur-qte">{{ form_widget(positionTarifaire.quantite) }}</div>
+        
+            <div class="col-2 col-valeur-devise"  data-fac="{{ key_fac }}">{{ form_widget(positionTarifaire.valeurFob) }}</div>
+            <div class="col-2  col-valeur-cfa">{{ form_widget(positionTarifaire.valeurFobCfa) }}</div>
+            <div class="col-2  col-mise-fob">{{ form_widget(positionTarifaire.miseFob) }}</div>
+           
+            {% for field in fields %}
+            {{ form_widget(positionTarifaire[field], {attr: {'data-field': field, 'class': 'calc-field field-' ~ field }} )}}
+            {% endfor %}
+            
+            
+        </div>
+        <div class="row">
+            <div style="display:none">{{ form_widget(positionTarifaire.total) }}</div>
+             <div class="col-2 col-valeur-pb" data-fac="{{ key_fac }}">{{ form_row(positionTarifaire.poidsBrut) }}</div>
+            <div class="col-2 col-valeur-pn"  data-fac="{{ key_fac }}">{{ form_row(positionTarifaire.poidsNet) }}</div>
+            {#% if sens == 'i' %}
+            <div class="col-1  col-valeur-total pr-0 pl-0">
+                {{ form_row(positionTarifaire.sousRegime) }}
+            </div>
+            {% endif %#}
+             <div class="col-1  col-valeur-total pr-0 pl-0">
+                {{ form_row(positionTarifaire.sousRegime) }}
+            </div>
+           
+            <div class="col-1 col-code-un pl-0 pr-0">{{ form_row(positionTarifaire.uniteAppurement) }}</div>
+            <div class="col-2 col-valeur-un">{{ form_row(positionTarifaire.valeurAppurement) }}</div>
+            <div class="col-2 col-valeur-ass">{{ form_row(positionTarifaire.valeurAssurance) }}</div>
+            <div class="col-2 col-valeur-fret">{{ form_row(positionTarifaire.valeurFret) }}</div>
+            
+        </div>
+        <div class="col-1 del-pos float-right"  data-container=".prototype_position_tarifaire"></div>
+    </div>
+{% endmacro %}
+
+
+{% macro prototype_moyen_transport_minute(form, types) %}
+    {% for key, item in form.moyenTransports %}
+        <div class="row">
+            {{ _self.moyen_transport_minute(item|e, types) }}
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro moyen_transport_minute(moyenTransport, types) %}
+    
+    {% set label = types[moyenTransport.type.vars.value] %}
+    <div style="display:none">{{ form_row(moyenTransport.type) }}</div>
+    <div class="col-md-6">{{ form_row(moyenTransport.libelle, {label: 'Moyen Transport (' ~ label ~ ')'}) }}</div>
+    <div class="col-md-6">{{ form_row(moyenTransport.nationalite, {label: 'Nationalité (' ~ label ~ ')'}) }}</div>
+    
+{% endmacro %}
+
+
+{% macro prototype_ligne_taxe_decl(form, redressement) %}
+    <div class="list-taxe-decl"  data-prototype="{{ _self.ligne_taxe_decl(form.ligneTaxes.vars.prototype, redressement)|e }}"></div>
+  
+    <div class="row row-lines">
+        <div class="col-8">Libelle</div>
+        <div class="col-4">Valeur</div>
+    </div>
+    <div class="collection list_taxes_decl">
+        {% for item in form.ligneTaxes %}
+            {% set ligne_taxe = item.vars.value %}
+            {% if not redressement is same as(false)  or ligne_taxe.refRedressement == '' %}
+            <div class="row mb-5">
+                {{ _self.ligne_taxe_decl(item|e) }}
+            </div>
+            {% else %}
+                <div class="row mb-5" style="display:none;">
+                {{ _self.ligne_taxe_decl(item|e) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{% macro ligne_taxe_decl(ligne) %}
+    <div style="display:none">{{ form_row(ligne.taxe) }}</div>
+    <div style="display:none">{{ form_row(ligne.libelle) }}</div>
+    <div class="col-md-8">{{ ligne.vars.value.taxe.code|default('') }}</div>
+    <div class="col-md-4">{{ form_widget(ligne.valeur) }}</div>
+{% endmacro %}

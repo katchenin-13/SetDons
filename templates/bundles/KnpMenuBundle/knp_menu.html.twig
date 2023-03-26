@@ -1,0 +1,242 @@
+{% extends 'knp_menu_base.html.twig' %}
+
+{% macro attributes(attributes) %}
+{% for name, value in attributes %}
+    {%- if value is not none and value is not same as(false) and name != 'icon' -%}
+        {{- ' %s="%s"'|format(name, value is same as(true) ? name|e : value|e)|raw -}}
+    {%- endif -%}
+{%- endfor -%}
+{% endmacro %}
+
+{% block compressed_root %}
+{% apply spaceless %}
+{{ block('root') }}
+{% endapply %}
+{% endblock %}
+
+{% block root %}
+{% set listAttributes = item.childrenAttributes %}
+{% set child_name = item.getExtra('child', false) %}
+{% set module_name = item.getExtra('module', false) %}
+{% set append_as = item.getExtra('append_as', false) %}
+{% set role_prefix = item.getExtra('role_prefix') %}
+{% set skip_checks = item.getExtra('skip_checks', false) %}
+{% set name_prefix = item.getExtra('name_prefix', false) %}
+{{ block('list') -}}
+{% endblock %}
+
+{% block list %}
+{% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+    {% import _self as knp_menu %}
+    {#<ul{{ knp_menu.attributes(listAttributes) }}>#}
+        {{ block('children') }}
+    {#</ul>#}
+{% endif %}
+{% endblock %}
+
+{% block list_url %}
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {% import _self as knp_menu %}
+        <div class="menu-sub menu-sub-accordion" kt-hidden-height="265" style="">
+            {% set listAttributes = listAttributes|merge({class: ''}) %}
+            {{ block('children') }}
+           
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block children %}
+{# save current variables #}
+{% set currentOptions = options %}
+{% set currentItem = item %}
+{% set roles = item.role|default([]) %}
+{# update the depth for children #}
+{% if options.depth is not none %}
+{% set options = options|merge({'depth': currentOptions.depth - 1}) %}
+{% endif %}
+{# update the matchingDepth for children #}
+{% if options.matchingDepth is not none and options.matchingDepth > 0 %}
+{% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
+{% endif %}
+{% for item in currentItem.children %}
+    {% set roles = item.getExtra('role', []) %}
+    {% set allowed = item.getExtra('allowed', 'ROLE_UNDEFINED') %}
+    {% set routes = item.getExtra('routes', []) %}
+    {% set check_role = item.getExtra('check_role', false) %}
+    {% set _role = item.getExtra('role', false) %}
+    {% set skip_link_items = item.getExtra('skip_link_items', false) %}
+    {% set _as = item.getExtra('as', null) %}
+    {% set count = item.getExtra('count', false) %}
+    {% set route_name = '' %}
+    {% set allowed_role = false %}
+    {% if routes|length %}
+        {% set route_name  = routes[0].route|default('') %}
+    {% endif %}
+    {% if skip_checks or skip_link_items %}
+        {{ block('item') }}
+    {% else %}
+        
+        
+        {% if is_granted(allowed) or (_role and (_role == 'ROLE_ALL' or app.user.hasRole(_role)))   %}
+            {{ block('item') }}
+        {% else %}
+            {% if check_role and module_name %}
+                {% set allowed_role = get_role_from_item_name(module_name, item.name) %}
+            {% else %}
+                {% if route_name and module_name %}
+                    {% set allowed_role = get_menu_role(route_name, module_name, child_name) %}
+                {% endif %}
+            {% endif %}
+            {% if is_menu_link_displayable(item, module_name, child_name, _as) %}
+                {{ block('item') }}
+            {% else %}
+                
+                {% if append_as %}
+                    {% set allowed_role = allowed_role ~ '_' ~ (_as|upper) %}
+                {% endif %}
+                {% set is_allowed = app.user.hasRole(allowed_role) %}
+                {% if ((item.getExtra('is_child') or (item.uri and item.uri != 'javascript:;')) and is_allowed) %}
+                    {{ block('item') }}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{# restore current variables #}
+{% set item = currentItem %}
+{% set options = currentOptions %}
+{% endblock %}
+
+{% block item %}
+
+
+{% if item.displayed  %}
+{# building the class of the item #}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+    {%- if matcher.isCurrent(item) %}
+        {%- set classes = classes|merge([options.currentClass]) %}
+    {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+        {%- set classes = classes|merge([options.ancestorClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeFirst %}
+        {%- set classes = classes|merge([options.firstClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeLast %}
+        {%- set classes = classes|merge([options.lastClass]) %}
+    {%- endif %}
+
+    {# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+    {% if item.hasChildren and options.depth is not same as(0) %}
+        {% if options.branch_class is not empty and item.displayChildren %}
+            {%- set classes = classes|merge([options.branch_class]) %}
+        {% endif %}
+    {% elseif options.leaf_class is not empty %}
+        {%- set classes = classes|merge([options.leaf_class]) %}
+    {%- endif %}
+
+     {%- set attributes = item.attributes %}
+
+     {% if item.uri is empty %}
+        {% set classes = classes|merge(['menu-item']) %}
+    {% else %}
+        {% set classes = classes|merge(['menu-item', 'menu-item-'~module_name]) %}
+        {% if item.uri == 'javascript:;' %}
+            {% set classes = classes|merge(['menu-item  menu-accordion']) %}
+             {% set attributes = attributes|merge({'data-kt-menu-trigger': 'click'}) %}
+        {% endif %}
+
+
+        
+        
+       
+    {% endif %}
+
+   
+
+   
+    {%- if classes is not empty %}
+        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- endif %}
+
+   
+{# displaying the item #}
+    {% import _self as knp_menu %}
+    
+    <div{{ knp_menu.attributes(attributes) }}>
+       
+        {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
+            {{ block('linkElement') }}
+        {%- else %}
+            {{ block('moduleTitle') }}
+        {%- endif %}
+{# render the list of children#}
+        {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+        {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+        {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+        {{ block('list_url') }}
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block linkElement %}
+    {% import _self as knp_menu %}
+    {% set link_attributes = item.linkAttributes %}
+    {% set hasChildren = item.children|length %}
+    {% set class = ['menu-link'] %}
+
+    {%- if matcher.isCurrent(item) %}
+         {% set class = class|merge(['active']) %}
+    {% endif %}
+   
+    {% if hasChildren %}
+        {#% set class = class|merge(['show menu-accordion']) %#}
+    {% endif %}
+    {% set class = class|merge([item.name]) %}
+    {% set link_attributes = link_attributes|merge({"class": class|join(' ')}) %}
+    {#% set link_attributes = link_attributes|merge(data_attr) %#}
+    
+    {% if item.uri in ['#', 'javascript:;'] %}
+        <span class="menu-link">
+    {% else %}
+        <a href="{{ item.uri }}" {{ knp_menu.attributes(link_attributes) }}>
+    {% endif %}
+        {% if item.getExtra('is_child', false) or not item.getExtra('icon') %}
+            <span class="menu-bullet">
+				<span class="bullet bullet-dot"></span>
+			</span>
+        {% else %}
+            <span class="menu-icon">
+				<i class="{{ item.getExtra('icon', 'bi bi-sticky') }} fs-3"></i>
+			</span>
+        {% endif %}
+        <span class="menu-title">
+            {% if item.getExtra('convert_title', false) %}
+                {{ block('label_title') }}{% else %}{{ block('label') }}
+            {% endif %}
+           
+        </span>
+         
+        {% if hasChildren %}<span class="menu-arrow"></span>{% endif %}
+    {% if item.uri in ['#', 'javascript:;'] %}</span>{% else %}</a>{% endif %}
+    
+{% endblock %}
+
+{% block spanElement %}{% import _self as knp_menu %}<span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
+
+{% block moduleTitle %}
+    <div class="menu-item pt-5">
+		<div class="menu-content">
+			<span class="menu-heading fw-bold text-uppercase fs-7">{{ block('label') }}</span>
+		</div>
+	</div>
+{% endblock %}
+{% block label %}
+    
+    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}
+        {{ item.label|raw }}{% else %}{{ item.label }}
+    {% endif %}
+{% endblock %}
+{% block label_title %}
+    {{ block('label') | title }}
+{% endblock %}

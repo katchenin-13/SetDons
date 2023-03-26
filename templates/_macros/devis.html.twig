@@ -1,0 +1,62 @@
+{% macro prototype_ligne_conteneur(form, dossier) %}
+    <div class="list-ligne-conteneur-im"  data-prototype="{{ _self.ligne_conteneur(form.conteneurs.vars.prototype)|e }}"></div>
+    <button class="btn btn-primary btn-sm" type="button" id="add_line_im">Ajouter un conteneur</button>
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                <th width="32%">Taille TC</th>
+                <th width="32%">Poids TC</th>
+                <th width="32%">Nbre Colis</th>
+                <th width="4%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody id="list_ligne_conteneur_im" class="collection list_ligne_conteneur_im">
+            {% for item in form.conteneurs %}
+                {{ _self.ligne_conteneur(item|e) }}
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="1" class="text-right">Totaux</td>
+                <td class="col-poids text-right font-weight-bolder"><span>0</span> / {{ dossier.poids }} KG</td>
+                <td class="col-colis text-right font-weight-bolder"><span>0</span> / {{ dossier.quantite }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+{% endmacro %}
+
+{% macro ligne_conteneur(conteneur) %}
+   
+    <tr class="prototype_ligne_conteneur_im even pointer table-light">
+        <td>
+            {{ form_widget(conteneur.taille) }}
+        </td>
+        <td>{{ form_widget(conteneur.poids) }}</td>
+        <td>{{ form_widget(conteneur.nbreColis) }}</td>
+        <td class="del-col"></td>
+    </tr>
+{% endmacro %}
+
+
+{% macro prototype_ligne_offre(form, old_libelles) %}
+     {% set vars = form.libelles.vars %}
+   
+    <div class="checkbox-list">
+    {% for item in form.libelles %}
+        <label class="checkbox">
+            <input type="checkbox" name="{{ item.libelleDevis.vars.full_name }}" 
+                data-value="{{ item.vars.data.libelleDevis.libelle }}" 
+                class="ck-offre" multiple="multiple" 
+                id="{{ item.libelleDevis.vars.id }}" value="{{ item.vars.data.libelleDevis.id }}"
+                {% if item.vars.data.libelleDevis.id in old_libelles %}checked="checked"{% endif %}
+            >
+           
+            <span></span> {{ item.vars.data.libelleDevis.libelle }}
+        </label>
+        <div style="display:none">{{ form_widget(item.valeurLibelle)}}</div>
+    {% endfor %}
+    </div>
+{% endmacro %}
+

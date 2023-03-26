@@ -1,0 +1,95 @@
+{% macro module(form, index, allowed_roles, titles = {}, etats = []) %}
+    {% set module_name = form.vars.data.module %}
+    <div class="row mb-5">
+        <div style="display:none">
+            {{ form_widget(form.module) }}
+            {{ form_widget(form.child) }}
+        </div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-3">
+            {{ titles[form.vars.data.name] | title }}
+            <div style="display:none">{{ form_widget(form.name) }}</div>
+        </div>
+        <div class="col-md-8">
+            {% set role_vars = form.roles.vars %}
+            {% set multiple = role_vars.multiple %}
+            {% set value = role_vars.value %}
+            {% set required = role_vars.required %}
+            {% set child = '__empty__' %}
+            {% set has_workflow = false %}
+            <div class="checkbox-inline">
+                {% for label, role in allowed_roles %}
+                {% set current_role = role[child] %}
+                {% set has_workflow = current_role starts with 'ROLE_wORKFLOW' %}
+                <label class="checkbox checkbox-square">
+                    <input type="checkbox" class="checkbox-role {% if has_workflow %}workflow-role{% endif %}" multiple="multiple" name="{{ role_vars.full_name }}"  id="{{ role_vars.id }}" value="{{ current_role }}" {% if role[child] in value %} checked="checked"{% endif %} >
+                    <span></span> {{ label }}
+                </label>
+                {% endfor %}
+            </div>
+            {% if etats|length and has_workflow %}
+                <select name="{{ role_vars.full_name }}" class="has-select2 select2-wkflow" multiple="multiple">
+                {% for etat, _role in etats[child] %}
+                    <option value="{{ _role }}" {% if _role in value %}selected="selected"{% endif %}>{{ etat | translate_wk_state }}</option>
+                {% endfor %}
+                </select>
+            {% endif %}
+              
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro module_children(form, index, allowed_roles, child, displayed = [], titles = {}, etats = [], display_child = true, groupes = []) %}
+    
+    {% set module_name = form.vars.data.module %}
+        {% if child not in displayed and display_child %}
+        <div class="row mb-5">
+             <div class="col-md-1">&nbsp;</div>
+             <div class="col-md-11"><b>{{ child | title }}</b></div>
+        </div>
+        {% endif %}
+        <div class="row mb-5">
+           
+            <div style="display:none">
+                {{ form_widget(form.module) }}
+                {{ form_widget(form.child) }}
+            </div>
+            <div class="{% if child == '__empty__' %}col-md-1{% else %}col-md-2{% endif %}">&nbsp;</div>
+            <div class="col-md-3">
+                {{ titles[form.vars.data.name] | title }}
+                <div style="display:none">{{ form_widget(form.name) }}</div>
+            </div>
+            <div class="{% if child == '__empty__' %}col-md-8{% else %}col-md-7{% endif %}">
+                {% set role_vars = form.roles.vars %}
+                {% set multiple = role_vars.multiple %}
+                {% set value = role_vars.value %}
+              
+                {% set required = role_vars.required %}
+                 {% set has_workflow = false %}
+                <div class="checkbox-inline">
+                    {% for label, role in allowed_roles %}
+                        {% set current_role = role[child] %}
+                        {% set has_workflow = current_role starts with 'ROLE_WORKFLOW' %}
+                        <label class="checkbox checkbox-square">
+                            <input type="checkbox" {% if has_workflow %}data-ref="{{ child }}-{{ module_name }}"{% endif %} class="checkbox-role"  multiple="multiple" name="{{ role_vars.full_name }}"  id="{{ role_vars.id }}" value="{{ current_role }}" {% if current_role in value %} checked="checked"{% endif %} >
+                            <span></span> {{ label }}
+                        </label>
+                    {% endfor %}
+                </div>
+                {% if etats|length and has_workflow %}
+                    <div class="d-none">
+                        <select name="{{ role_vars.full_name }}" class="has-select2 select2-wkflow select2-wk-{{ child }}-{{ module_name }}" multiple="multiple">
+                        {% for etat, _role in etats[child] %}
+                            <option value="{{ _role }}" {% if _role in value %}selected="selected"{% endif %}>{{ etat | translate_wk_state }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                  
+
+                
+            </div>
+        </div>
+   
+{% endmacro %}

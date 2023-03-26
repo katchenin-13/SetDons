@@ -1,0 +1,430 @@
+{% macro prototype_tranche_had_cat_val(form) %}
+    <div class="list-tranche-had-cat-val"  data-prototype="{{ _self.tranche_had_cat_val(form.categories.vars.prototype)|e }}"></div>
+  
+    <div class="row row-lines">
+        <div class="col-md-6">Catégorie</div>
+        <div class="col-md-6">Valeur</div>
+    </div>
+    <div class="collection list_tranche_had_cal_val">
+        {% for item in form.categories %}
+            {{ _self.tranche_had_cat_val(item|e) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro tranche_had_cat_val(categorie) %}
+    <div class="prototype_tranche_had_cat_val even pointer row" style="margin-bottom: 5px">
+        <div class="col-md-6">
+            <div style="display:none">{{ form_widget(categorie.categorie) }}</div>
+            {{ categorie.vars.value.categorie.libelle|default('') }}
+        </div>
+         <div class="col-md-6">{{ form_widget(categorie.valeur) }}</div>
+    </div>
+{% endmacro %}
+
+
+{#% macro prototype_ligne_facture(form) %}
+    
+    <table class="table table-bordered table-ligne-facture">
+        <thead class="thead-dark">
+            <tr>
+                <th width="5%" class="text-center">
+                    <button type="button" class="btn btn-light-danger remove-row btn-xs" title="Supprimer les lignes sélectionnées">
+                        <span class="fas fa-ban"></span>
+                    </button>
+                </th>
+                <th width="5%">Compte</th>
+                <th>Libellé</th>
+                <th width="15%">Remise</th>
+                <th width="15%">Montant Initital</th>
+                <th width="15%">Montant Forcé</th>
+                <th width="15%">Montant final</th>
+            </tr>
+        </thead>
+        <tbody id="list_ligne_facture" class="collection list_ligne_facture">
+            {% for item in form.ligneFactures %}
+                {{ _self.ligne_facture(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %#}
+{% macro prototype_ligne_facture(form, forfait) %}
+    {% set has_forfait = forfait|length %}
+    {% if has_forfait %}
+    <h4>Forfait</h4>
+   
+     <table class="table table-bordered table-ligne-facture mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th width="5%" class="text-center">
+                    <button type="button" class="btn btn-light-danger remove-row btn-xs" title="Supprimer les lignes sélectionnées">
+                        <span class="fas fa-ban"></span>
+                    </button>
+                </th>
+                <th width="5%">Compte</th>
+                <th>Libellé</th>
+                <th style="width:15%">Remise</th>
+                <th style="width:15%">Montant Initital</th>
+                <th style="width:15%">Montant Forcé</th>
+                <th style="width:15%">Montant final</th>
+            </tr>
+        </thead>
+    </table>
+     {% endif %}
+    
+    {% set ligne_forfaits = [] %}
+    {% set ligne_factures = form.ligneFactures %}
+    {% set ligne_complements = [] %}
+    {% if has_forfait %}
+        {% set ligne_forfaits = ligne_factures|filter(v => v.vars.data.forfait) %}
+         {% set ligne_complements = ligne_factures|filter(v => not v.vars.data.forfait) %}
+    {% else %}
+        {% set ligne_forfaits = ligne_factures %}
+    {% endif %}
+    <table class="table table-bordered table-ligne-facture">
+        {% if not has_forfait %}
+         <thead class="thead-dark">
+            <tr>
+                <th style="width:5%" class="text-center">
+                    <button type="button" class="btn btn-light-danger remove-row btn-xs" title="Supprimer les lignes sélectionnées">
+                        <span class="fas fa-ban"></span>
+                    </button>
+                </th>
+                <th style="width:5%">Compte</th>
+                <th>Libellé</th>
+                <th>Code</th>
+                <th style="width:15%">Remise</th>
+                <th style="width:15%">Montant Initital</th>
+                <th style="width:15%">Montant Forcé</th>
+                <th style="width:15%">Montant final</th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody  class="collection list_ligne_facture">
+            {% for item in ligne_forfaits %}
+                {{ _self.ligne_facture(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if has_forfait %}
+        <div class="row justify-content-end">
+            <div class="col-xl-2">
+                {{ form_row(form.montantForfait) }}
+            </div>
+        </div>
+       
+    {% endif %}
+    {% if ligne_complements|length %}
+    <h4 class="mt-4">Libellés complémentaires</h4>
+    <table class="table table-bordered table-ligne-facture mt-3">
+         <thead class="thead-dark">
+            <tr>
+                <th colspan="8" class="text-left">
+                    <button type="button" class="btn btn-light-danger remove-row btn-xs" title="Supprimer les lignes sélectionnées">
+                        <span class="fas fa-ban"></span>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="collection list_ligne_facture">
+            {% for item in ligne_complements %}
+                {{ _self.ligne_facture(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endmacro %}
+
+{% macro ligne_facture(ligneFacture) %}
+    {% set id = ligneFacture.vars.data.id|default('') %} 
+    {% set libelleFacturation = ligneFacture.libelleFacturation.vars.data %}
+     {% set forfait = ligneFacture.vars.data.forfait|default(false) %}
+    {% set type = libelleFacturation.type|default('') %}
+    {% set remise = libelleFacturation.remise|default(true) %}
+    {% set calcul = libelleFacturation.calcul|default(0) %}
+    {% set base = libelleFacturation.base|default('') %}
+    {% set totalisateur = libelleFacturation.totalisateur|default(0) %}
+    {% set valeur = 0 %}
+    {% if calcul == 16 %}
+        {% set valeur = ref_value(libelleFacturation.valeur|default(0)) %}
+    {% endif %}
+    {% set is_prestation = (type == 'prestation') %}
+    <tr class="prototype_ligne_facture even pointer {% if forfait %}table-primary row-forfait{% else %}table-light{% endif %}" 
+        data-row="{{ id }}" 
+        data-calcul="{{ calcul }}" 
+        {% if calcul == 16 %}data-ref-base="{{ base }}"{% else %}data-base="{{ base }}" {% endif %}
+        data-total="{{ totalisateur }}" 
+        data-type="{{ type  }}" 
+        data-forfait="{{ forfait }}" 
+        data-valeur="{{ valeur }}"
+        style="width:5%"
+    >
+        <td>    
+            <div class="form-group form-check text-center">
+                <input  type="checkbox" class="form-check-input" id="delete-row-{{ id }}" value="{{ id }}">
+            </div>
+        </td>
+        <td class="num__compte_{{ type }}" {% if is_prestation %}data-normal="{{ libelleFacturation.compteNormal.compte|default('') }}" data-exo="{{ libelleFacturation.compteExo.compte|default('') }}"{% endif %}  style="width:5%">
+        
+            <b><span>{{ ligneFacture.vars.data.numCompte|default('') }}</span></b>
+        </td>
+        <td>  
+            {#<a href="#edit-{{ id }}" title="Cliquez pour modifier">{{ ligneFacture.libelle.vars.data|default('') }}</a>#} 
+            {{ ligneFacture.libelle.vars.data|default('') }}
+            <div class="input-group mb-3 edit-{{ id }} d-none edit-block" data-id="{{ id }}">
+                {{ form_widget(ligneFacture.libelle, {attr: {'class': 'form-control form-control-sm'}}) }}
+
+                <div class="input-group-append">
+                    <button class="btn btn-primary btn-edit-libelle btn-sm" type="button"> <span class="flaticon2-checkmark"></span></button>
+                    <button class="btn btn-warning btn-close-libelle btn-sm" type="button" title="Fermer le champ"> 
+                        <span class="flaticon-close"></span>
+                    </button>
+                </div>
+            </div>
+            <div style="display:none">{{ form_widget(ligneFacture.libelleFacturation) }}</div>
+        </td>
+         <td  style="width:3%">
+            <b><span>{{ libelleFacturation.code|default('') }}</span></b>
+        </td>
+        <td style="width:15%">    
+            {% set  remise_attr = {'class': 'remise-'~ id ~ ' text-right remise form-control-sm', 'data-id': id, 'data-ref' : '.montant-final-' ~ id, 'data-base': '.montant-initial-'~id, 'data-mf': '.montant-force-'~id} %}
+            {% if not remise %}
+                {% set remise_attr = remise_attr|merge({'readonly':'readonly'}) %}
+            {% endif %}
+            {{ form_widget(ligneFacture.remise, {attr: remise_attr}) }}
+        </td>
+         <td style="width:15%">    
+            {{ form_widget(ligneFacture.montantInitial, {attr: {'class': 'montant-initial-' ~ id ~' montant-force input-money form-control-sm'}}) }}
+        </td>
+         <td style="width:15%">    
+            {{ form_widget(ligneFacture.montantForce, {attr: {'class': 'montant-force-' ~ id ~ ' montant-force text-right form-control-sm', 'data-id': id, 'data-ref' : '.montant-final-' ~ id}}) }}
+        </td>
+         <td style="width:15%">    
+            {{ form_widget(ligneFacture.montantFinal, {attr: {'class': 'montant-final-' ~ id ~ ' montant-final text-right form-control-sm montant-final-'~ type ~ '', 'readonly':'readonly', 'data-value': ligneFacture.montantFinal.vars.value|replace({' ': ''})}}) }}
+        </td>
+        
+        
+    </tr>
+{% endmacro %}
+
+
+{% macro ligne_devis(ligneDevis) %}
+    {% set id = ligneDevis.vars.data.id|default('') %} 
+    {% set libelleFacturation = ligneDevis.libelleFacturation.vars.data %}
+     {% set type = libelleFacturation.type|default('debours') %}
+    {% set remise = libelleFacturation.remise|default(false) %}
+    <tr class="prototype_ligne_facture even pointer table-light" data-row="{{ id }}" data-type="{{ type  }}">
+        <td>    
+            <div class="form-group form-check text-center">
+                <input  type="checkbox" class="form-check-input" id="delete-row-{{ id }}" value="{{ id }}">
+            </div>
+            <div style="display:none">{{ form_widget(ligneDevis.libelleFacturation) }}</div>
+        </td>
+        <td>  
+            <a href="#edit-{{ id }}" title="Cliquez pour modifier">{{ ligneDevis.libelle.vars.data|default('') }}</a> 
+            <div class="input-group mb-3 edit-{{ id }} d-none edit-block" data-id="{{ id }}">
+                {{ form_widget(ligneDevis.libelle, {attr: {'class': 'form-control form-control-sm'}}) }}
+
+                <div class="input-group-append">
+                    <button class="btn btn-primary btn-edit-libelle btn-sm" type="button" title="Valider"> 
+                        <span class="flaticon2-checkmark"></span>
+                    </button>
+                     <button class="btn btn-warning btn-close-libelle btn-sm" type="button" title="Fermer le champ"> 
+                        <span class="flaticon-close"></span>
+                    </button>
+                </div>
+            </div>
+            
+        </td>
+        <td>    
+            {% set  remise_attr = {'class': 'remise-'~ id ~ ' text-right remise form-control-sm', 'data-id': id, 'data-ref' : '.montant-final-' ~ id} %}
+            {% if not remise %}
+                {% set remise_attr = remise_attr|merge({'readonly':'readonly'}) %}
+            {% endif %}
+            {{ form_widget(ligneDevis.remise, {attr: remise_attr}) }}
+        </td>
+         <td>    
+            {{ form_widget(ligneDevis.montantInitial, {attr: {'class': 'montant-initial-' ~ id }}) }}
+        </td>
+         <td>    
+            {{ form_widget(ligneDevis.montantForce, {attr: {'class': 'montant-force-' ~ id ~ ' montant-force text-right form-control-sm', 'data-id': id, 'data-ref' : '.montant-final-' ~ id, 'data-base': '.montant-initial-'~id, 'data-mf': '.montant-force-'~id}}) }}
+        </td>
+         <td>    
+            {{ form_widget(ligneDevis.montantFinal, {attr: {'class': 'montant-final-' ~ id ~ ' montant-final text-right form-control-sm montant-final-'~ type ~ '', 'readonly':'readonly', 'data-value': ligneDevis.montantFinal.vars.value|replace({' ': ''})}}) }}
+        </td>
+        
+        
+    </tr>
+{% endmacro %}
+
+{% macro prototype_ligne_devis(form) %}
+    <div class="list-ligne-facture"  data-prototype="{{ _self.ligne_devis(form.ligneDevis.vars.prototype)|e }}"></div>
+    <table class="table table-bordered table-ligne-facture">
+        <thead class="thead-dark">
+            <tr>
+                <th width="5%" class="text-center">
+                    <button type="button" class="btn btn-light-danger remove-row btn-xs" title="Supprimer les lignes sélectionnées">
+                        <span class="fas fa-ban"></span>
+                    </button>
+                </th>
+                <th>Libellé</th>
+                <th width="15%">Remise</th>
+                <th width="15%">Montant Initital</th>
+                <th width="15%">Montant Forcé</th>
+                <th width="15%">Montant final</th>
+            </tr>
+        </thead>
+        <tbody id="list_ligne_facture" class="collection list_ligne_facture">
+            {% for item in form.ligneDevis %}
+                {{ _self.ligne_devis(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+
+{% macro ligne_litiges(facture) %}
+    {% set data = get_ligne_litiges(facture) %}
+    <table class="table table-bordered table-ligne-taxe mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Libellé</th>
+                <th width="20%">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _data in data %}
+                 <tr>
+                    <td>{{ _data.libelle }}</td>
+                    <td style="text-align:right"><b>{{ _data.montant | format_number }}</b></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+
+{% macro recap_taxe_douane(dossier = null, sous_dossier = null) %}
+    {% set taxes_dossier = get_total_taxe_dossier(dossier) %}
+    {% set data = sous_dossier ? sous_dossier.ligneTaxes|filter(v => v.valeur > 0): taxes_dossier %}
+    <table class="table table-bordered table-ligne-taxe mb-0" data-taxes="{{ taxes_dossier | json_encode }}">
+        <thead class="thead-dark">
+            <tr>
+                <th>Taxe</th>
+                <th width="40%">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _data in data %}
+                <tr>
+                    <td>{{ _data.libelle | upper }}</td>
+                    <td class="text-right">{{ _data.valeur | format_number }}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro recap_sorties_ts(id_dossier) %}
+    
+    {% set data = get_sortie_ts(id_dossier) %}
+    <table class="table table-bordered mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Libellé</th>
+                <th width="40%">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set somme = 0 %}
+            {% for _data in data %}
+                {% set somme = somme +  _data.montant %}
+                <tr>
+                    <td>{{ _data.libelle | upper }}</td>
+                    <td class="text-right">{{ _data.montant | format_number }}
+                </tr>
+            {% endfor %}
+        </tbody>
+         <tfoot>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="text-right"><b>{{ somme | format_number }}</b>
+            </tr>
+        </tfoo>
+    </table>
+{% endmacro %}
+
+{% macro facture_fournisseur(dossier) %}
+    
+    {% set data = get_scans(dossier) %}
+    <table class="table table-bordered table-ligne-taxe mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Fichier</th>
+                <th width="40%">Nature</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _data in data %}
+               
+               
+                <tr>
+                    <td>
+                        <a href="{{ path('fichier_index', {id: _data.fichier_id}) }}" target="_blank" 
+                            class="btn-hover-text-primary font-weight-bold btn-sm" title="Télécharger">
+                            <span class="flaticon2-download"></span> Fac. {{ _data.reference}}
+                        </a>
+                    </td>
+                    <td class="text-right">{{ _data.type | upper }}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro recap_debours(dossier) %}
+    <table class="table table-bordered table-ligne-devis mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Code</th>
+                <th width="40%">Réçu</th>
+                <th width="40%">Facturé</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total_recu = 0 %}
+            {% set total_facture = 0 %}
+            {% for val in get_montant_fac_debours(dossier) %}
+                {% set montant_facture = val.montant_facture %}
+                {% set montant_recu = val.total %}
+                {% set total_recu = total_recu + montant_recu %}
+                {% set total_facture = total_facture + montant_facture %}
+                {% if montant_facture > 0 or montant_recu > 0 %}
+                <tr>
+                    <td><abbr title="{{ val.libelle }}">{{ val.code }}</abbr></td>
+                    <td class="text-right">{{ montant_recu | format_number }}</td>
+                    <td class="text-right">{{  montant_facture | format_number }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>TOTAUX</th>
+                <th class="text-right">{{ total_recu | format_number }}</th>
+                <th class="text-right">{{  total_facture | format_number }}</th>
+            </tr>
+        </tfoot>
+    </table>
+{% endmacro %}
+
+
+
+{% macro ligne_echeancier(ligne) %}
+    <div class="row row-line mb-2">
+        <div class="col-md-3">{{ form_widget(ligne.montant) }}</div>
+        <div class="col-md-3">{{ form_widget(ligne.dateAttendu) }}</div>
+        <div class="col-md-5">{{ form_widget(ligne.nature) }}</div>
+        <div class="col-md-1 del-col"></div>
+    </div>
+{% endmacro %}

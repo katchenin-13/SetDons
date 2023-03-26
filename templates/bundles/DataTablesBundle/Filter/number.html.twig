@@ -1,0 +1,25 @@
+{% set operators = column.filter.operators %}
+<div class="row {% if operators|length %}row-has-operators{% endif %}">
+    {% if operators.length %}
+        <div class="col-md-6"> 
+            <select class="filter-operator has-select2 select2-dt-{{ column.name }}">
+                {% for val, lib in operators %}
+                    <option value="{{ val }}">{{ lib }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+    <div class="col-md-{{ operators.length ? 6 : 12 }}">
+        <input id="{{ datatable.name }}-column-{{ column.index }}"
+        data-search-column-index="{{ column.index }}"
+        {% if column.filter.placeholder != null %}
+            placeholder="{{ column.filter.placeholder|trans }}"
+        {% endif %}
+        value="{{ column.searchValue | default('') }}" class="form-control form-control-sm d-block input-money"
+        data-index="{{ column.index }}"
+        >
+    </div>
+</div>
+ <script>
+    init_select2('.select2-dt-{{ column.name }}');
+</script>
