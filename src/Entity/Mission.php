@@ -33,6 +33,7 @@ class Mission
     private ?string $opportinuite = null;
 
     #[ORM\ManyToOne(inversedBy: 'missions')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'mission', targetEntity: Rapportmission::class)]
@@ -40,11 +41,11 @@ class Mission
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $UpdatedAt = null;
+    private ?\DateTimeInterface $UpdatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $CreatedAt = null;
+    private ?\DateTimeInterface $CreatedAt = null;
     
 
     private $updated;
@@ -161,24 +162,24 @@ class Mission
         return $this;
     }
 
-   public function getUpdatedAt(): ?\DateTimeImmutable
+   public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->CreatedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
 

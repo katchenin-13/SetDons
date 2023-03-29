@@ -33,6 +33,7 @@ class Communaute
     private ?Localite $localite = null;
 
     #[ORM\ManyToOne(inversedBy: 'communautes')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Beneficiaire::class)]
@@ -47,16 +48,17 @@ class Communaute
     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Audience::class)]
     private Collection $audiences;
 
-     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $UpdatedAt = null;
 
-     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numero = null;
+     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: PointFocal::class,orphanRemoval: true, cascade:['persist'])]
+     private Collection $pointFocals;
+
     
 
 
@@ -66,6 +68,7 @@ class Communaute
         $this->rapportmissions = new ArrayCollection();
         $this->contacts = new ArrayCollection();
         $this->audiences = new ArrayCollection();
+        $this->pointFocals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -289,17 +292,37 @@ class Communaute
         return $this;
     }
 
-    public function getNumero(): ?string
+    /**
+     * @return Collection<int, PointFocal>
+     */
+    public function getPointFocals(): Collection
     {
-        return $this->numero;
+        return $this->pointFocals;
     }
 
-    public function setNumero(string $numero): self
+    public function addPointFocal(PointFocal $pointFocal): self
     {
-        $this->numero = $numero;
+        if (!$this->pointFocals->contains($pointFocal)) {
+            $this->pointFocals->add($pointFocal);
+            $pointFocal->setCommunaute($this);
+        }
 
         return $this;
     }
+
+    public function removePointFocal(PointFocal $pointFocal): self
+    {
+        if ($this->pointFocals->removeElement($pointFocal)) {
+            // set the owning side to null (unless already changed)
+            if ($pointFocal->getCommunaute() === $this) {
+                $pointFocal->setCommunaute(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
     
 }

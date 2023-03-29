@@ -24,6 +24,7 @@ class Typedon
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(inversedBy: 'typedons')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'typedon', targetEntity: Fieldon::class)]

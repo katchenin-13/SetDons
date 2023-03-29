@@ -36,8 +36,8 @@ class RhMenuBuilder
         }
         
         if (isset($menu[self::MODULE_NAME])) {
-            //$menu->addChild('demande', ['route' => 'app_demande_demande_index', 'label' => 'Demande Absence'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
-           // $menu->addChild('avis', ['route' => 'app_demande_demande_index_avis', 'label' => 'Affecter avis'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+            $menu->addChild('demande', ['route' => 'app_config_parametre_index', 'label' => 'Demande Absence'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+           $menu->addChild('avis', ['route' => 'app_config_parametre_index', 'label' => 'Affecter avis'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
         }
        
         return $menu;

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Communaute;
+use App\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Communaute>
+ * @extends ServiceEntityRepository<Contact>
  *
- * @method Communaute|null find($id, $lockMode = null, $lockVersion = null)
- * @method Communaute|null findOneBy(array $criteria, array $orderBy = null)
- * @method Communaute[]    findAll()
- * @method Communaute[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Contact|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Contact|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Contact[]    findAll()
+ * @method Contact[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CommunauteRepository extends ServiceEntityRepository
+class ContactRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Communaute::class);
+        parent::__construct($registry, Contact::class);
     }
 
-    public function save(Communaute $entity, bool $flush = false): void
+    public function save(Contact $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CommunauteRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Communaute $entity, bool $flush = false): void
+    public function remove(Contact $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,17 +39,8 @@ class CommunauteRepository extends ServiceEntityRepository
         }
     }
 
-
-//        public function findOneBySomeField()
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->join('c.pointFocals','p')
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 //    /**
-//     * @return Communaute[] Returns an array of Communaute objects
+//     * @return Contact[] Returns an array of Contact objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -63,7 +54,7 @@ class CommunauteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Communaute
+//    public function findOneBySomeField($value): ?Contact
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

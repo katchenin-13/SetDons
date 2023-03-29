@@ -25,15 +25,19 @@ class PointFocal
     private ?string $emailpf = null;
 
     #[ORM\ManyToOne(inversedBy: 'pointFocals')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
      #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $UpdatedAt = null;
+    private ?\DateTimeInterface $UpdatedAt = null;
 
-     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $CreatedAt = null;
+    private ?\DateTimeInterface $CreatedAt = null;
+    
+    #[ORM\ManyToOne(inversedBy: 'pointFocals')]
+     private ?Communaute $communaute = null;
 
     public function getId(): ?int
     {
@@ -87,26 +91,38 @@ class PointFocal
 
         return $this;
     }
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->CreatedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getCommunaute(): ?Communaute
+    {
+        return $this->communaute;
+    }
+
+    public function setCommunaute(?Communaute $communaute): self
+    {
+        $this->communaute = $communaute;
 
         return $this;
     }

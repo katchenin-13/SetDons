@@ -2,14 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\Localite;
 use App\Entity\Categorie;
 use App\Entity\Communaute;
-use App\Entity\Localite;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\PointFocal;
+use App\Form\PointFocalType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CommunauteType extends AbstractType
 {
@@ -64,6 +67,19 @@ class CommunauteType extends AbstractType
                     'placeholder' => 'Choisir une localité',
                     'attr' => ['class' => 'has-select2'],
                    
+                ])
+          
+
+            ->add('pointFocals', CollectionType::class, [
+                'entry_type' => PointFocalType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
                 ])
                 
         

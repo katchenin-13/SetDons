@@ -36,6 +36,7 @@ class Localite
     private ?\DateTimeInterface $UpdatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'localites')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $Utilisateur = null;
 
     public function __construct()

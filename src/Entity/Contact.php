@@ -31,6 +31,7 @@ class Contact
     private ?string $observation = null;
 
     #[ORM\ManyToOne(inversedBy: 'contacts')]
+    #[Gedmo\Blameable(on: 'create')]
     private ?Communaute $communaute = null;
 
     #[ORM\ManyToOne(inversedBy: 'contacts')]
@@ -38,11 +39,11 @@ class Contact
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $UpdatedAt = null;
+    private ?\DateTimeInterface $UpdatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $CreatedAt = null;
+    private ?\DateTimeInterface $CreatedAt = null;
     
 
 
@@ -135,24 +136,24 @@ class Contact
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->CreatedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
 
