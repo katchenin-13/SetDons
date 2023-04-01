@@ -88,6 +88,34 @@
     </div>
 {% endmacro %}
 
+{% macro fieldon(fieldon) %}
+    <div class="row row-line">
+       <div class="row "> 
+         <div class="form-group col-md-11">{{ form_row(fieldon.typedon) }}</div>
+         <div class="form-group col-md-1 del-col"> 
+       </div>
+        <div class="form-group col-md-1">{{ form_row(fieldon.qte,{'attr':{'class':'qte'}}) }}</div>
+        <div class="form-group col-md-3 ">{{ form_row(fieldon.naturedon,{'attr':{'class':'naturedon'}}) }}</div>
+        <div class="form-group col-md-3">{{ form_row(fieldon.motifdon) }}</div>
+        <div class="form-group col-md-4">{{ form_row(fieldon.montantdon) }}</div>
+        
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro beneficiaire(beneficiaire) %}
+    <div class="row row-line2">
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.communaute) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.nom) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.numero) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.email) }}</div>
+        {# <div class="form-group col-md-1 del-col">
+
+        </div> #}
+    </div>
+{% endmacro %}
+
 
 {% macro lignes_sortie(article) %}
     <div class="row row-line">

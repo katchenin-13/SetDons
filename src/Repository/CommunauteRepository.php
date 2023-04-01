@@ -40,14 +40,7 @@ class CommunauteRepository extends ServiceEntityRepository
     }
 
 
-//        public function findOneBySomeField()
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->join('c.pointFocals','p')
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   
 //    /**
 //     * @return Communaute[] Returns an array of Communaute objects
 //     */

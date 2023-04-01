@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,8 +17,7 @@ class Don
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dons')]
-    private ?Beneficiaire $beneficiaire = null;
+
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateremise = null;
@@ -31,13 +32,12 @@ class Don
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dons')]
-    private ?Fieldon $fieldon = null;
 
-    #[ORM\Column]
+
+    #[ORM\Column(nullable:true)]
     private ?bool $statusdon = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $mentions = null;
 
      #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -47,6 +47,18 @@ class Don
      #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
+
+     #[ORM\OneToMany(mappedBy: 'don', targetEntity: Beneficiaire::class,orphanRemoval: true, cascade:['persist'])]
+     private Collection $Beneficiaire;
+
+     #[ORM\OneToMany(mappedBy: 'don', targetEntity: Fieldon::class,orphanRemoval: true, cascade:['persist'])]
+     private Collection $fieldon;
+
+     public function __construct()
+     {
+         $this->Beneficiaire = new ArrayCollection();
+         $this->fieldon = new ArrayCollection();
+     }
     
 
 
@@ -57,17 +69,7 @@ class Don
         return $this->id;
     }
 
-    public function getBeneficiaire(): ?Beneficiaire
-    {
-        return $this->beneficiaire;
-    }
-
-    public function setBeneficiaire(?Beneficiaire $beneficiaire): self
-    {
-        $this->beneficiaire = $beneficiaire;
-
-        return $this;
-    }
+   
 
     public function getDateremise(): ?\DateTimeInterface
     {
@@ -118,17 +120,7 @@ class Don
         return $this;
     }
 
-    public function getFieldon(): ?Fieldon
-    {
-        return $this->fieldon;
-    }
-
-    public function setFieldon(?Fieldon $fieldon): self
-    {
-        $this->fieldon = $fieldon;
-
-        return $this;
-    }
+    
 
     public function isStatusdon(): ?bool
     {
@@ -174,6 +166,66 @@ class Don
     public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Beneficiaire>
+     */
+    public function getBeneficiaire(): Collection
+    {
+        return $this->Beneficiaire;
+    }
+
+    public function addBeneficiaire(Beneficiaire $beneficiaire): self
+    {
+        if (!$this->Beneficiaire->contains($beneficiaire)) {
+            $this->Beneficiaire->add($beneficiaire);
+            $beneficiaire->setDon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBeneficiaire(Beneficiaire $beneficiaire): self
+    {
+        if ($this->Beneficiaire->removeElement($beneficiaire)) {
+            // set the owning side to null (unless already changed)
+            if ($beneficiaire->getDon() === $this) {
+                $beneficiaire->setDon(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Fieldon>
+     */
+    public function getFieldon(): Collection
+    {
+        return $this->fieldon;
+    }
+
+    public function addFieldon(Fieldon $fieldon): self
+    {
+        if (!$this->fieldon->contains($fieldon)) {
+            $this->fieldon->add($fieldon);
+            $fieldon->setDon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFieldon(Fieldon $fieldon): self
+    {
+        if ($this->fieldon->removeElement($fieldon)) {
+            // set the owning side to null (unless already changed)
+            if ($fieldon->getDon() === $this) {
+                $fieldon->setDon(null);
+            }
+        }
 
         return $this;
     }

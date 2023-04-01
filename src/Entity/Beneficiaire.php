@@ -43,13 +43,15 @@ class Beneficiaire
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Beneficiaire')]
+    private ?Don $don = null;
     
    
-    private $updated;
+
 
     public function __construct()
     {
-        $this->dons = new ArrayCollection();
         $this->CreatedAt;
     }
 
@@ -128,27 +130,7 @@ class Beneficiaire
         return $this->dons;
     }
 
-    public function addDon(Don $don): self
-    {
-        if (!$this->dons->contains($don)) {
-            $this->dons->add($don);
-            $don->setBeneficiaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDon(Don $don): self
-    {
-        if ($this->dons->removeElement($don)) {
-            // set the owning side to null (unless already changed)
-            if ($don->getBeneficiaire() === $this) {
-                $don->setBeneficiaire(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -170,6 +152,18 @@ class Beneficiaire
     public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getDon(): ?Don
+    {
+        return $this->don;
+    }
+
+    public function setDon(?Don $don): self
+    {
+        $this->don = $don;
 
         return $this;
     }

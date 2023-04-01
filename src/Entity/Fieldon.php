@@ -20,10 +20,10 @@ class Fieldon
     #[ORM\ManyToOne(inversedBy: 'qte')]
     private ?Typedon $typedon = null;
 
-    #[ORM\Column]
-    private ?float $qte = null;
+    #[ORM\Column(nullable:true)]
+    private ?int $qte = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable:true)]
     private ?string $naturedon = null;
 
     #[ORM\Column(length: 255)]
@@ -35,24 +35,18 @@ class Fieldon
     #[ORM\ManyToOne(inversedBy: 'fieldons')]
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
-
-    #[ORM\OneToMany(mappedBy: 'fieldon', targetEntity: Don::class)]
-    private Collection $dons;
-
-     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $UpdatedAt = null;
 
      #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
-    
 
-    private $updated;
-    public function __construct()
-    {
-        $this->dons = new ArrayCollection();
-    }
+     #[ORM\ManyToOne(inversedBy: 'fieidon')]
+     private ?Don $don = null;
+    
 
     public function getId(): ?int
     {
@@ -71,12 +65,12 @@ class Fieldon
         return $this;
     }
 
-    public function getQte(): ?float
+    public function getQte(): ?int
     {
         return $this->qte;
     }
 
-    public function setQte(float $qte): self
+    public function setQte(int $qte): self
     {
         $this->qte = $qte;
 
@@ -134,36 +128,7 @@ class Fieldon
         return $this;
     }
 
-    /**
-     * @return Collection<int, Don>
-     */
-    public function getDons(): Collection
-    {
-        return $this->dons;
-    }
-
-    public function addDon(Don $don): self
-    {
-        if (!$this->dons->contains($don)) {
-            $this->dons->add($don);
-            $don->setFieldon($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDon(Don $don): self
-    {
-        if ($this->dons->removeElement($don)) {
-            // set the owning side to null (unless already changed)
-            if ($don->getFieldon() === $this) {
-                $don->setFieldon(null);
-            }
-        }
-
-        return $this;
-    }
-
+ 
    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
@@ -184,6 +149,18 @@ class Fieldon
     public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getDon(): ?Don
+    {
+        return $this->don;
+    }
+
+    public function setDon(?Don $don): self
+    {
+        $this->don = $don;
 
         return $this;
     }

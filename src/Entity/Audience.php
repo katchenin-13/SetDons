@@ -26,12 +26,13 @@ class Audience
 
     #[ORM\Column(length: 255)]
     private ?string $numero = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
 
     #[ORM\Column]
     private ?int $nombreparticipant = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nomdesparticipant = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $observation = null;
@@ -43,10 +44,10 @@ class Audience
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $statusaudience = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $mentions = null;
 
 
@@ -112,6 +113,17 @@ class Audience
 
         return $this;
     }
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
 
     public function getNombreparticipant(): ?int
     {
@@ -125,17 +137,7 @@ class Audience
         return $this;
     }
 
-    public function getNomdesparticipant(): ?string
-    {
-        return $this->nomdesparticipant;
-    }
-
-    public function setNomdesparticipant(string $nomdesparticipant): self
-    {
-        $this->nomdesparticipant = $nomdesparticipant;
-
-        return $this;
-    }
+    
 
     public function getObservation(): ?string
     {

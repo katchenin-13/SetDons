@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Controller\Parametre;
+namespace App\Controller\Gestion;
 
+use Mpdf\Tag\Dd;
+use App\Entity\Don;
+use App\Form\DonType;
 use App\Entity\Communaute;
 use App\Service\FormError;
-use App\Form\CommunauteType;
+use App\Entity\Beneficiaire;
 use App\Service\ActionRender;
+use Doctrine\ORM\QueryBuilder;
+use App\Repository\DonRepository;
 use App\Repository\CommunauteRepository;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,36 +18,54 @@ use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\NumberColumn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/parametre/communaute')]
-class CommunauteController extends AbstractController
+#[Route('/gestion/don')]
+class DonController extends AbstractController
 {
-    #[Route('/', name: 'app_parametre_communaute_index', methods: ['GET', 'POST'])]
-    public function index(CommunauteRepository $communaute,Request $request, DataTableFactory $dataTableFactory): Response
+    #[Route('/', name: 'app_gestion_don_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
-        // dd($communaute->findOneBySomeField());
+       
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Nom '])
-        ->add('localite', TextColumn::class, ['label' => 'Localité','field' => 'l.libelle'])
-        ->add('categorie', TextColumn::class, ['label' => 'Catégorie','field' => 'ca.libelle'])
+
+        // ->add('beneficiaire', TextColumn::class, ['label' => 'Motif','field' => 'b.nom'])
+        // ->add('numero', TextColumn::class, ['label' => 'Tel du béneficiare','field'=>'b.numero'])
+        // ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'b.communaute'])
+        // ->add('dateremise', DateTimeColumn::class, ['
+        // label' => 'Date de remise',
+        //  "format" => 'Y-m-d',
+        //  ])
+        //  ->add('dateremise', DateTimeColumn::class, ['
+        // label' => 'Date de remise',
+        //  "format" => 'd-m-Y'
+        //  ])
+        ->add('remispar', TextColumn::class, ['label' => 'Remise par'])
+        // ->add('typedon', TextColumn::class, ['label' => 'Type','field'=>'f.typedon'])
+        // ->add('montantdon', NumberColumn::class, [
+        //     'label' => 'Montant / Valeur Estimative',
+        //     'field'=>'f.montantdon',
+        //     "format" => 'Y-m-d'
+        //     ])
+
         ->createAdapter(ORMAdapter::class, [
-            'entity' => Communaute::class,
+            'entity' => Don::class,
             'query'=> function(QueryBuilder $req){
-              $req->select('c,l,ca')
-                  ->from(Communaute::class,'c')
-                  ->join('c.localite', 'l')
-                  ->join('c.categorie', 'ca')
-                //   ->join('c.pointFocals','p')
+              $req->select('d')
+                  ->from(Don::class,'d')
+                //  ->join('d.beneficiaire','b')
+                //  ->join('d.fieldon','f')
+                  
                 ;
             }
         ])
-
-        ->setName('dt_app_parametre_communaute');
-
+       
+        ->setName('dt_app_gestion_don');
+        
         $renders = [
             'edit' =>  new ActionRender(function () {
                 return true;
@@ -68,14 +91,14 @@ class CommunauteController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, Communaute $context) use ($renders) {
+                , 'render' => function ($value, Don $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'edit' => [
-                            'url' => $this->generateUrl('app_parametre_communaute_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_don_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -83,7 +106,7 @@ class CommunauteController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_parametre_communaute_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_don_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-main']
@@ -104,20 +127,43 @@ class CommunauteController extends AbstractController
             return $table->getResponse();
         }
 
-        
-        return $this->render('parametre/communaute/index.html.twig', [
+
+        return $this->render('gestion/don/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_parametre_communaute_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_don_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, DonRepository $donRepository,CommunauteRepository $communauteRepository, FormError $formError): Response
     {
-        $communaute = new Communaute();
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $don = new Don();
+
+        $comm = $communauteRepository->findAll();
+        $beneficiaire = new Beneficiaire();
+        foreach($comm  as $elem){
+            $beneficiaire->setCommunaute($elem);
+        }
+       
+        $beneficiaire->setNom("");
+        $beneficiaire->setNumero("");
+        $beneficiaire->setEmail("");
+        $form1 = $this->createForm(DonType::class, $don, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_new')
+            'action' => $this->generateUrl('app_gestion_don_new')
         ]);
+
+        $don->addBeneficiaire($beneficiaire);
+
+        $form = $this->createForm(DonType::class, $don, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('app_gestion_don_new')
+        ]);
+
+        // $options = $form->get('promesse')->getConfig()->getOptions();
+        // $choices = $options['don_promesse']->getChoices();
+
+    //    dd($form);
+    
         $form->handleRequest($request);
 
         $data = null;
@@ -127,14 +173,14 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_don_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $donRepository->save($don, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -163,28 +209,28 @@ class CommunauteController extends AbstractController
 
         }
 
-        return $this->renderForm('parametre/communaute/new.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/don/new.html.twig', [
+            'don' => $don,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_parametre_communaute_show', methods: ['GET'])]
-    public function show(Communaute $communaute): Response
+    #[Route('/{id}/show', name: 'app_gestion_don_show', methods: ['GET'])]
+    public function show(Don $don): Response
     {
-        return $this->render('parametre/communaute/show.html.twig', [
-            'communaute' => $communaute,
+        return $this->render('gestion/don/show.html.twig', [
+            'don' => $don,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_parametre_communaute_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_don_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Don $don, DonRepository $donRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $form = $this->createForm(DonType::class, $don, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_edit', [
-                    'id' =>  $communaute->getId()
+            'action' => $this->generateUrl('app_gestion_don_edit', [
+                    'id' =>  $don->getId()
             ])
         ]);
 
@@ -198,12 +244,12 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_don_index');
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $donRepository->save($don, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -230,21 +276,21 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/edit.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/don/edit.html.twig', [
+            'don' => $don,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_parametre_communaute_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_don_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Don $don, DonRepository $donRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_parametre_communaute_delete'
+                'app_gestion_don_delete'
                 ,   [
-                        'id' => $communaute->getId()
+                        'id' => $don->getId()
                     ]
                 )
             )
@@ -253,9 +299,9 @@ class CommunauteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $communauteRepository->remove($communaute, true);
+            $donRepository->remove($don, true);
 
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_don_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -275,8 +321,8 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/delete.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/don/delete.html.twig', [
+            'don' => $don,
             'form' => $form,
         ]);
     }

@@ -1,47 +1,33 @@
 <?php
 
-namespace App\Controller\Parametre;
+namespace App\Controller\Gestion;
 
-use App\Entity\Communaute;
-use App\Service\FormError;
-use App\Form\CommunauteType;
+use App\Entity\Beneficiaire;
+use App\Form\BeneficiaireType;
+use App\Repository\BeneficiaireRepository;
 use App\Service\ActionRender;
-use App\Repository\CommunauteRepository;
-use Omines\DataTablesBundle\DataTableFactory;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\FormError;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\DataTableFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Doctrine\ORM\QueryBuilder;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/parametre/communaute')]
-class CommunauteController extends AbstractController
+#[Route('/gestion/beneficiaire')]
+class BeneficiaireController extends AbstractController
 {
-    #[Route('/', name: 'app_parametre_communaute_index', methods: ['GET', 'POST'])]
-    public function index(CommunauteRepository $communaute,Request $request, DataTableFactory $dataTableFactory): Response
+    #[Route('/', name: 'app_gestion_beneficiaire_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
-        // dd($communaute->findOneBySomeField());
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Nom '])
-        ->add('localite', TextColumn::class, ['label' => 'Localité','field' => 'l.libelle'])
-        ->add('categorie', TextColumn::class, ['label' => 'Catégorie','field' => 'ca.libelle'])
         ->createAdapter(ORMAdapter::class, [
-            'entity' => Communaute::class,
-            'query'=> function(QueryBuilder $req){
-              $req->select('c,l,ca')
-                  ->from(Communaute::class,'c')
-                  ->join('c.localite', 'l')
-                  ->join('c.categorie', 'ca')
-                //   ->join('c.pointFocals','p')
-                ;
-            }
+            'entity' => Beneficiaire::class,
         ])
-
-        ->setName('dt_app_parametre_communaute');
+        ->setName('dt_app_gestion_beneficiaire');
 
         $renders = [
             'edit' =>  new ActionRender(function () {
@@ -68,14 +54,14 @@ class CommunauteController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, Communaute $context) use ($renders) {
+                , 'render' => function ($value, Beneficiaire $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'edit' => [
-                            'url' => $this->generateUrl('app_parametre_communaute_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_beneficiaire_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -83,7 +69,7 @@ class CommunauteController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_parametre_communaute_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_beneficiaire_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-main']
@@ -104,19 +90,19 @@ class CommunauteController extends AbstractController
             return $table->getResponse();
         }
 
-        
-        return $this->render('parametre/communaute/index.html.twig', [
+
+        return $this->render('gestion/beneficiaire/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_parametre_communaute_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_beneficiaire_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, BeneficiaireRepository $beneficiaireRepository, FormError $formError): Response
     {
-        $communaute = new Communaute();
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $beneficiaire = new Beneficiaire();
+        $form = $this->createForm(BeneficiaireType::class, $beneficiaire, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_new')
+            'action' => $this->generateUrl('app_gestion_beneficiaire_new')
         ]);
         $form->handleRequest($request);
 
@@ -127,14 +113,14 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_beneficiaire_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $beneficiaireRepository->save($beneficiaire, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -163,28 +149,28 @@ class CommunauteController extends AbstractController
 
         }
 
-        return $this->renderForm('parametre/communaute/new.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/beneficiaire/new.html.twig', [
+            'beneficiaire' => $beneficiaire,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_parametre_communaute_show', methods: ['GET'])]
-    public function show(Communaute $communaute): Response
+    #[Route('/{id}/show', name: 'app_gestion_beneficiaire_show', methods: ['GET'])]
+    public function show(Beneficiaire $beneficiaire): Response
     {
-        return $this->render('parametre/communaute/show.html.twig', [
-            'communaute' => $communaute,
+        return $this->render('gestion/beneficiaire/show.html.twig', [
+            'beneficiaire' => $beneficiaire,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_parametre_communaute_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_beneficiaire_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Beneficiaire $beneficiaire, BeneficiaireRepository $beneficiaireRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $form = $this->createForm(BeneficiaireType::class, $beneficiaire, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_edit', [
-                    'id' =>  $communaute->getId()
+            'action' => $this->generateUrl('app_gestion_beneficiaire_edit', [
+                    'id' =>  $beneficiaire->getId()
             ])
         ]);
 
@@ -198,12 +184,12 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_beneficiaire_index');
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $beneficiaireRepository->save($beneficiaire, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -230,21 +216,21 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/edit.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/beneficiaire/edit.html.twig', [
+            'beneficiaire' => $beneficiaire,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_parametre_communaute_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_beneficiaire_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Beneficiaire $beneficiaire, BeneficiaireRepository $beneficiaireRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_parametre_communaute_delete'
+                'app_gestion_beneficiaire_delete'
                 ,   [
-                        'id' => $communaute->getId()
+                        'id' => $beneficiaire->getId()
                     ]
                 )
             )
@@ -253,9 +239,9 @@ class CommunauteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $communauteRepository->remove($communaute, true);
+            $beneficiaireRepository->remove($beneficiaire, true);
 
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_beneficiaire_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -275,8 +261,8 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/delete.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/beneficiaire/delete.html.twig', [
+            'beneficiaire' => $beneficiaire,
             'form' => $form,
         ]);
     }

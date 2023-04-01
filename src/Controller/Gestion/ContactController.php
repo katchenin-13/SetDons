@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Controller\Parametre;
+namespace App\Controller\Gestion;
 
-use App\Entity\Communaute;
+use App\Entity\Contact;
+use App\Form\ContactType;
 use App\Service\FormError;
-use App\Form\CommunauteType;
 use App\Service\ActionRender;
-use App\Repository\CommunauteRepository;
+use Doctrine\ORM\QueryBuilder;
+use App\Repository\ContactRepository;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -14,34 +15,31 @@ use Omines\DataTablesBundle\Column\TextColumn;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/parametre/communaute')]
-class CommunauteController extends AbstractController
+#[Route('/gestion/contact')]
+class ContactController extends AbstractController
 {
-    #[Route('/', name: 'app_parametre_communaute_index', methods: ['GET', 'POST'])]
-    public function index(CommunauteRepository $communaute,Request $request, DataTableFactory $dataTableFactory): Response
+    #[Route('/', name: 'app_gestion_contact_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
-        // dd($communaute->findOneBySomeField());
         $table = $dataTableFactory->create()
-        ->add('libelle', TextColumn::class, ['label' => 'Nom '])
-        ->add('localite', TextColumn::class, ['label' => 'Localité','field' => 'l.libelle'])
-        ->add('categorie', TextColumn::class, ['label' => 'Catégorie','field' => 'ca.libelle'])
+        ->add('nom', TextColumn::class, ['label' => 'Nom et Prenom'])
+        ->add('fonction', TextColumn::class, ['label' => 'Fontion'])
+        ->add('numero', TextColumn::class, ['label' => 'Numéro'])
+        ->add('email', TextColumn::class, ['label' => 'Email'])
+        ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'co.libelle'])
         ->createAdapter(ORMAdapter::class, [
-            'entity' => Communaute::class,
+            'entity' => Contact::class,
             'query'=> function(QueryBuilder $req){
-              $req->select('c,l,ca')
-                  ->from(Communaute::class,'c')
-                  ->join('c.localite', 'l')
-                  ->join('c.categorie', 'ca')
-                //   ->join('c.pointFocals','p')
+              $req->select('c,co')
+                  ->from(Contact::class,'c')
+                  ->join('c.communaute', 'co')
                 ;
             }
         ])
-
-        ->setName('dt_app_parametre_communaute');
+        ->setName('dt_app_gestion_contact');
 
         $renders = [
             'edit' =>  new ActionRender(function () {
@@ -68,14 +66,14 @@ class CommunauteController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, Communaute $context) use ($renders) {
+                , 'render' => function ($value, Contact $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'edit' => [
-                            'url' => $this->generateUrl('app_parametre_communaute_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_contact_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -83,7 +81,7 @@ class CommunauteController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_parametre_communaute_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_contact_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-main']
@@ -104,19 +102,19 @@ class CommunauteController extends AbstractController
             return $table->getResponse();
         }
 
-        
-        return $this->render('parametre/communaute/index.html.twig', [
+
+        return $this->render('gestion/contact/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_parametre_communaute_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_contact_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ContactRepository $contactRepository, FormError $formError): Response
     {
-        $communaute = new Communaute();
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_new')
+            'action' => $this->generateUrl('app_gestion_contact_new')
         ]);
         $form->handleRequest($request);
 
@@ -127,14 +125,14 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_contact_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $contactRepository->save($contact, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -163,28 +161,28 @@ class CommunauteController extends AbstractController
 
         }
 
-        return $this->renderForm('parametre/communaute/new.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/contact/new.html.twig', [
+            'contact' => $contact,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_parametre_communaute_show', methods: ['GET'])]
-    public function show(Communaute $communaute): Response
+    #[Route('/{id}/show', name: 'app_gestion_contact_show', methods: ['GET'])]
+    public function show(Contact $contact): Response
     {
-        return $this->render('parametre/communaute/show.html.twig', [
-            'communaute' => $communaute,
+        return $this->render('gestion/contact/show.html.twig', [
+            'contact' => $contact,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_parametre_communaute_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_contact_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Contact $contact, ContactRepository $contactRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(CommunauteType::class, $communaute, [
+        $form = $this->createForm(ContactType::class, $contact, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_communaute_edit', [
-                    'id' =>  $communaute->getId()
+            'action' => $this->generateUrl('app_gestion_contact_edit', [
+                    'id' =>  $contact->getId()
             ])
         ]);
 
@@ -198,12 +196,12 @@ class CommunauteController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_contact_index');
 
 
             if ($form->isValid()) {
 
-                $communauteRepository->save($communaute, true);
+                $contactRepository->save($contact, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -230,21 +228,21 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/edit.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/contact/edit.html.twig', [
+            'contact' => $contact,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_parametre_communaute_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_contact_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Contact $contact, ContactRepository $contactRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_parametre_communaute_delete'
+                'app_gestion_contact_delete'
                 ,   [
-                        'id' => $communaute->getId()
+                        'id' => $contact->getId()
                     ]
                 )
             )
@@ -253,9 +251,9 @@ class CommunauteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $communauteRepository->remove($communaute, true);
+            $contactRepository->remove($contact, true);
 
-            $redirect = $this->generateUrl('app_parametre_communaute_index');
+            $redirect = $this->generateUrl('app_gestion_contact_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -275,8 +273,8 @@ class CommunauteController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/communaute/delete.html.twig', [
-            'communaute' => $communaute,
+        return $this->renderForm('gestion/contact/delete.html.twig', [
+            'contact' => $contact,
             'form' => $form,
         ]);
     }
