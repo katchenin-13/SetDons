@@ -2,51 +2,32 @@
 
 namespace App\Controller\Gestion;
 
-use App\Entity\Audience;
-use App\Form\AudienceType;
-use App\Service\FormError;
+use App\Entity\Emailpf;
+use App\Form\EmailpfType;
+use App\Repository\EmailpfRepository;
 use App\Service\ActionRender;
-use Doctrine\ORM\QueryBuilder;
-use App\Repository\AudienceRepository;
-use Omines\DataTablesBundle\DataTableFactory;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\FormError;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\DataTableFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/gestion/audience')]
-class AudienceController extends AbstractController
+#[Route('/gestion/emailpf')]
+class EmailpfController extends AbstractController
 {
-    #[Route('/', name: 'app_gestion_audience_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_gestion_emailpf_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-        ->add('daterencontre', DateTimeColumn::class, [
-            'label' => 'Date de la rencontre',
-              "format" => 'Y-m-d'
-         ])
-        ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'co.libelle'])
-        ->add('nomchef', TextColumn::class, ['label' => 'Nom du chef'])
-        ->add('numero', TextColumn::class, ['label' => 'Numéro'])
-        ->add('motif', TextColumn::class, ['label' => 'Motif'])
-
-        
-        // ->add('email', TextColumn::class, ['label' => 'Email'])
-
         ->createAdapter(ORMAdapter::class, [
-            'entity' => Audience::class,
-            'query'=> function(QueryBuilder $req){
-              $req->select('a,co')
-                  ->from(Audience::class,'a')
-                  ->join('a.communaute', 'co')
-                ;
-            }
+            'entity' => Emailpf::class,
         ])
-        ->setName('dt_app_gestion_audience');
+        ->setName('dt_app_gestion_emailpf');
 
         $renders = [
             'edit' =>  new ActionRender(function () {
@@ -73,14 +54,14 @@ class AudienceController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, Audience $context) use ($renders) {
+                , 'render' => function ($value, Emailpf $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'edit' => [
-                            'url' => $this->generateUrl('app_gestion_audience_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_emailpf_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -88,7 +69,7 @@ class AudienceController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_gestion_audience_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_emailpf_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-main']
@@ -110,18 +91,18 @@ class AudienceController extends AbstractController
         }
 
 
-        return $this->render('gestion/audience/index.html.twig', [
+        return $this->render('gestion/emailpf/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_gestion_audience_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AudienceRepository $audienceRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_emailpf_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EmailpfRepository $emailpfRepository, FormError $formError): Response
     {
-        $audience = new Audience();
-        $form = $this->createForm(AudienceType::class, $audience, [
+        $emailpf = new Emailpf();
+        $form = $this->createForm(EmailpfType::class, $emailpf, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestion_audience_new')
+            'action' => $this->generateUrl('app_gestion_emailpf_new')
         ]);
         $form->handleRequest($request);
 
@@ -132,14 +113,14 @@ class AudienceController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestion_audience_index');
+            $redirect = $this->generateUrl('app_gestion_emailpf_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $audienceRepository->save($audience, true);
+                $emailpfRepository->save($emailpf, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -168,28 +149,28 @@ class AudienceController extends AbstractController
 
         }
 
-        return $this->renderForm('gestion/audience/new.html.twig', [
-            'audience' => $audience,
+        return $this->renderForm('gestion/emailpf/new.html.twig', [
+            'emailpf' => $emailpf,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_gestion_audience_show', methods: ['GET'])]
-    public function show(Audience $audience): Response
+    #[Route('/{id}/show', name: 'app_gestion_emailpf_show', methods: ['GET'])]
+    public function show(Emailpf $emailpf): Response
     {
-        return $this->render('gestion/audience/show.html.twig', [
-            'audience' => $audience,
+        return $this->render('gestion/emailpf/show.html.twig', [
+            'emailpf' => $emailpf,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_gestion_audience_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Audience $audience, AudienceRepository $audienceRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_emailpf_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Emailpf $emailpf, EmailpfRepository $emailpfRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(AudienceType::class, $audience, [
+        $form = $this->createForm(EmailpfType::class, $emailpf, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestion_audience_edit', [
-                    'id' =>  $audience->getId()
+            'action' => $this->generateUrl('app_gestion_emailpf_edit', [
+                    'id' =>  $emailpf->getId()
             ])
         ]);
 
@@ -203,12 +184,12 @@ class AudienceController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestion_audience_index');
+            $redirect = $this->generateUrl('app_gestion_emailpf_index');
 
 
             if ($form->isValid()) {
 
-                $audienceRepository->save($audience, true);
+                $emailpfRepository->save($emailpf, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -235,21 +216,21 @@ class AudienceController extends AbstractController
             }
         }
 
-        return $this->renderForm('gestion/audience/edit.html.twig', [
-            'audience' => $audience,
+        return $this->renderForm('gestion/emailpf/edit.html.twig', [
+            'emailpf' => $emailpf,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_gestion_audience_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Audience $audience, AudienceRepository $audienceRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_emailpf_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Emailpf $emailpf, EmailpfRepository $emailpfRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_gestion_audience_delete'
+                'app_gestion_emailpf_delete'
                 ,   [
-                        'id' => $audience->getId()
+                        'id' => $emailpf->getId()
                     ]
                 )
             )
@@ -258,9 +239,9 @@ class AudienceController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $audienceRepository->remove($audience, true);
+            $emailpfRepository->remove($emailpf, true);
 
-            $redirect = $this->generateUrl('app_gestion_audience_index');
+            $redirect = $this->generateUrl('app_gestion_emailpf_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -280,8 +261,8 @@ class AudienceController extends AbstractController
             }
         }
 
-        return $this->renderForm('gestion/audience/delete.html.twig', [
-            'audience' => $audience,
+        return $this->renderForm('gestion/emailpf/delete.html.twig', [
+            'emailpf' => $emailpf,
             'form' => $form,
         ]);
     }

@@ -55,8 +55,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Communaute::class)]
     private Collection $communautes;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PointFocal::class)]
-    private Collection $pointFocals;
+    
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Beneficiaire::class)]
     private Collection $beneficiaires;
@@ -85,13 +84,21 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\OneToMany(mappedBy: 'Utilisateur', targetEntity: Localite::class)]
     private Collection $localites;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Nompf::class)]
+    private Collection $nompfs;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Numeropf::class)]
+    private Collection $numeropfs;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Emailpf::class)]
+    private Collection $emailpfs;
+
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->typedons = new ArrayCollection();
         $this->communautes = new ArrayCollection();
-        $this->pointFocals = new ArrayCollection();
         $this->beneficiaires = new ArrayCollection();
         $this->dons = new ArrayCollection();
         $this->fieldons = new ArrayCollection();
@@ -101,6 +108,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
         $this->contacts = new ArrayCollection();
         $this->audiences = new ArrayCollection();
         $this->localites = new ArrayCollection();
+        $this->nompfs = new ArrayCollection();
+        $this->numeropfs = new ArrayCollection();
+        $this->emailpfs = new ArrayCollection();
        
     }
 
@@ -516,36 +526,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     }
 
     /**
-     * @return Collection<int, PointFocal>
-     */
-    public function getPointFocals(): Collection
-    {
-        return $this->pointFocals;
-    }
-
-    public function addPointFocal(PointFocal $pointFocal): self
-    {
-        if (!$this->pointFocals->contains($pointFocal)) {
-            $this->pointFocals->add($pointFocal);
-            $pointFocal->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removePointFocal(PointFocal $pointFocal): self
-    {
-        if ($this->pointFocals->removeElement($pointFocal)) {
-            // set the owning side to null (unless already changed)
-            if ($pointFocal->getUtilisateur() === $this) {
-                $pointFocal->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Beneficiaire>
      */
     public function getBeneficiaires(): Collection
@@ -809,6 +789,96 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
             // set the owning side to null (unless already changed)
             if ($localite->getUtilisateur() === $this) {
                 $localite->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nompf>
+     */
+    public function getNompfs(): Collection
+    {
+        return $this->nompfs;
+    }
+
+    public function addNompf(Nompf $nompf): self
+    {
+        if (!$this->nompfs->contains($nompf)) {
+            $this->nompfs->add($nompf);
+            $nompf->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNompf(Nompf $nompf): self
+    {
+        if ($this->nompfs->removeElement($nompf)) {
+            // set the owning side to null (unless already changed)
+            if ($nompf->getUtilisateur() === $this) {
+                $nompf->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Numeropf>
+     */
+    public function getNumeropfs(): Collection
+    {
+        return $this->numeropfs;
+    }
+
+    public function addNumeropf(Numeropf $numeropf): self
+    {
+        if (!$this->numeropfs->contains($numeropf)) {
+            $this->numeropfs->add($numeropf);
+            $numeropf->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNumeropf(Numeropf $numeropf): self
+    {
+        if ($this->numeropfs->removeElement($numeropf)) {
+            // set the owning side to null (unless already changed)
+            if ($numeropf->getUtilisateur() === $this) {
+                $numeropf->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emailpf>
+     */
+    public function getEmailpfs(): Collection
+    {
+        return $this->emailpfs;
+    }
+
+    public function addEmailpf(Emailpf $emailpf): self
+    {
+        if (!$this->emailpfs->contains($emailpf)) {
+            $this->emailpfs->add($emailpf);
+            $emailpf->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmailpf(Emailpf $emailpf): self
+    {
+        if ($this->emailpfs->removeElement($emailpf)) {
+            // set the owning side to null (unless already changed)
+            if ($emailpf->getUtilisateur() === $this) {
+                $emailpf->setUtilisateur(null);
             }
         }
 

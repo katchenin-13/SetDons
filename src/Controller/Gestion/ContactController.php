@@ -28,7 +28,7 @@ class ContactController extends AbstractController
         ->add('nom', TextColumn::class, ['label' => 'Nom et Prenom'])
         ->add('fonction', TextColumn::class, ['label' => 'Fontion'])
         ->add('numero', TextColumn::class, ['label' => 'Numéro'])
-        ->add('email', TextColumn::class, ['label' => 'Email'])
+        // ->add('email', TextColumn::class, ['label' => 'Email'])
         ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'co.libelle'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Contact::class,

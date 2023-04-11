@@ -1,45 +1,33 @@
 <?php
 
-namespace App\Controller\Parametre;
+namespace App\Controller\Gestion;
 
-use App\Entity\PointFocal;
-use App\Service\FormError;
-use App\Form\PointFocalType;
+use App\Entity\Numeropf;
+use App\Form\NumeropfType;
+use App\Repository\NumeropfRepository;
 use App\Service\ActionRender;
-use Doctrine\ORM\QueryBuilder;
-use App\Repository\PointFocalRepository;
-use Omines\DataTablesBundle\DataTableFactory;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\FormError;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\DataTableFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/parametre/point/focal')]
-class PointFocalController extends AbstractController
+#[Route('/gestion/numeropf')]
+class NumeropfController extends AbstractController
 {
-    #[Route('/', name: 'app_parametre_point_focal_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_gestion_numeropf_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
         ->createAdapter(ORMAdapter::class, [
-            'entity' => PointFocal::class,
+            'entity' => Numeropf::class,
         ])
-        // ->createAdapter(ORMAdapter::class, [
-        //     'entity' => PointFocal::class,
-        //     'query'=> function(QueryBuilder $req){
-        //       $req->select('c,l,ca')
-        //           ->from(PointFocal::class,'c')
-        //           ->join('c.localite', 'l')
-        //           ->join('c.categorie', 'ca')
-        //           ->join('c.pointfocal','p')
-        //         ;
-        //     }
-        // ])
-        ->setName('dt_app_parametre_point_focal');
+        ->setName('dt_app_gestion_numeropf');
 
         $renders = [
             'edit' =>  new ActionRender(function () {
@@ -66,14 +54,14 @@ class PointFocalController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, PointFocal $context) use ($renders) {
+                , 'render' => function ($value, Numeropf $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'edit' => [
-                            'url' => $this->generateUrl('app_parametre_point_focal_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_numeropf_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -81,7 +69,7 @@ class PointFocalController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_parametre_point_focal_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_numeropf_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-main']
@@ -103,18 +91,18 @@ class PointFocalController extends AbstractController
         }
 
 
-        return $this->render('parametre/point_focal/index.html.twig', [
+        return $this->render('gestion/numeropf/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_parametre_point_focal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PointFocalRepository $pointFocalRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_numeropf_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, NumeropfRepository $numeropfRepository, FormError $formError): Response
     {
-        $pointFocal = new PointFocal();
-        $form = $this->createForm(PointFocalType::class, $pointFocal, [
+        $numeropf = new Numeropf();
+        $form = $this->createForm(NumeropfType::class, $numeropf, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_point_focal_new')
+            'action' => $this->generateUrl('app_gestion_numeropf_new')
         ]);
         $form->handleRequest($request);
 
@@ -125,14 +113,14 @@ class PointFocalController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_point_focal_index');
+            $redirect = $this->generateUrl('app_gestion_numeropf_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $pointFocalRepository->save($pointFocal, true);
+                $numeropfRepository->save($numeropf, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -161,28 +149,28 @@ class PointFocalController extends AbstractController
 
         }
 
-        return $this->renderForm('parametre/point_focal/new.html.twig', [
-            'point_focal' => $pointFocal,
+        return $this->renderForm('gestion/numeropf/new.html.twig', [
+            'numeropf' => $numeropf,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_parametre_point_focal_show', methods: ['GET'])]
-    public function show(PointFocal $pointFocal): Response
+    #[Route('/{id}/show', name: 'app_gestion_numeropf_show', methods: ['GET'])]
+    public function show(Numeropf $numeropf): Response
     {
-        return $this->render('parametre/point_focal/show.html.twig', [
-            'point_focal' => $pointFocal,
+        return $this->render('gestion/numeropf/show.html.twig', [
+            'numeropf' => $numeropf,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_parametre_point_focal_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, PointFocal $pointFocal, PointFocalRepository $pointFocalRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_numeropf_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Numeropf $numeropf, NumeropfRepository $numeropfRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(PointFocalType::class, $pointFocal, [
+        $form = $this->createForm(NumeropfType::class, $numeropf, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_parametre_point_focal_edit', [
-                    'id' =>  $pointFocal->getId()
+            'action' => $this->generateUrl('app_gestion_numeropf_edit', [
+                    'id' =>  $numeropf->getId()
             ])
         ]);
 
@@ -196,12 +184,12 @@ class PointFocalController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_parametre_point_focal_index');
+            $redirect = $this->generateUrl('app_gestion_numeropf_index');
 
 
             if ($form->isValid()) {
 
-                $pointFocalRepository->save($pointFocal, true);
+                $numeropfRepository->save($numeropf, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -228,21 +216,21 @@ class PointFocalController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/point_focal/edit.html.twig', [
-            'point_focal' => $pointFocal,
+        return $this->renderForm('gestion/numeropf/edit.html.twig', [
+            'numeropf' => $numeropf,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_parametre_point_focal_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, PointFocal $pointFocal, PointFocalRepository $pointFocalRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_numeropf_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Numeropf $numeropf, NumeropfRepository $numeropfRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_parametre_point_focal_delete'
+                'app_gestion_numeropf_delete'
                 ,   [
-                        'id' => $pointFocal->getId()
+                        'id' => $numeropf->getId()
                     ]
                 )
             )
@@ -251,9 +239,9 @@ class PointFocalController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $pointFocalRepository->remove($pointFocal, true);
+            $numeropfRepository->remove($numeropf, true);
 
-            $redirect = $this->generateUrl('app_parametre_point_focal_index');
+            $redirect = $this->generateUrl('app_gestion_numeropf_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -273,8 +261,8 @@ class PointFocalController extends AbstractController
             }
         }
 
-        return $this->renderForm('parametre/point_focal/delete.html.twig', [
-            'point_focal' => $pointFocal,
+        return $this->renderForm('gestion/numeropf/delete.html.twig', [
+            'numeropf' => $numeropf,
             'form' => $form,
         ]);
     }

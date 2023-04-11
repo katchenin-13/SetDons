@@ -44,7 +44,7 @@
                 <div class="card-body py-5">
                        <div class="row doc-container23">
                             <div class="col-md-5">{{ form_row(form.dateremise) }}</div>
-                            <div class="col-md-5">{{ form_row(form.remispar) }}</div>
+                            <div class="col-md-5">{{ form_row(form.remispar,{'attr':{'class':'remise'}}) }}</div>
                             <div class="col-md-2">{{ form_row(form.promesse,{'attr':{'class':'promesse'}}) }} </div>
                       </div>   
                 </div>
@@ -94,24 +94,36 @@
         
         $(document).ready(function() {
             $('.promesse').click(function() {
-                const source = document.getElementsByClassName("naturedon");
-                const source1 = document.getElementsByClassName('qte');
+                
                 if (this.checked) {
-                    //this.value = 1;
-                   
-                    source.disabled = true;
-                    source1.disabled = true;
+                  
+                    $("input.remise").prop('disabled', true);
                     console.log(this.value);
                 }
                 else {
-                    //this.value=0;
-                    source.disabled = false;
-                    source1.disabled = false;
-                    console.log("njjjj");
+                    $("input.remise").prop('disabled', false);
+                    console.log(this.value);
+                    
                 }
             });
         });
-
+ {# $(document).ready(function() {
+            $('.promesse').click(function() {
+                
+                if (this.checked) {
+                  
+                    $("input.qte").prop('disabled', true);
+                    $("input.naturedon").prop('disabled', true);
+                    console.log(this.value);
+                }
+                else {
+                    $("input.qte").prop('disabled', false);
+                    $("input.naturedon").prop('disabled', false);
+                    console.log(this.value);
+                    
+                }
+            });
+        }); #}
 
         $(function () {
 
@@ -161,7 +173,8 @@
 
 
             }
-
+            
+            
 
             function addDeleteLink($prototype) {
 

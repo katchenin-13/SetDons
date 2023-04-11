@@ -1,7 +1,7 @@
 {% block page_content %}
     {% form_theme form 'widget/fields-block.html.twig' %}
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Création PointFocal</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modification Numeropf</h5>
         <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
             <span class="svg-icon svg-icon-2x text-white">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,11 +24,11 @@
     {{ form_end(form) }}
 {% endblock %}
 
-{% block java %}
+{% block javascripts_inline %}
     <script>
         $(function () {
             init_select2('select');
-        });
-       
+        }); 
+        
     </script>
 {% endblock %}

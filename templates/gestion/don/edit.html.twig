@@ -89,6 +89,30 @@
         init_select2('select');
     });
 
+
+ $(document).ready(function() {
+        $('.promesse').click(function() {
+            
+            if (this.checked) {
+              
+                $("input.qte").prop('disabled', true);
+               $("input.naturedon").prop('disabled', true);
+
+                //$("input.qte").attr('disabled');
+                //$("input.naturedon").attr('disabled');
+                console.log(this.value);
+            }
+            else {
+                $("input.qte").prop('disabled', false);
+                $("input.naturedon").prop('disabled', false);
+                //$("input.qte").removeAttr('disabled',);
+                //$("input.naturedon").removeAttr('disabled');
+                console.log(this.value);
+                
+            }
+        });
+    }); 
+
     $(function () {
 
       
@@ -100,6 +124,24 @@
         const $addLink = $('.add-ligne');
 
         $addLink.click(function(e) {
+
+           if (('.promesse').checked) {
+                    
+                  $("input.qte").prop('disabled', true);
+                  $("input.naturedon").prop('disabled', true);
+
+                    //$("input.qte").attr('disabled');
+                   //$("input.naturedon").attr('disabled');
+                        console.log(this.value);
+                    }
+                    else {
+                        $("input.qte").prop('disabled', false);
+                        $("input.naturedon").prop('disabled', false);
+                        //$("input.qte").removeAttr('disabled',);
+                        //$("input.naturedon").removeAttr('disabled');
+                        console.log(this.value);
+                        
+                    }
 
             addLine($container);
 
@@ -156,7 +198,7 @@
             $deleteLink.click(function(e) {
                 const $parent = $(this).closest('.row-line');
                 $parent.remove();
-
+                
 
                 if (index > 0) {
                     index -= 1;

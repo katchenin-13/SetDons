@@ -5,8 +5,6 @@ namespace App\Form;
 use App\Entity\Localite;
 use App\Entity\Categorie;
 use App\Entity\Communaute;
-use App\Entity\PointFocal;
-use App\Form\PointFocalType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -70,8 +68,8 @@ class CommunauteType extends AbstractType
                 ])
           
 
-            ->add('pointFocals', CollectionType::class, [
-                'entry_type' => PointFocalType::class,
+            ->add('nompfs', CollectionType::class, [
+                'entry_type' => NompfType::class,
                 'entry_options' => [
                     'label' => false,
                 ],
@@ -81,6 +79,28 @@ class CommunauteType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 ])
+            ->add('numeropfs',CollectionType::class, [
+                    'entry_type' => NumeropfType::class,
+                    'entry_options' => [
+                        'label' => false,
+                    ],
+                    'allow_add' => true,
+                    'label' => false,
+                    'by_reference' => false,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    ])
+            ->add('emailpfs', CollectionType::class, [
+                        'entry_type' => EmailpfType::class,
+                        'entry_options' => [
+                            'label' => false,
+                        ],
+                        'allow_add' => true,
+                        'label' => false,
+                        'by_reference' => false,
+                        'allow_delete' => true,
+                        'prototype' => true,
+                        ])
                 
         
             // ->add('utilisateur')

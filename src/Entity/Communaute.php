@@ -56,8 +56,17 @@ class Communaute
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
 
-     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: PointFocal::class,orphanRemoval: true, cascade:['persist'])]
-     private Collection $pointFocals;
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Nompf::class,orphanRemoval: true, cascade:['persist'])]
+    private Collection $nompfs;
+
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Numeropf::class,orphanRemoval: true, cascade:['persist'])]
+    private Collection $numeropfs;
+
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Emailpf::class,orphanRemoval: true, cascade:['persist'])]
+    private Collection $emailpfs;
+
+    //  #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: PointFocal::class,orphanRemoval: true, cascade:['persist'])]
+    //  private Collection $pointFocals;
 
     
 
@@ -68,7 +77,10 @@ class Communaute
         $this->rapportmissions = new ArrayCollection();
         $this->contacts = new ArrayCollection();
         $this->audiences = new ArrayCollection();
-        $this->pointFocals = new ArrayCollection();
+        // $this->pointFocals = new ArrayCollection();
+        $this->nompfs = new ArrayCollection();
+        $this->numeropfs = new ArrayCollection();
+        $this->emailpfs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -292,30 +304,120 @@ class Communaute
         return $this;
     }
 
+    // /**
+    //  * @return Collection<int, PointFocal>
+    //  */
+    // public function getPointFocals(): Collection
+    // {
+    //     return $this->pointFocals;
+    // }
+
+    // public function addPointFocal(PointFocal $pointFocal): self
+    // {
+    //     if (!$this->pointFocals->contains($pointFocal)) {
+    //         $this->pointFocals->add($pointFocal);
+    //         $pointFocal->setCommunaute($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removePointFocal(PointFocal $pointFocal): self
+    // {
+    //     if ($this->pointFocals->removeElement($pointFocal)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($pointFocal->getCommunaute() === $this) {
+    //             $pointFocal->setCommunaute(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
     /**
-     * @return Collection<int, PointFocal>
+     * @return Collection<int, Nompf>
      */
-    public function getPointFocals(): Collection
+    public function getNompfs(): Collection
     {
-        return $this->pointFocals;
+        return $this->nompfs;
     }
 
-    public function addPointFocal(PointFocal $pointFocal): self
+    public function addNompf(Nompf $nompf): self
     {
-        if (!$this->pointFocals->contains($pointFocal)) {
-            $this->pointFocals->add($pointFocal);
-            $pointFocal->setCommunaute($this);
+        if (!$this->nompfs->contains($nompf)) {
+            $this->nompfs->add($nompf);
+            $nompf->setCommunaute($this);
         }
 
         return $this;
     }
 
-    public function removePointFocal(PointFocal $pointFocal): self
+    public function removeNompf(Nompf $nompf): self
     {
-        if ($this->pointFocals->removeElement($pointFocal)) {
+        if ($this->nompfs->removeElement($nompf)) {
             // set the owning side to null (unless already changed)
-            if ($pointFocal->getCommunaute() === $this) {
-                $pointFocal->setCommunaute(null);
+            if ($nompf->getCommunaute() === $this) {
+                $nompf->setCommunaute(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Numeropf>
+     */
+    public function getNumeropfs(): Collection
+    {
+        return $this->numeropfs;
+    }
+
+    public function addNumeropf(Numeropf $numeropf): self
+    {
+        if (!$this->numeropfs->contains($numeropf)) {
+            $this->numeropfs->add($numeropf);
+            $numeropf->setCommunaute($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNumeropf(Numeropf $numeropf): self
+    {
+        if ($this->numeropfs->removeElement($numeropf)) {
+            // set the owning side to null (unless already changed)
+            if ($numeropf->getCommunaute() === $this) {
+                $numeropf->setCommunaute(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emailpf>
+     */
+    public function getEmailpfs(): Collection
+    {
+        return $this->emailpfs;
+    }
+
+    public function addEmailpf(Emailpf $emailpf): self
+    {
+        if (!$this->emailpfs->contains($emailpf)) {
+            $this->emailpfs->add($emailpf);
+            $emailpf->setCommunaute($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmailpf(Emailpf $emailpf): self
+    {
+        if ($this->emailpfs->removeElement($emailpf)) {
+            // set the owning side to null (unless already changed)
+            if ($emailpf->getCommunaute() === $this) {
+                $emailpf->setCommunaute(null);
             }
         }
 

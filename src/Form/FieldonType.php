@@ -27,13 +27,14 @@ class FieldonType extends AbstractType
                 'choice_label' => 'libelle',
                 'multiple'     => false,
                 'expanded'     => false,
-                'placeholder' => 'Don en nature ou en espèces',
                 'attr' => ['class' => 'has-select2'],
                
             ])
+            
             ->add('qte', NumberType::class,[
                 'label' =>'Qté',
                ])
+
            ->add('naturedon', TextType::class,[
             'label' =>'Nature du don',
                ])
@@ -42,6 +43,7 @@ class FieldonType extends AbstractType
             'label' =>'Motif du don',
             'attr' => ['placeholder' => 'Motif du don']
                ])
+
            ->add('montantdon', NumberType::class,[
                 'label' =>' Montant / Valeur Estimative',
                 'attr' => ['placeholder' => ' Montant / Valeur']

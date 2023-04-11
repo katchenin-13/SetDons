@@ -5,9 +5,9 @@ namespace App\Controller\Gestion;
 use Mpdf\Tag\Dd;
 use App\Entity\Don;
 use App\Form\DonType;
-use App\Entity\Communaute;
 use App\Service\FormError;
 use App\Entity\Beneficiaire;
+use App\Repository\BeneficiaireRepository;
 use App\Service\ActionRender;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\DonRepository;
@@ -28,25 +28,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DonController extends AbstractController
 {
     #[Route('/', name: 'app_gestion_don_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+    public function index(Request $request, DataTableFactory $dataTableFactory ): Response
     {
        
         $table = $dataTableFactory->create()
 
-        // ->add('beneficiaire', TextColumn::class, ['label' => 'Motif','field' => 'b.nom'])
-        // ->add('numero', TextColumn::class, ['label' => 'Tel du béneficiare','field'=>'b.numero'])
-        // ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'b.communaute'])
-        // ->add('dateremise', DateTimeColumn::class, ['
-        // label' => 'Date de remise',
-        //  "format" => 'Y-m-d',
-        //  ])
-        //  ->add('dateremise', DateTimeColumn::class, ['
-        // label' => 'Date de remise',
-        //  "format" => 'd-m-Y'
-        //  ])
+            // ->add('Beneficiaire', TextColumn::class, ['label' => 'Motif','field' => 'b.nom'])
+            // ->add('numero', TextColumn::class, ['label' => 'Tel du béneficiare','field'=>'b.numero'])
+            // ->add('communaute', TextColumn::class, ['label' => 'Communauté','field' => 'b.communaute'])
+            ->add('dateremise', DateTimeColumn::class, [
+                'label' => 'Date de remise',
+                "format" => 'Y-m-d'
+            ])
+     
         ->add('remispar', TextColumn::class, ['label' => 'Remise par'])
         // ->add('typedon', TextColumn::class, ['label' => 'Type','field'=>'f.typedon'])
-        // ->add('montantdon', NumberColumn::class, [
+        //->add('montantdon', NumberColumn::class, [
         //     'label' => 'Montant / Valeur Estimative',
         //     'field'=>'f.montantdon',
         //     "format" => 'Y-m-d'
@@ -57,7 +54,7 @@ class DonController extends AbstractController
             'query'=> function(QueryBuilder $req){
               $req->select('d')
                   ->from(Don::class,'d')
-                //  ->join('d.beneficiaire','b')
+                //   ->join('d.Beneficiaire','b')
                 //  ->join('d.fieldon','f')
                   
                 ;

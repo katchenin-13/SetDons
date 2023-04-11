@@ -1,6 +1,6 @@
 {% block page_content %}
     <div class="modal-header">
-        <h4 class="modal-title">Détails PointFocal</h4>
+        <h4 class="modal-title">Détails Numeropf</h4>
         <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
             <span class="svg-icon svg-icon-2x text-white">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,27 +16,19 @@
         <tbody>
                             <tr>
                     <th>Id</th>
-                    <td>{{ point_focal.id }}</td>
+                    <td>{{ numeropf.id }}</td>
                 </tr>
                             <tr>
                     <th>Libelle</th>
-                    <td>{{ point_focal.libelle }}</td>
-                </tr>
-                            <tr>
-                    <th>Numeropf</th>
-                    <td>{{ point_focal.numeropf }}</td>
-                </tr>
-                            <tr>
-                    <th>Emailpf</th>
-                    <td>{{ point_focal.emailpf }}</td>
+                    <td>{{ numeropf.libelle }}</td>
                 </tr>
                             <tr>
                     <th>UpdatedAt</th>
-                    <td>{{ point_focal.UpdatedAt ? point_focal.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ numeropf.UpdatedAt ? numeropf.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                             <tr>
                     <th>CreatedAt</th>
-                    <td>{{ point_focal.CreatedAt ? point_focal.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ numeropf.CreatedAt ? numeropf.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                     </tbody>
     </table>

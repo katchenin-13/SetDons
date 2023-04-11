@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PointFocalRepository;
+use App\Repository\NompfRepository;
 use Doctrine\DBAL\Types\Types;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PointFocalRepository::class)]
-class PointFocal
+#[ORM\Entity(repositoryClass: NompfRepository::class)]
+class Nompf
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,26 +18,20 @@ class PointFocal
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numeropf = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $emailpf = null;
-
-    #[ORM\ManyToOne(inversedBy: 'pointFocals')]
-    #[Gedmo\Blameable(on: 'create')]
-    private ?Utilisateur $utilisateur = null;
-
-     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $UpdatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
-    
-    #[ORM\ManyToOne(inversedBy: 'pointFocals')]
-     private ?Communaute $communaute = null;
+
+    #[ORM\ManyToOne(inversedBy: 'nompfs')]
+    #[Gedmo\Blameable(on: 'create')]
+    private ?Utilisateur $utilisateur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'nompfs')]
+    private ?Communaute $communaute = null;
 
     public function getId(): ?int
     {
@@ -56,41 +50,6 @@ class PointFocal
         return $this;
     }
 
-    public function getNumeropf(): ?string
-    {
-        return $this->numeropf;
-    }
-
-    public function setNumeropf(string $numeropf): self
-    {
-        $this->numeropf = $numeropf;
-
-        return $this;
-    }
-
-    public function getEmailpf(): ?string
-    {
-        return $this->emailpf;
-    }
-
-    public function setEmailpf(string $emailpf): self
-    {
-        $this->emailpf = $emailpf;
-
-        return $this;
-    }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(?Utilisateur $utilisateur): self
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
@@ -115,6 +74,18 @@ class PointFocal
         return $this;
     }
 
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
     public function getCommunaute(): ?Communaute
     {
         return $this->communaute;
@@ -126,5 +97,4 @@ class PointFocal
 
         return $this;
     }
-
-   }
+}

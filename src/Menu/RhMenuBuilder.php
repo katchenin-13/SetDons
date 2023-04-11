@@ -36,8 +36,8 @@ class RhMenuBuilder
         }
         
         if (isset($menu[self::MODULE_NAME])) {
-            $menu->addChild('Audience', ['route' => 'app_gestion_audience_index', 'label' => 'Audience'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
-           $menu->addChild('Dons', ['route' => 'app_gestion_don_index', 'label' => 'Dons'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+            $menu->addChild('Audience', ['route' => 'app_config_audience_index', 'label' => 'Audience'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+           $menu->addChild('Dons', ['route' => 'app_config_don_index', 'label' => 'Dons'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
            $menu->addChild('Mission', ['route' => 'app_gestion_mission_index', 'label' => 'Mission'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
            $menu->addChild('Contact', ['route' => 'app_gestion_contact_index', 'label' => 'Contact'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
         }

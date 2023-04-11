@@ -129,10 +129,10 @@ class Fieldon
     }
 
  
-   public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->UpdatedAt;
-    }
+     public function getUpdatedAt(): ?\DateTimeInterface
+        {
+            return $this->UpdatedAt;
+        }
 
     public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
