@@ -32,6 +32,9 @@ class TypedonController extends AbstractController
         ->setName('dt_app_parametre_typedon');
 
         $renders = [
+            'show' =>  new ActionRender(function () {
+                return true;
+            }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -62,6 +65,13 @@ class TypedonController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
+                             'show' => [
+                            'url' => $this->generateUrl('app_parametre_typedon_show', ['id' => $value])
+                            , 'ajax' => true
+                            , 'icon' => '%icon% bi bi-eye'
+                            , 'attrs' => ['class' => 'btn-success']
+                            , 'render' => $renders['show']
+                        ],  
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_typedon_edit', ['id' => $value])
                             , 'ajax' => true
@@ -74,7 +84,7 @@ class TypedonController extends AbstractController
                             'url' => $this->generateUrl('app_parametre_typedon_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

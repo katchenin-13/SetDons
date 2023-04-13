@@ -17,12 +17,17 @@ class   DonController extends AbstractController
     {
         $modules = [
             [
-                'label' => 'Lieste des dons',
+                'label' => 'Liste des dons',
                 'icon' => 'bi bi-people',
-                'href' => $this->generateUrl('app_gestion_don_index', ['module' => 'affectation'])
+                'href' => $this->generateUrl('app_gestion_don_index', ['module' => 'don'])
+            ],
+            
+            [
+                'label' => 'Liste des blacklist',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_gestion_don_index', ['module' => 'blacklist'])
             ],
 
-            
 
 
         ];
@@ -52,15 +57,15 @@ class   DonController extends AbstractController
          */
         $parametes = [
 
-            'config' => [
+            'don' => [
                      
-                     'label' => 'hfhffgg',
+                     'label' => 'Liste des dont',
                      'id' => 'param_hhh',
                      'href' => $this->generateUrl('app_gestion_don_index')
                 ] ,
-                'rh' => [
+            'blacklist' => [
                      
-                    'label' => 'fjhhfhghhf',
+                    'label' => 'Blacklist',
                     'id' => 'param_rrr',
                     'href' => $this->generateUrl('app_gestion_don_index')
                  
@@ -68,6 +73,6 @@ class   DonController extends AbstractController
         ];
 
 
-        return $this->render('config/audience/liste.html.twig', ['links' => $parametes[$module] ?? []]);
+        return $this->render('config/don/liste.html.twig', ['links' => $parametes[$module] ?? []]);
     }
 }

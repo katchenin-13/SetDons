@@ -19,10 +19,14 @@ class   AudienceController extends AbstractController
             [
                 'label' => 'Liste des audiences',
                 'icon' => 'bi bi-people',
-                'href' => $this->generateUrl('app_gestion_audience_index', ['module' => 'affectation'])
+                'href' => $this->generateUrl('app_gestion_audience_index', ['module' => 'audience'])
             ],
 
-
+            [    
+                'label' => 'Liste des blacklist',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_gestion_audience_index', ['module' => 'blacklist'])
+            ],
         ];
 
         $breadcrumb->addItem([
@@ -50,18 +54,18 @@ class   AudienceController extends AbstractController
          */
         $parametes = [
 
-            'config' => [
+            'audience' => [
+                                'label' => 'Audience',
+                                'id' => 'param_audience',
+                                'href' => $this->generateUrl('app_gestion_audience_index')
+                            ] ,
+                
+           'blacklist' => [
                      
-                     'label' => 'Audience',
-                     'id' => 'param_audience',
-                     'href' => $this->generateUrl('app_gestion_audience_index')
-                ] ,
-                'rh' => [
-                     
-                    'label' => 'fjhhfhghhf',
-                    'id' => 'param_r',
-                    'href' => $this->generateUrl('app_gestion_audience_index')
-               ] ,
+                                'label' => 'Blacklist',
+                                'id' => 'param_r',
+                                'href' => $this->generateUrl('app_gestion_audience_index')
+                        ] ,
         ];
 
 

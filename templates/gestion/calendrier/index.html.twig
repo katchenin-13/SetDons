@@ -1,4 +1,8 @@
+{% extends 'base-layout.html.twig' %}
 
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block stylesheets %}
 <style>
     #calendrier{
@@ -6,40 +10,18 @@
         margin: auto;
     }
 </style>
-{% endblock %}
+{% endblock %} 
 
 {% block body %}
-<div class="card shadow-sm">
-    <div class="card-header card-header-sm">
-        <h3 class="card-title"> Liste des agendas</h3>
-        <div class="card-toolbar">
-            <a href="{{ path('app_gestion_agenda_new') }}" class="btn btn-main btn-sm"  
-                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
-                <i class="bi bi-plus-square text-light"></i>
-                Nouveau
-            </a>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="grid_app_gestion_agenda" class="grid-dt-wrapper">Chargement....</div>
-            </div>
-            
 
-        </div>
-    </div>
+<div id="calendrier">
 </div>
-{# <div id="calendrier">
-</div> #}
-
 {% endblock %}
 
-
 {% block java %}
-    <script src="{{ asset('assets/js/datatables.js') }}"></script>
-    <script> 
-        $(function() { 
+    {# <script src="{{ asset('assets/js/datatables.js') }}"></script>  #}
+   <script> 
+      {#    $(function() { 
               $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
                   searching: true,
                   ajaxUrl: "{{ path('app_gestion_agenda_index') }}",
@@ -47,9 +29,9 @@
                       url: asset_base_path + "/js/i18n/French.json"
                   }
               });
-        });
-
-        {# window.onload = () => {
+        }); #}
+         
+        window.onload = () => {
             let calendarElt = document.querySelector("#calendrier")
     
             let calendar = new FullCalendar.Calendar(calendarElt, {
@@ -61,7 +43,7 @@
                     center: 'title',
                     end: 'dayGridMonth,timeGridWeek'
                 },
-                events: {{ data|raw }},
+                events: {{ data|raw }}, 
                 editable: true,
                 eventResizableFromStart: true
             })
@@ -86,6 +68,6 @@
             })
     
             calendar.render()
-        } #}
+        }
     </script>
 {% endblock %}

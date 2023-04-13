@@ -1,3 +1,9 @@
+{# {% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des typedons{% endblock %}
+{% block header %}typedons{% endblock %}
+{% block breadcrumb %}{% endblock %}  #}
+
 {% block page_content %}
     <div class="modal-header">
         <h4 class="modal-title">Détails Agenda</h4>
@@ -14,27 +20,27 @@
     <div class="modal-body">
         <table class="table table-bordered">
         <tbody>
-                            <tr>
+                {# <tr>
                     <th>Id</th>
                     <td>{{ agenda.id }}</td>
-                </tr>
-                            <tr>
+                </tr> #}
+               <tr>
                     <th>Libelle</th>
                     <td>{{ agenda.libelle }}</td>
                 </tr>
-                            <tr>
+                <tr>
                     <th>Description</th>
                     <td>{{ agenda.description }}</td>
                 </tr>
-                            <tr>
+                <tr>
                     <th>UpdatedAt</th>
                     <td>{{ agenda.UpdatedAt ? agenda.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
-                            <tr>
+                <tr>
                     <th>CreatedAt</th>
                     <td>{{ agenda.CreatedAt ? agenda.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
-                    </tbody>
+        </tbody>
     </table>
     </div>
     <div class="modal-footer">

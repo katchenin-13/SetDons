@@ -44,6 +44,9 @@ class CommunauteController extends AbstractController
         ->setName('dt_app_parametre_communaute');
 
         $renders = [
+            'show' =>  new ActionRender(function () {
+                return true;
+            }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -74,6 +77,13 @@ class CommunauteController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
+                         'show' => [
+                            'url' => $this->generateUrl('app_parametre_communaute_show', ['id' => $value])
+                            , 'ajax' => true
+                            , 'icon' => '%icon% bi bi-eye'
+                            , 'attrs' => ['class' => 'btn-success']
+                            , 'render' => $renders['show']
+                        ],    
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_communaute_edit', ['id' => $value])
                             , 'ajax' => true
@@ -86,7 +96,7 @@ class CommunauteController extends AbstractController
                             'url' => $this->generateUrl('app_parametre_communaute_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

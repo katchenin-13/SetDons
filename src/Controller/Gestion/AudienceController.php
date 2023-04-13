@@ -49,13 +49,16 @@ class AudienceController extends AbstractController
         ->setName('dt_app_gestion_audience');
 
         $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+            'show' =>  new ActionRender(function () {
+               return true;
+           }),
+           'edit' =>  new ActionRender(function () {
+               return true;
+           }),
+           'delete' => new ActionRender(function () {
+               return true;
+           }),
+       ];
 
 
         $hasActions = false;
@@ -79,6 +82,13 @@ class AudienceController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
+                            'show' => [
+                                'url' => $this->generateUrl('app_gestion_audience_show', ['id' => $value])
+                                , 'ajax' => true
+                                , 'icon' => '%icon% bi bi-eye'
+                                , 'attrs' => ['class' => 'btn-success']
+                                , 'render' => $renders['edit']
+                            ],
                             'edit' => [
                             'url' => $this->generateUrl('app_gestion_audience_edit', ['id' => $value])
                             , 'ajax' => true
@@ -91,7 +101,7 @@ class AudienceController extends AbstractController
                             'url' => $this->generateUrl('app_gestion_audience_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

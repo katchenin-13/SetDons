@@ -24,12 +24,25 @@ class AgendaController extends AbstractController
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
+        ->add('libelle', TextColumn::class, ['label' => 'Nom et Libéllé'])
+        ->add('description', TextColumn::class, ['label' => 'Description'])
+        ->add('start', DateTimeColumn::class, [
+            'label' => 'Date de debut',
+            "format" => 'Y-m-d'
+        ])
+        ->add('end', DateTimeColumn::class, [
+            'label' => 'Date de fin',
+            "format" => 'Y-m-d'
+        ])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Agenda::class,
         ])
         ->setName('dt_app_gestion_agenda');
 
         $renders = [
+             'show' =>  new ActionRender(function () {
+                return true;
+            }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -60,6 +73,13 @@ class AgendaController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
+                            'show' => [
+                                'url' => $this->generateUrl('app_gestion_agenda_show', ['id' => $value])
+                                , 'ajax' => true
+                                , 'icon' => '%icon% bi bi-eye'
+                                , 'attrs' => ['class' => 'btn-success']
+                                , 'render' => $renders['show']
+                            ],
                             'edit' => [
                             'url' => $this->generateUrl('app_gestion_agenda_edit', ['id' => $value])
                             , 'ajax' => true
@@ -72,7 +92,7 @@ class AgendaController extends AbstractController
                             'url' => $this->generateUrl('app_gestion_agenda_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]
@@ -93,6 +113,34 @@ class AgendaController extends AbstractController
 
         return $this->render('gestion/agenda/index.html.twig', [
             'datatable' => $table
+        ]);
+    }
+
+    #[Route('/gestion/calendrier', name: 'app_gestion_calendrier')]
+    public function CalendrierShow(AgendaRepository $agendaRepository): Response
+    {
+        $events = $agendaRepository->findAll();
+
+        $rdvs = [];
+
+        foreach($events as $event){
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getLibelle(),
+                'description' => $event->getDescription(),
+                'backgroundColor' => $event->getBackgroundColor(),
+                'borderColor' => $event->getBorderColor(),
+                'textColor' => $event->getTextColor(),
+                // 'allDay' => $event->getAllDay(),
+            ];
+        }
+
+        $data = json_encode($rdvs);
+
+        return $this->render('gestion/calendrier/index.html.twig', [
+            'data' => $data,
         ]);
     }
 

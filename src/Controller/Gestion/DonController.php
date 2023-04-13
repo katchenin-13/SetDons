@@ -62,15 +62,17 @@ class DonController extends AbstractController
         ])
        
         ->setName('dt_app_gestion_don');
-        
         $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+            'show' =>  new ActionRender(function () {
+               return true;
+           }),
+           'edit' =>  new ActionRender(function () {
+               return true;
+           }),
+           'delete' => new ActionRender(function () {
+               return true;
+           }),
+       ];
 
 
         $hasActions = false;
@@ -106,7 +108,7 @@ class DonController extends AbstractController
                             'url' => $this->generateUrl('app_gestion_don_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

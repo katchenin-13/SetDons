@@ -1,4 +1,8 @@
+{% extends 'base-layout.html.twig' %}
 
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block stylesheets %}
 <style>
     #calendrier{
@@ -9,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="card shadow-sm">
+{# <div class="card shadow-sm">
     <div class="card-header card-header-sm">
         <h3 class="card-title"> Liste des agendas</h3>
         <div class="card-toolbar">
@@ -29,15 +33,15 @@
 
         </div>
     </div>
-</div>
-{# <div id="calendrier">
 </div> #}
+<div id="calendrier">
+</div>
 
 {% endblock %}
 
 
 {% block java %}
-    <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables.js') }}"></script> 
     <script> 
         $(function() { 
               $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
@@ -49,8 +53,8 @@
               });
         });
 
-        {# window.onload = () => {
-            let calendarElt = document.querySelector("#calendrier")
+        window.onload = () => {
+            let calendarElt = document.querySelector("#module0")
     
             let calendar = new FullCalendar.Calendar(calendarElt, {
                 initialView: 'timeGridWeek',
@@ -61,7 +65,7 @@
                     center: 'title',
                     end: 'dayGridMonth,timeGridWeek'
                 },
-                events: {{ data|raw }},
+                events: {{ data|raw }}, 
                 editable: true,
                 eventResizableFromStart: true
             })
@@ -86,6 +90,6 @@
             })
     
             calendar.render()
-        } #}
+        }
     </script>
 {% endblock %}

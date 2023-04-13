@@ -1,3 +1,9 @@
+{# {% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des typedons{% endblock %}
+{% block header %}typedons{% endblock %}
+{% block breadcrumb %}{% endblock %}  #}
+
 {% block page_content %}
     <div class="modal-header">
         <h4 class="modal-title">Détails Typedon</h4>
@@ -14,10 +20,10 @@
     <div class="modal-body">
         <table class="table table-bordered">
         <tbody>
-                            <tr>
+                            {# <tr>
                     <th>Id</th>
                     <td>{{ typedon.id }}</td>
-                </tr>
+                </tr> #}
                             <tr>
                     <th>Code</th>
                     <td>{{ typedon.code }}</td>
