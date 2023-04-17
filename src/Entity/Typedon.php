@@ -27,7 +27,7 @@ class Typedon
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'typedon', targetEntity: Fieldon::class)]
+    #[ORM\OneToMany(mappedBy: 'typedon', targetEntity: Fieldon::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $qte;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

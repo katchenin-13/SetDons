@@ -14,16 +14,16 @@ class   AgendaController extends AbstractController
 {
 
     #[Route(path: '/', name: 'app_config_agenda_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, Breadcrumb $breadcrumb,AgendaRepository $agendaRepository): Response
+    public function index(Request $request, Breadcrumb $breadcrumb): Response
     {
         $modules = [
-                        // [
-                        //     'label' => 'Agenda',
-                        //     'icon' => 'bi bi-people',
-                        //     'href' => $this->generateUrl('app_gestion_calendrier', ['module' => 'agenda'])
-                        // ],
                         [
-                            'label' => 'Liste des évènements',
+                            'label' => 'Liste des évènements en cour',
+                            'icon' => 'bi bi-people',
+                            'href' => $this->generateUrl('app_gestion_agenda_index', ['module' => 'agenda1'])
+                        ],
+                        [
+                            'label' => 'Liste des évènements passé',
                             'icon' => 'bi bi-people',
                             'href' => $this->generateUrl('app_gestion_agenda_index', ['module' => 'evenement'])
                         ],
@@ -58,16 +58,16 @@ class   AgendaController extends AbstractController
 
             'agenda' => [
                      
-                     'label' => 'Agenda',
+                     'label' => 'Liste des évènements en cour',
                      'id' => 'param_audience',
-                     'href' => $this->generateUrl('app_gestion_calendrier')
+                     'href' => $this->generateUrl('app_gestion_agenda_index')
                 ] ,
                 
            'evenement' => [
                      
-                    'label' => 'Liste des évènements',
+                    'label' => 'Liste des évènements passé',
                     'id' => 'param_r',
-                    'href' => $this->generateUrl('app_config_agenda_index')
+                    'href' => $this->generateUrl('app_gestion_agenda_index')
                ] ,
         ];
 

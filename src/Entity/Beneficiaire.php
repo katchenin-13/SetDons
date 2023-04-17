@@ -33,7 +33,7 @@ class Beneficiaire
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'beneficiaire', targetEntity: Don::class)]
+    #[ORM\OneToMany(mappedBy: 'beneficiaire', targetEntity: Don::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $dons;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

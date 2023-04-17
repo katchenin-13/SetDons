@@ -11,8 +11,6 @@ use App\Service\ActionRender;
 use App\Service\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\BoolColumn;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTableFactory;
 use PhpOffice\PhpSpreadsheet\IOFactory;

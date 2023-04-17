@@ -36,7 +36,7 @@ class Mission
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'mission', targetEntity: Rapportmission::class)]
+    #[ORM\OneToMany(mappedBy: 'mission', targetEntity: Rapportmission::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $rapportmissions;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

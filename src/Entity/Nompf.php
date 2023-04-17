@@ -30,7 +30,7 @@ class Nompf
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nompfs')]
+    #[ORM\ManyToOne(inversedBy: 'nompfs',)]
     private ?Communaute $communaute = null;
 
     public function getId(): ?int

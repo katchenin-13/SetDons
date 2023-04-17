@@ -40,7 +40,8 @@ class RhMenuBuilder
            $menu->addChild('Dons', ['route' => 'app_config_don_index', 'label' => 'Dons'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
            $menu->addChild('Mission', ['route' => 'app_gestion_mission_index', 'label' => 'Mission'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
            $menu->addChild('Contact', ['route' => 'app_gestion_contact_index', 'label' => 'Contact'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
-           $menu->addChild('Agenda', ['route' => 'app_config_agenda_index', 'label' => 'Agenda'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+           $menu->addChild('Agenda', ['route' =>'app_gestion_calendrier', 'label' => 'Agenda'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
+           $menu->addChild('Evenement', ['route' => 'app_config_agenda_index', 'label' => 'evenement'])->setExtra('icon', 'bi bi-arrow-up-right-circle');
         }         
 
        

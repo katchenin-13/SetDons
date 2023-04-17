@@ -56,7 +56,7 @@ class Communaute
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Nompf::class,orphanRemoval: true, cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Nompf::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $nompfs;
 
     #[ORM\OneToMany(mappedBy: 'communaute', targetEntity: Numeropf::class,orphanRemoval: true, cascade:['persist'])]

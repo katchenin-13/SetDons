@@ -28,7 +28,7 @@ class Categorie
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Communaute::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Communaute::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $communautes;
 
     // #[ORM\Column]

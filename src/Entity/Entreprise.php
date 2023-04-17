@@ -18,7 +18,7 @@ class Entreprise
     #[ORM\Column(length: 255)]
     private ?string $denomination = null;
 
-    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Employe::class)]
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Employe::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $employes;
 
     #[ORM\Column(length: 255)]

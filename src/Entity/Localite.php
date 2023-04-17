@@ -23,7 +23,7 @@ class Localite
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'localite', targetEntity: Communaute::class)]
+    #[ORM\OneToMany(mappedBy: 'localite', targetEntity: Communaute::class,orphanRemoval: true, cascade:['persist'])]
     private Collection $communautes;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -103,24 +103,24 @@ class Localite
         return $this;
     }
 
-   public function getUpdatedAt(): ?\DateTimeImmutable
+   public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->UpdatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->CreatedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
 

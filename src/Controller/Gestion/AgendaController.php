@@ -115,36 +115,8 @@ class AgendaController extends AbstractController
             'datatable' => $table
         ]);
     }
-
-    #[Route('/gestion/calendrier', name: 'app_gestion_calendrier')]
-    public function CalendrierShow(AgendaRepository $agendaRepository): Response
-    {
-        $events = $agendaRepository->findAll();
-
-        $rdvs = [];
-
-        foreach($events as $event){
-            $rdvs[] = [
-                'id' => $event->getId(),
-                'start' => $event->getStart()->format('Y-m-d H:i:s'),
-                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
-                'title' => $event->getLibelle(),
-                'description' => $event->getDescription(),
-                'backgroundColor' => $event->getBackgroundColor(),
-                'borderColor' => $event->getBorderColor(),
-                'textColor' => $event->getTextColor(),
-                // 'allDay' => $event->getAllDay(),
-            ];
-        }
-
-        $data = json_encode($rdvs);
-
-        return $this->render('gestion/calendrier/index.html.twig', [
-            'data' => $data,
-        ]);
-    }
-
-    #[Route('/new', name: 'app_gestion_agenda_new', methods: ['GET', 'POST'])]
+    
+   #[Route('/new', name: 'app_gestion_agenda_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgendaRepository $agendaRepository, FormError $formError): Response
     {
         $agenda = new Agenda();
