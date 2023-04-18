@@ -43,6 +43,47 @@ class LocaliteController extends AbstractController
             }),
         ];
 
+            // if($permission == "RS"){
+        //     $renders = [
+        //         'edit' =>  new ActionRender(function () {
+        //             return false;
+        //         }),
+        //         'delete' => new ActionRender(function () {
+        //             return false;
+        //         }),
+        //         'show' => new ActionRender(function () {
+        //             return true;
+        //         }),
+        //     ];
+
+        // }else if($permission == "CRUS"){
+        //     $renders = [
+        //         'edit' =>  new ActionRender(function () {
+        //             return true;
+        //         }),
+        //         'delete' => new ActionRender(function () {
+        //             return false;
+        //         }),
+        //         'show' => new ActionRender(function () {
+        //             return true;
+        //         }),
+        //     ];
+
+        // }else{
+        //     $renders = [
+        //         'edit' =>  new ActionRender(function () {
+        //             return true;
+        //         }),
+        //         'delete' => new ActionRender(function () {
+        //             return true;
+        //         }),
+        //         'show' => new ActionRender(function () {
+        //             return true;
+        //         }),
+        //     ];
+
+        // }
+
 
         $hasActions = false;
 

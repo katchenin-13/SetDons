@@ -41,77 +41,22 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[Assert\NotBlank(message: 'Veuillez sélectionner un employé', groups: ['Registration'])]
     private ?Employe $employe = null;
 
-    #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'utilisateurs')]
-    #[ORM\JoinTable(name: 'user_utilisateur_groupe')]
-    private Collection $groupes;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Categorie::class)]
-    private Collection $categories;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Typedon::class)]
-    private Collection $typedons;
-
-    
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Communaute::class)]
-    private Collection $communautes;
+    // #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'utilisateurs')]
+    // // #[ORM\JoinTable(name: 'user_utilisateur_groupe')]
+    // private Collection $groupe;
 
     
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Beneficiaire::class)]
-    private Collection $beneficiaires;
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Groupe $groupe = null;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Don::class)]
-    private Collection $dons;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Fieldon::class)]
-    private Collection $fieldons;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Mission::class)]
-    private Collection $missions;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Rapportmission::class)]
-    private Collection $rapportmissions;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Agenda::class)]
-    private Collection $agendas;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Contact::class)]
-    private Collection $contacts;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Audience::class)]
-    private Collection $audiences;
-
-    #[ORM\OneToMany(mappedBy: 'Utilisateur', targetEntity: Localite::class)]
-    private Collection $localites;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Nompf::class)]
-    private Collection $nompfs;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Numeropf::class)]
-    private Collection $numeropfs;
-
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Emailpf::class)]
-    private Collection $emailpfs;
 
     public function __construct()
     {
-        $this->groupes = new ArrayCollection();
-        $this->categories = new ArrayCollection();
-        $this->typedons = new ArrayCollection();
-        $this->communautes = new ArrayCollection();
-        $this->beneficiaires = new ArrayCollection();
-        $this->dons = new ArrayCollection();
-        $this->fieldons = new ArrayCollection();
-        $this->missions = new ArrayCollection();
-        $this->rapportmissions = new ArrayCollection();
-        $this->agendas = new ArrayCollection();
-        $this->contacts = new ArrayCollection();
-        $this->audiences = new ArrayCollection();
-        $this->localites = new ArrayCollection();
-        $this->nompfs = new ArrayCollection();
-        $this->numeropfs = new ArrayCollection();
-        $this->emailpfs = new ArrayCollection();
-       
+       // $this->groupes = new ArrayCollection();
+        // $this->demandes = new ArrayCollection();
+        // $this->avis = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -148,9 +93,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     {
         $roles = (array)$this->roles;
         $roles[] = 'ROLE_USER';
-        foreach ($this->getGroupes() as $group) {
+        /*foreach ($this->getGroupes() as $group) {
             $roles = array_merge($roles, $group->getRoles());
-        }       
+        } */
 
         return array_unique($roles);
     }
@@ -296,7 +241,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
         }
         return $this->hasRole('ROLE_ADMIN') || $result;
     }
-  
+
 
 
     public function hasAllRoleOnModule($roleName, $module, $controller, $child = null, $as = null)
@@ -316,6 +261,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
             if ($child) {
                 $regex .= strtoupper("_{$child}");
             }
+
             if (preg_match("/{$regex}$/", $role)) {
                 $result = true;
                 break;
@@ -401,488 +347,26 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    /**
-     * @return Collection<int, Groupe>
-     */
-    public function getGroupes(): Collection
-    {
-        return $this->groupes ?: $this->groupes = new ArrayCollection();
-    }
-
-    public function addGroupe(Groupe $groupe): self
-    {
-        if (!$this->groupes->contains($groupe)) {
-            $this->groupes->add($groupe);
-        }
-
-        return $this;
-    }
-
-    public function removeGroupe(Groupe $groupe): self
-    {
-        if ($this->groupes->removeElement($groupe)) {
-            $groupe->removeUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-
     public function getNomComplet()
     {
         return $this->getEmploye() ? $this->getEmploye()->getNomComplet(): '';
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategories(): Collection
+    
+
+    public function getGroupe(): ?Groupe
     {
-        return $this->categories;
+        return $this->groupe;
     }
 
-    public function addCategory(Categorie $category): self
+    public function setGroupe(?Groupe $groupe): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->setUtilisateur($this);
-        }
+        $this->groupe = $groupe;
 
         return $this;
     }
 
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getUtilisateur() === $this) {
-                $category->setUtilisateur(null);
-            }
-        }
 
-        return $this;
-    }
 
-    /**
-     * @return Collection<int, Typedon>
-     */
-    public function getTypedons(): Collection
-    {
-        return $this->typedons;
-    }
 
-    public function addTypedon(Typedon $typedon): self
-    {
-        if (!$this->typedons->contains($typedon)) {
-            $this->typedons->add($typedon);
-            $typedon->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTypedon(Typedon $typedon): self
-    {
-        if ($this->typedons->removeElement($typedon)) {
-            // set the owning side to null (unless already changed)
-            if ($typedon->getUtilisateur() === $this) {
-                $typedon->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-   
-
-    /**
-     * @return Collection<int, Communaute>
-     */
-    public function getCommunautes(): Collection
-    {
-        return $this->communautes;
-    }
-
-    public function addCommunaute(Communaute $communaute): self
-    {
-        if (!$this->communautes->contains($communaute)) {
-            $this->communautes->add($communaute);
-            $communaute->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommunaute(Communaute $communaute): self
-    {
-        if ($this->communautes->removeElement($communaute)) {
-            // set the owning side to null (unless already changed)
-            if ($communaute->getUtilisateur() === $this) {
-                $communaute->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Beneficiaire>
-     */
-    public function getBeneficiaires(): Collection
-    {
-        return $this->beneficiaires;
-    }
-
-    public function addBeneficiaire(Beneficiaire $beneficiaire): self
-    {
-        if (!$this->beneficiaires->contains($beneficiaire)) {
-            $this->beneficiaires->add($beneficiaire);
-            $beneficiaire->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBeneficiaire(Beneficiaire $beneficiaire): self
-    {
-        if ($this->beneficiaires->removeElement($beneficiaire)) {
-            // set the owning side to null (unless already changed)
-            if ($beneficiaire->getUtilisateur() === $this) {
-                $beneficiaire->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Don>
-     */
-    public function getDons(): Collection
-    {
-        return $this->dons;
-    }
-
-    public function addDon(Don $don): self
-    {
-        if (!$this->dons->contains($don)) {
-            $this->dons->add($don);
-            $don->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDon(Don $don): self
-    {
-        if ($this->dons->removeElement($don)) {
-            // set the owning side to null (unless already changed)
-            if ($don->getUtilisateur() === $this) {
-                $don->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Fieldon>
-     */
-    public function getFieldons(): Collection
-    {
-        return $this->fieldons;
-    }
-
-    public function addFieldon(Fieldon $fieldon): self
-    {
-        if (!$this->fieldons->contains($fieldon)) {
-            $this->fieldons->add($fieldon);
-            $fieldon->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFieldon(Fieldon $fieldon): self
-    {
-        if ($this->fieldons->removeElement($fieldon)) {
-            // set the owning side to null (unless already changed)
-            if ($fieldon->getUtilisateur() === $this) {
-                $fieldon->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Mission>
-     */
-    public function getMissions(): Collection
-    {
-        return $this->missions;
-    }
-
-    public function addMission(Mission $mission): self
-    {
-        if (!$this->missions->contains($mission)) {
-            $this->missions->add($mission);
-            $mission->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMission(Mission $mission): self
-    {
-        if ($this->missions->removeElement($mission)) {
-            // set the owning side to null (unless already changed)
-            if ($mission->getUtilisateur() === $this) {
-                $mission->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Rapportmission>
-     */
-    public function getRapportmissions(): Collection
-    {
-        return $this->rapportmissions;
-    }
-
-    public function addRapportmission(Rapportmission $rapportmission): self
-    {
-        if (!$this->rapportmissions->contains($rapportmission)) {
-            $this->rapportmissions->add($rapportmission);
-            $rapportmission->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRapportmission(Rapportmission $rapportmission): self
-    {
-        if ($this->rapportmissions->removeElement($rapportmission)) {
-            // set the owning side to null (unless already changed)
-            if ($rapportmission->getUtilisateur() === $this) {
-                $rapportmission->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Agenda>
-     */
-    public function getAgendas(): Collection
-    {
-        return $this->agendas;
-    }
-
-    public function addAgenda(Agenda $agenda): self
-    {
-        if (!$this->agendas->contains($agenda)) {
-            $this->agendas->add($agenda);
-            $agenda->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgenda(Agenda $agenda): self
-    {
-        if ($this->agendas->removeElement($agenda)) {
-            // set the owning side to null (unless already changed)
-            if ($agenda->getUtilisateur() === $this) {
-                $agenda->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Contact>
-     */
-    public function getContacts(): Collection
-    {
-        return $this->contacts;
-    }
-
-    public function addContact(Contact $contact): self
-    {
-        if (!$this->contacts->contains($contact)) {
-            $this->contacts->add($contact);
-            $contact->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContact(Contact $contact): self
-    {
-        if ($this->contacts->removeElement($contact)) {
-            // set the owning side to null (unless already changed)
-            if ($contact->getUtilisateur() === $this) {
-                $contact->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Audience>
-     */
-    public function getAudiences(): Collection
-    {
-        return $this->audiences;
-    }
-
-    public function addAudience(Audience $audience): self
-    {
-        if (!$this->audiences->contains($audience)) {
-            $this->audiences->add($audience);
-            $audience->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAudience(Audience $audience): self
-    {
-        if ($this->audiences->removeElement($audience)) {
-            // set the owning side to null (unless already changed)
-            if ($audience->getUtilisateur() === $this) {
-                $audience->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Localite>
-     */
-    public function getLocalites(): Collection
-    {
-        return $this->localites;
-    }
-
-    public function addLocalite(Localite $localite): self
-    {
-        if (!$this->localites->contains($localite)) {
-            $this->localites->add($localite);
-            $localite->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLocalite(Localite $localite): self
-    {
-        if ($this->localites->removeElement($localite)) {
-            // set the owning side to null (unless already changed)
-            if ($localite->getUtilisateur() === $this) {
-                $localite->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Nompf>
-     */
-    public function getNompfs(): Collection
-    {
-        return $this->nompfs;
-    }
-
-    public function addNompf(Nompf $nompf): self
-    {
-        if (!$this->nompfs->contains($nompf)) {
-            $this->nompfs->add($nompf);
-            $nompf->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNompf(Nompf $nompf): self
-    {
-        if ($this->nompfs->removeElement($nompf)) {
-            // set the owning side to null (unless already changed)
-            if ($nompf->getUtilisateur() === $this) {
-                $nompf->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Numeropf>
-     */
-    public function getNumeropfs(): Collection
-    {
-        return $this->numeropfs;
-    }
-
-    public function addNumeropf(Numeropf $numeropf): self
-    {
-        if (!$this->numeropfs->contains($numeropf)) {
-            $this->numeropfs->add($numeropf);
-            $numeropf->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNumeropf(Numeropf $numeropf): self
-    {
-        if ($this->numeropfs->removeElement($numeropf)) {
-            // set the owning side to null (unless already changed)
-            if ($numeropf->getUtilisateur() === $this) {
-                $numeropf->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Emailpf>
-     */
-    public function getEmailpfs(): Collection
-    {
-        return $this->emailpfs;
-    }
-
-    public function addEmailpf(Emailpf $emailpf): self
-    {
-        if (!$this->emailpfs->contains($emailpf)) {
-            $this->emailpfs->add($emailpf);
-            $emailpf->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmailpf(Emailpf $emailpf): self
-    {
-        if ($this->emailpfs->removeElement($emailpf)) {
-            // set the owning side to null (unless already changed)
-            if ($emailpf->getUtilisateur() === $this) {
-                $emailpf->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    }
+}

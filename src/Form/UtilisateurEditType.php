@@ -34,7 +34,7 @@ class UtilisateurEditType extends AbstractType
                     'ROLE_ADMIN' => 'Administrateur'
                 ]),
             ])
-            ->add('groupes', EntityType::class, [
+            ->add('groupe', EntityType::class, [
                 'label'        => 'Groupes',
                 'choice_label' => 'name',
                 'multiple'     => true,
@@ -52,7 +52,7 @@ class UtilisateurEditType extends AbstractType
                     'second_options'  => ['label' => 'Répétez le mot de passe'],
                 ]
             )
-            /*->add('employe', EntityType::class,
+            ->add('employe', EntityType::class,
             [
                 'class' => Employe::class,
                 'choice_label' => 'nomComplet',
@@ -60,7 +60,7 @@ class UtilisateurEditType extends AbstractType
                     return $er->withoutAccount();
                 }
             ]
-        )*/
+        )
         ;
     }
 

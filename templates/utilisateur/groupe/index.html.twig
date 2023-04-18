@@ -7,11 +7,13 @@
     <div class="card-header card-header-sm">
         <h3 class="card-title"> Liste</h3>
         <div class="card-toolbar">
+            {% if permition != "RS" %}
             <a href="{{ path('app_utilisateur_groupe_new') }}" class="btn btn-main btn-sm"  
                 data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
                 <i class="bi bi-plus-square text-light"></i>
                 Nouveau
             </a>
+            {% endif %}
         </div>
     </div>
     <div class="card-body">

@@ -25,16 +25,15 @@ class Groupe
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'groupes')]
-    private Collection $utilisateurs;
+    #[ORM\OneToMany(mappedBy: 'groupeUser', targetEntity: ModuleGroupePermition::class ,orphanRemoval: true, cascade:['persist'])]
+    private Collection $moduleGroupePermitions;
 
-    // #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: ElementAvis::class)]
-    // private Collection $elementAvis;
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: Utilisateur::class)]
+    private Collection $utilisateurs;
 
     public function __construct()
     {
-        $this->utilisateurs = new ArrayCollection();
-        // $this->elementAvis = new ArrayCollection();
+        $this->moduleGroupePermitions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +110,37 @@ class Groupe
     }
 
 
+
+    /**
+     * @return Collection<int, ModuleGroupePermition>
+     */
+    public function getModuleGroupePermitions(): Collection
+    {
+        return $this->moduleGroupePermitions;
+    }
+
+    public function addModuleGroupePermition(ModuleGroupePermition $moduleGroupePermition): self
+    {
+        if (!$this->moduleGroupePermitions->contains($moduleGroupePermition)) {
+            $this->moduleGroupePermitions->add($moduleGroupePermition);
+            $moduleGroupePermition->setGroupeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModuleGroupePermition(ModuleGroupePermition $moduleGroupePermition): self
+    {
+        if ($this->moduleGroupePermitions->removeElement($moduleGroupePermition)) {
+            // set the owning side to null (unless already changed)
+            if ($moduleGroupePermition->getGroupeUser() === $this) {
+                $moduleGroupePermition->setGroupeUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Utilisateur>
      */
@@ -123,7 +153,7 @@ class Groupe
     {
         if (!$this->utilisateurs->contains($utilisateur)) {
             $this->utilisateurs->add($utilisateur);
-            $utilisateur->addGroupe($this);
+            $utilisateur->setGroupe($this);
         }
 
         return $this;
@@ -131,38 +161,13 @@ class Groupe
 
     public function removeUtilisateur(Utilisateur $utilisateur): self
     {
-        $this->utilisateurs->removeElement($utilisateur);
+        if ($this->utilisateurs->removeElement($utilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($utilisateur->getGroupe() === $this) {
+                $utilisateur->setGroupe(null);
+            }
+        }
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection<int, ElementAvis>
-    //  */
-    // public function getElementAvis(): Collection
-    // {
-    //     return $this->elementAvis;
-    // }
-
-    // public function addElementAvi(ElementAvis $elementAvi): self
-    // {
-    //     if (!$this->elementAvis->contains($elementAvi)) {
-    //         $this->elementAvis->add($elementAvi);
-    //         $elementAvi->setGroupe($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeElementAvi(ElementAvis $elementAvi): self
-    // {
-    //     if ($this->elementAvis->removeElement($elementAvi)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($elementAvi->getGroupe() === $this) {
-    //             $elementAvi->setGroupe(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 }

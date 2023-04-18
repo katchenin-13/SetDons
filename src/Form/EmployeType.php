@@ -24,7 +24,7 @@ class EmployeType extends AbstractType
                 'class' => Civilite::class,
                 'choice_label' => 'code',
                 'label' => 'Civilité',
-                'attr' => ['class' => 'has-select2']
+                'attr' => ['class' => 'has-select2 form-select']
             ])
             ->add('matricule', null, ['label' => 'Matricule'])
             ->add('contact', null, ['label' => 'Contact(s)'])
@@ -35,19 +35,19 @@ class EmployeType extends AbstractType
                 'class' => Fonction::class,
                 'choice_label' => 'libelle',
                 'label' => 'Fonction',
-                'attr' => ['class' => 'has-select2']
+                'attr' => ['class' => 'has-select2 form-select']
             ])
             ->add('service', EntityType::class, [
                 'class' => Service::class,
                 'choice_label' => 'libelle',
                 'label' => 'Direction',
-                'attr' => ['class' => 'has-select2']
+                'attr' => ['class' => 'has-select2 form-select']
             ])
             ->add('entreprise', EntityType::class, [
                 'class' => Entreprise::class,
                 'choice_label' => 'denomination',
                 'label' => 'Entreprise',
-                'attr' => ['class' => 'has-select2']
+                'attr' => ['class' => 'has-select2 form-select']
             ])
             
         ;

@@ -8,6 +8,7 @@ use App\Service\FormError;
 use App\Service\ActionRender;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\ContactRepository;
+use App\Service\Menu;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -22,8 +23,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ContactController extends AbstractController
 {
     #[Route('/', name: 'app_gestion_contact_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+    public function index(Request $request, DataTableFactory $dataTableFactory,Menu $menu): Response
     {
+        $permission = $menu->getPermission()["code"];
         $table = $dataTableFactory->create()
         ->add('nom', TextColumn::class, ['label' => 'Nom et Prenom'])
         ->add('fonction', TextColumn::class, ['label' => 'Fontion'])
@@ -41,18 +43,46 @@ class ContactController extends AbstractController
         ])
         ->setName('dt_app_gestion_contact');
 
-        $renders = [
-            'show' =>  new ActionRender(function () {
-                return true;
-            }),
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+        if($permission == "RS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return false;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
 
+        }else if($permission == "CRUS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }else{
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return true;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }
 
         $hasActions = false;
 

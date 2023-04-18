@@ -7,6 +7,7 @@ use App\Form\BeneficiaireType;
 use App\Repository\BeneficiaireRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
+use App\Service\Menu;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -21,23 +22,55 @@ use Symfony\Component\Routing\Annotation\Route;
 class BeneficiaireController extends AbstractController
 {
     #[Route('/', name: 'app_gestion_beneficiaire_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+    public function index(Request $request, DataTableFactory $dataTableFactory,Menu $menu): Response
     {
+        $permission = $menu->getPermission()["code"];
         $table = $dataTableFactory->create()
         ->createAdapter(ORMAdapter::class, [
             'entity' => Beneficiaire::class,
         ])
         ->setName('dt_app_gestion_beneficiaire');
 
-        $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+        if($permission == "RS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return false;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
 
+        }else if($permission == "CRUS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }else{
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return true;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }
 
         $hasActions = false;
 

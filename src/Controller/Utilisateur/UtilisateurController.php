@@ -10,6 +10,7 @@ use App\Form\UtilisateurEditType;
 use App\Service\ActionRender;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UtilisateurRepository;
+use App\Service\Menu;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -25,8 +26,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UtilisateurController extends AbstractController
 {
     #[Route('/', name: 'app_utilisateur_utilisateur_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+    public function index(Request $request, DataTableFactory $dataTableFactory,Menu $menu): Response
     {
+        $permission = $menu->getPermission()["code"];
         $table = $dataTableFactory->create()
         ->add('username', TextColumn::class, ['label' => 'Pseudo'])
         ->add('email', TextColumn::class, ['label' => 'Email', 'field' => 'e.adresseMail'])
@@ -45,14 +47,46 @@ class UtilisateurController extends AbstractController
         ])
         ->setName('dt_app_utilisateur_utilisateur');
 
-        $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+        if($permission == "RS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return false;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }else if($permission == "CRUS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }else{
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return true;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }
 
         
         $hasActions = false;
@@ -88,7 +122,7 @@ class UtilisateurController extends AbstractController
                             'url' => $this->generateUrl('app_utilisateur_utilisateur_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ] 
@@ -108,7 +142,8 @@ class UtilisateurController extends AbstractController
 
 
         return $this->render('utilisateur/utilisateur/index.html.twig', [
-            'datatable' => $table
+            'datatable' => $table,
+            'permition' => $permission
         ]);
     }
     private UserPasswordHasherInterface $hasher;

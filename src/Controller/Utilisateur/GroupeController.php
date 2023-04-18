@@ -7,6 +7,8 @@ use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
+use App\Service\Menu;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -14,30 +16,79 @@ use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/utilisateur/groupe')]
 class GroupeController extends AbstractController
 {
-    #[Route('/', name: 'app_utilisateur_groupe_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+
+    private $security;
+
+    public function __construct(Security $security)
     {
+
+            $this->security = $security;
+
+            //dd( $security->getUser()->getGroupe()->)
+
+    }
+
+    #[Route('/', name: 'app_utilisateur_groupe_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, DataTableFactory $dataTableFactory,Menu $menu): Response
+    {
+        //dd($menu->getPermission());
+        $permission = $menu->getPermission()["code"];
+        //dd($menu->getPermission()[0]);
         $table = $dataTableFactory->create()
         ->add('name', TextColumn::class, ['label' => 'Libellé'])
         ->createAdapter(ORMAdapter::class, [
             'entity' => Groupe::class,
         ])
         ->setName('dt_app_utilisateur_groupe');
+        if($permission == "RS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return false;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
 
-        $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+        }else if($permission == "CRUS"){
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return false;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }else{
+            $renders = [
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return true;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
+
+        }
 
         
         $hasActions = false;
@@ -68,12 +119,19 @@ class GroupeController extends AbstractController
                             , 'attrs' => ['class' => 'btn-default']
                             , 'render' => $renders['edit']
                         ],
+                            'show' => [
+                                'url' => $this->generateUrl('app_utilisateur_groupe_show', ['id' => $value])
+                                , 'ajax' => true
+                                , 'icon' => '%icon% bi bi-eye'
+                                , 'attrs' => ['class' => 'btn-success']
+                                , 'render' => $renders['show']
+                            ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
                             'url' => $this->generateUrl('app_utilisateur_groupe_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ] 
@@ -93,7 +151,8 @@ class GroupeController extends AbstractController
 
 
         return $this->render('utilisateur/groupe/index.html.twig', [
-            'datatable' => $table
+            'datatable' => $table,
+            'permition' => $permission
         ]);
     }
 

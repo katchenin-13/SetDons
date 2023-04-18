@@ -8,11 +8,20 @@
     <div class="card-header card-header-sm">
         <h3 class="card-title"> Liste des communautes</h3>
         <div class="card-toolbar">
+
             <a href="{{ path('app_parametre_communaute_new') }}" class="btn btn-main btn-sm"  
                 data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
                 <i class="bi bi-plus-square text-light"></i>
                 Nouveau
             </a>
+          
+            {# {% if permition != "RS" %}
+            <a href="{{ path('app_parametre_communaute_new') }}" class="btn btn-main btn-sm"  
+                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau
+            </a>
+            {% endif %} #}
         </div>
     </div>
     <div class="card-body">

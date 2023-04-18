@@ -18,15 +18,19 @@ class Entreprise
     #[ORM\Column(length: 255)]
     private ?string $denomination = null;
 
-    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Employe::class,orphanRemoval: true, cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Employe::class)]
     private Collection $employes;
 
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: ParametreConfiguration::class)]
+    private Collection $parametreConfigurations;
+
     public function __construct()
     {
         $this->employes = new ArrayCollection();
+        $this->parametreConfigurations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,6 +88,36 @@ class Entreprise
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ParametreConfiguration>
+     */
+    public function getParametreConfigurations(): Collection
+    {
+        return $this->parametreConfigurations;
+    }
+
+    public function addParametreConfiguration(ParametreConfiguration $parametreConfiguration): self
+    {
+        if (!$this->parametreConfigurations->contains($parametreConfiguration)) {
+            $this->parametreConfigurations->add($parametreConfiguration);
+            $parametreConfiguration->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParametreConfiguration(ParametreConfiguration $parametreConfiguration): self
+    {
+        if ($this->parametreConfigurations->removeElement($parametreConfiguration)) {
+            // set the owning side to null (unless already changed)
+            if ($parametreConfiguration->getEntreprise() === $this) {
+                $parametreConfiguration->setEntreprise(null);
+            }
+        }
 
         return $this;
     }

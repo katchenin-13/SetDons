@@ -46,26 +46,26 @@ services:
         arguments:
             $renderer: '@twig.form.renderer'
 
-    App\Menu\HomeMenuBuilder:
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: home }
+    # App\Menu\HomeMenuBuilder:
+    #     arguments: ["@knp_menu.factory"]
+    #     tags:
+    #         - { name: knp_menu.menu_builder, method: createMainMenu, alias: home }
 
-    App\Menu\ConfigMenuBuilder:
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: Config }
+    # App\Menu\ConfigMenuBuilder:
+    #     arguments: ["@knp_menu.factory"]
+    #     tags:
+    #         - { name: knp_menu.menu_builder, method: createMainMenu, alias: Config }
 
 
-    App\Menu\DemandeMenuBuilder:
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: demande }
+    # App\Menu\DemandeMenuBuilder:
+    #     arguments: ["@knp_menu.factory"]
+    #     tags:
+    #         - { name: knp_menu.menu_builder, method: createMainMenu, alias: demande }
 
-    App\Menu\RhMenuBuilder:
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: rh }
+    # App\Menu\RhMenuBuilder:
+    #     arguments: ["@knp_menu.factory"]
+    #     tags:
+    #         - { name: knp_menu.menu_builder, method: createMainMenu, alias: rh }
 
 
 

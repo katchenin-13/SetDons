@@ -34,7 +34,7 @@ class UtilisateurType extends AbstractType
                     'ROLE_ADMIN' => 'Administrateur'
                 ]),
             ])
-            ->add('groupes', EntityType::class, [
+            ->add('groupe', EntityType::class, [
                 'label'        => 'Groupes',
                 'choice_label' => 'name',
                 'multiple'     => true,
