@@ -115,7 +115,7 @@ class GroupeModuleController extends AbstractController
                             'url' => $this->generateUrl('app_utilisateur_groupe_module_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

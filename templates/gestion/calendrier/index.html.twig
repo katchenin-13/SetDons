@@ -14,7 +14,23 @@
 
 {% block body %}
 
-<div id="calendrier">
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Draggable Events</h4>
+            </div>
+            <div class="card-body">
+               
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+    <div class="col-9">
+        <div id="calendrier">
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -43,10 +59,10 @@
                     center: 'title',
                     end: 'dayGridMonth,timeGridWeek'
                 },
-                events: {{ data|raw }}, 
+                events: {{data|raw }}, 
                 editable: true,
                 eventResizableFromStart: true
-            })
+            });
     
             calendar.on('eventChange', (e) => {
                 let url = `/api/${e.event.id}/edit`

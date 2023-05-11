@@ -57,9 +57,9 @@ class GroupeController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return false;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }else if($permission == "CRUS"){
@@ -70,9 +70,9 @@ class GroupeController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return false;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }else{
@@ -83,9 +83,9 @@ class GroupeController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return true;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }
@@ -119,13 +119,13 @@ class GroupeController extends AbstractController
                             , 'attrs' => ['class' => 'btn-default']
                             , 'render' => $renders['edit']
                         ],
-                            'show' => [
-                                'url' => $this->generateUrl('app_utilisateur_groupe_show', ['id' => $value])
-                                , 'ajax' => true
-                                , 'icon' => '%icon% bi bi-eye'
-                                , 'attrs' => ['class' => 'btn-success']
-                                , 'render' => $renders['show']
-                            ],
+                            // 'show' => [
+                            //     'url' => $this->generateUrl('app_utilisateur_groupe_show', ['id' => $value])
+                            //     , 'ajax' => true
+                            //     , 'icon' => '%icon% bi bi-eye'
+                            //     , 'attrs' => ['class' => 'btn-success']
+                            //     , 'render' => $renders['show']
+                            // ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
                             'url' => $this->generateUrl('app_utilisateur_groupe_delete', ['id' => $value])

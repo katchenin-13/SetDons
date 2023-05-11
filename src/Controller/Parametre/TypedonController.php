@@ -19,7 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/parametre/typedon')]
 class TypedonController extends AbstractController
-{
+{    /**
+    * Undocumented function
+    *
+    * @param Request $request
+    * @param DataTableFactory $dataTableFactory
+    * @return Response
+    */
     #[Route('/', name: 'app_parametre_typedon_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
@@ -32,9 +38,9 @@ class TypedonController extends AbstractController
         ->setName('dt_app_parametre_typedon');
 
         $renders = [
-            'show' =>  new ActionRender(function () {
-                return true;
-            }),
+            // 'show' =>  new ActionRender(function () {
+            //     return true;
+            // }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -65,13 +71,13 @@ class TypedonController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
-                             'show' => [
-                            'url' => $this->generateUrl('app_parametre_typedon_show', ['id' => $value])
-                            , 'ajax' => true
-                            , 'icon' => '%icon% bi bi-eye'
-                            , 'attrs' => ['class' => 'btn-success']
-                            , 'render' => $renders['show']
-                        ],  
+                        //      'show' => [
+                        //     'url' => $this->generateUrl('app_parametre_typedon_show', ['id' => $value])
+                        //     , 'ajax' => true
+                        //     , 'icon' => '%icon% bi bi-eye'
+                        //     , 'attrs' => ['class' => 'btn-success']
+                        //     , 'render' => $renders['show']
+                        // ],  
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_typedon_edit', ['id' => $value])
                             , 'ajax' => true
@@ -107,7 +113,14 @@ class TypedonController extends AbstractController
             'datatable' => $table
         ]);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param TypedonRepository $typedonRepository
+     * @param FormError $formError
+     * @return Response
+     */
     #[Route('/new', name: 'app_parametre_typedon_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TypedonRepository $typedonRepository, FormError $formError): Response
     {
@@ -166,7 +179,9 @@ class TypedonController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    /**w
+     * 
+     */
     #[Route('/{id}/show', name: 'app_parametre_typedon_show', methods: ['GET'])]
     public function show(Typedon $typedon): Response
     {

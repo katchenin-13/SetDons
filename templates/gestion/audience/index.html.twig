@@ -1,4 +1,8 @@
+{% extends 'base-layout.html.twig' %}
 
+{% block title %}Liste des audiences{% endblock %}
+{% block header %}Audience{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block body %}
 <div class="card shadow-sm">
     <div class="card-header card-header-sm">
@@ -9,6 +13,7 @@
                 <i class="bi bi-plus-square text-light"></i>
                 Nouveau
             </a>
+            {# {{ dump(permition)}} #}
         </div>
     </div>
     <div class="card-body">
@@ -24,15 +29,22 @@
 
 {% block java %}
     <script src="{{ asset('assets/js/datatables.js') }}"></script>
-    <script> 
-        $(function() { 
-              $('#grid_app_gestion_audience').initDataTables({{ datatable_settings(datatable) }}, {
-                  searching: true,
-                  ajaxUrl: "{{ path('app_gestion_audience_index') }}",
-                  language: {
-                      url: asset_base_path + "/js/i18n/French.json"
-                  }
-              });
+    <script src="{{ asset('assets/js/active.js') }}"></script>
+    
+  
+    <script>
+        $(function () {
+             
+            $('#grid_app_gestion_audience').initDataTables({{ datatable_settings(datatable) }}, {
+            searching: true,
+            ajaxUrl: "{{ path('app_gestion_audience_index') }}",
+            language: {
+                url: asset_base_path + "/js/i18n/French.json"
+            }
         });
+     });
+     
     </script>
 {% endblock %}
+
+

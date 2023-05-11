@@ -23,7 +23,7 @@ class FieldonType extends AbstractType
             // ->add('typedon')
             ->add('typedon', EntityType::class, [
                 'class'        => Typedon::class,
-                'label'        => 'Type',
+                'label'        => false,
                 'choice_label' => 'libelle',
                 'multiple'     => false,
                 'expanded'     => false,
@@ -32,20 +32,20 @@ class FieldonType extends AbstractType
             ])
             
             ->add('qte', NumberType::class,[
-                'label' =>'Qté',
+                'label'=> false,
                ])
 
            ->add('naturedon', TextType::class,[
-            'label' =>'Nature du don',
+               'label'=> false,
                ])
             
            ->add('motifdon', TextType::class,[
-            'label' =>'Motif du don',
+              'label'=> false,
             'attr' => ['placeholder' => 'Motif du don']
                ])
 
            ->add('montantdon', NumberType::class,[
-                'label' =>' Montant / Valeur Estimative',
+                'label'=> false,
                 'attr' => ['placeholder' => ' Montant / Valeur']
                ])
        

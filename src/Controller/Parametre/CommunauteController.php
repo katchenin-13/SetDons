@@ -20,7 +20,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/parametre/communaute')]
 class CommunauteController extends AbstractController
-{
+{  /**
+ * Undocumented function
+ *
+ * @param CommunauteRepository $communaute
+ * @param Request $request
+ * @param DataTableFactory $dataTableFactory
+ * @return Response
+ */
     #[Route('/', name: 'app_parametre_communaute_index', methods: ['GET', 'POST'])]
     public function index(CommunauteRepository $communaute,Request $request, DataTableFactory $dataTableFactory): Response
     {
@@ -44,9 +51,9 @@ class CommunauteController extends AbstractController
         ->setName('dt_app_parametre_communaute');
 
         $renders = [
-            'show' =>  new ActionRender(function () {
-                return true;
-            }),
+            // 'show' =>  new ActionRender(function () {
+            //     return true;
+            // }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -117,13 +124,13 @@ class CommunauteController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
-                         'show' => [
-                            'url' => $this->generateUrl('app_parametre_communaute_show', ['id' => $value])
-                            , 'ajax' => true
-                            , 'icon' => '%icon% bi bi-eye'
-                            , 'attrs' => ['class' => 'btn-success']
-                            , 'render' => $renders['show']
-                        ],    
+                        //  'show' => [
+                        //     'url' => $this->generateUrl('app_parametre_communaute_show', ['id' => $value])
+                        //     , 'ajax' => true
+                        //     , 'icon' => '%icon% bi bi-eye'
+                        //     , 'attrs' => ['class' => 'btn-success']
+                        //     , 'render' => $renders['show']
+                        // ],    
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_communaute_edit', ['id' => $value])
                             , 'ajax' => true
@@ -159,7 +166,14 @@ class CommunauteController extends AbstractController
             'datatable' => $table
         ]);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param CommunauteRepository $communauteRepository
+     * @param FormError $formError
+     * @return Response
+     */
     #[Route('/new', name: 'app_parametre_communaute_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CommunauteRepository $communauteRepository, FormError $formError): Response
     {
@@ -218,7 +232,9 @@ class CommunauteController extends AbstractController
             'form' => $form,
         ]);
     }
-
+     /**
+      * cette fonction permet d'afficher
+      */
     #[Route('/{id}/show', name: 'app_parametre_communaute_show', methods: ['GET'])]
     public function show(Communaute $communaute): Response
     {
@@ -226,7 +242,10 @@ class CommunauteController extends AbstractController
             'communaute' => $communaute,
         ]);
     }
-
+    
+    /**
+     * cette fonction permet d'editer
+     */
     #[Route('/{id}/edit', name: 'app_parametre_communaute_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository, FormError $formError): Response
     {
@@ -285,7 +304,10 @@ class CommunauteController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
+    /**
+     * cette fonction permet de supprimer un elements
+     */
     #[Route('/{id}/delete', name: 'app_parametre_communaute_delete', methods: ['DELETE', 'GET'])]
     public function delete(Request $request, Communaute $communaute, CommunauteRepository $communauteRepository): Response
     {

@@ -1,4 +1,8 @@
+{% extends 'base-layout.html.twig' %}
 
+{% block title %}Liste des don{% endblock %}
+{% block header %}Dons{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block body %}
 <div class="card shadow-sm">
     <div class="card-header card-header-sm">
@@ -24,6 +28,7 @@
 
 {% block java %}
     <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/active.js') }}"></script>
     <script> 
         $(function() { 
               $('#grid_app_gestion_don').initDataTables({{ datatable_settings(datatable) }}, {

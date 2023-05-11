@@ -37,53 +37,99 @@
                     <div class="col-md-4">{{ form_row(form.nbestmember) }}</div>
                 </div>
 
+                <br>
                 <div class="card card-flush shadow-sm">
-           
-                   <div class="card-body py-5">
-                        <div class="row doc-container1">
-                               <h3 class="card-title">Ajouté un nom ou plusieurs</h3>
-                                <div class="row ">
-                                        {% for ligne in form.nompfs %}
-                                                {{ nompf(ligne|e) }}
-                                            {% endfor %}
-                                        <div class="form-group col-md-3 ">
-                                                    <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne1 btn-xs" data-container=".doc-container1">
-                                                            <i class="fa fa-plus"></i>
-                                                    </button>
-                                        </div>
-                                </div>
-
+                    <div class="card-header">
+                        <h3 class="card-title">Ajout des mons</h3>
+                        <div class="card-toolbar">
+                            <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne1 btn-xs" data-container=".doc-container2">
+                                <i class="fa fa-plus"></i>Ajouter
+                            </button>
                         </div>
-                        <div class="row doc-container2">
-                                <h3 class="card-title">Ajouté un numéros ou plusieurs</h3>
-                                <div class="row ">
-                                        {% for ligne in form.numeropfs %}
-                                            {{ numeropf(ligne|e) }}
-                                        {% endfor %}
-                                    <div class="form-group col-md-3 ">
-                                            <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne2 btn-xs" data-container=".doc-container2">
-                                                    <i class="fa fa-plus"></i>
-                                            </button>
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="row doc-container3">
-                            <h3 class="card-title">Ajouté un numéros ou plusieurs</h3>
-                            <div class="row ">
-                                    {% for ligne in form.emailpfs %}
-                                        {{ emailpf(ligne|e) }}
-                                    {% endfor %}
-                                <div class="form-group col-md-3 ">
-                                        <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne3 btn-xs" data-container=".doc-container3">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                </div>
-                            </div>
+                    </div>
+                    <hr class="separateur">
+                    <div class="card-body py-5">
+                        <div class="row">
+                            <div class="form-group col-md-11">Nom point focal</div>
                       
-                        </div>         
-                   </div>
-                   <br>  
+                            <div class="form-group col-md-1 del-col">
+        
+                            </div>
+                        </div>
+                        <div class="doc-container1">
+                            {% for ligne in form.nompfs %}
+                                {{ nompf(ligne|e) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {#<div class="card-footer">
+                        Footer
+                    </div>#}
                 </div>
+                <br>
+
+                <br>
+                <div class="card card-flush shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title">Ajout de numéros point facal du menu</h3>
+                        <div class="card-toolbar">
+                            <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne2 btn-xs" data-container=".doc-container2">
+                                <i class="fa fa-plus"></i>Ajouter
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="separateur">
+                    <div class="card-body py-5">
+                        <div class="row">
+                            <div class="form-group col-md-11">Numéro</div>
+                            
+                            <div class="form-group col-md-1 del-col">
+        
+                            </div>
+                        </div>
+                        <div class="doc-container2">
+                            {% for ligne in form.numeropfs %}
+                                {{ numeropf(ligne|e) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {#<div class="card-footer">
+                        Footer
+                    </div>#}
+                </div>
+                <br>
+                <br>
+                <div class="card card-flush shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title">Ajout d'adresses mail</h3>
+                        <div class="card-toolbar">
+                            <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne3 btn-xs" data-container=".doc-container3">
+                                <i class="fa fa-plus"></i>Ajouter
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="separateur">
+                    <div class="card-body py-5">
+                        <div class="row">
+                            <div class="form-group col-md-11">Module</div>
+
+                            <div class="form-group col-md-1 del-col">
+        
+                            </div>
+                        </div>
+                        <div class="doc-container3">
+                            {% for ligne in form.emailpfs %}
+                                {{ emailpf(ligne|e) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {#<div class="card-footer">
+                        Footer
+                    </div>#}
+                </div>
+                <br>
+
+               
     </div>
     <div class="modal-footer">
         {# {{ include('_includes/ajax/loader.html.twig') }} #}

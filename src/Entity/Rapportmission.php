@@ -16,11 +16,23 @@ class Rapportmission
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rapportmissions')]
-    private ?Mission $mission = null;
+    #[ORM\Column(length: 255)]
+    private ?string $libelle = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rapportmissions')]
-    private ?Communaute $communaute = null;
+    #[ORM\Column(length: 255)]
+    private ?string $chefmission = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $membredeg = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $objectif = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $action = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $opportunite = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $difficulte = null;
@@ -28,10 +40,7 @@ class Rapportmission
     #[ORM\Column]
     private ?bool $etape = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $observation = null;
-
-    #[ORM\ManyToOne(inversedBy: 'rapportmissions')]
+   #[ORM\ManyToOne(inversedBy: 'rapportmissions')]
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
@@ -43,35 +52,15 @@ class Rapportmission
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
 
+   
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMission(): ?Mission
-    {
-        return $this->mission;
-    }
-
-    public function setMission(?Mission $mission): self
-    {
-        $this->mission = $mission;
-
-        return $this;
-    }
-
-    public function getCommunaute(): ?Communaute
-    {
-        return $this->communaute;
-    }
-
-    public function setCommunaute(?Communaute $communaute): self
-    {
-        $this->communaute = $communaute;
-
-        return $this;
-    }
+       
 
     public function getDifficulte(): ?string
     {
@@ -97,17 +86,7 @@ class Rapportmission
         return $this;
     }
 
-    public function getObservation(): ?string
-    {
-        return $this->observation;
-    }
-
-    public function setObservation(string $observation): self
-    {
-        $this->observation = $observation;
-
-        return $this;
-    }
+   
 
     public function getUtilisateur(): ?Utilisateur
     {
@@ -141,6 +120,78 @@ class Rapportmission
     public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getChefmission(): ?string
+    {
+        return $this->chefmission;
+    }
+
+    public function setChefmission(string $chefmission): self
+    {
+        $this->chefmission = $chefmission;
+
+        return $this;
+    }
+
+    public function getMembredeg(): ?string
+    {
+        return $this->membredeg;
+    }
+
+    public function setMembredeg(string $membredeg): self
+    {
+        $this->membredeg = $membredeg;
+
+        return $this;
+    }
+
+    public function getObjectif(): ?string
+    {
+        return $this->objectif;
+    }
+
+    public function setObjectif(string $objectif): self
+    {
+        $this->objectif = $objectif;
+
+        return $this;
+    }
+
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    public function setAction(string $action): self
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    public function getOpportunite(): ?string
+    {
+        return $this->opportunite;
+    }
+
+    public function setOpportunite(string $opportunite): self
+    {
+        $this->opportunite = $opportunite;
 
         return $this;
     }

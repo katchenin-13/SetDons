@@ -74,7 +74,7 @@ class ServiceController extends AbstractController
                             'url' => $this->generateUrl('app_parametre_service_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
-                            , 'attrs' => ['class' => 'btn-main']
+                            , 'attrs' => ['class' => 'btn-danger']
                             ,  'render' => $renders['delete']
                         ]
                     ]

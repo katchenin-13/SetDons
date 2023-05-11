@@ -51,9 +51,9 @@ class ContactController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return false;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }else if($permission == "CRUS"){
@@ -64,9 +64,9 @@ class ContactController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return false;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }else{
@@ -77,9 +77,9 @@ class ContactController extends AbstractController
                 'delete' => new ActionRender(function () {
                     return true;
                 }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
+                // 'show' => new ActionRender(function () {
+                //     return true;
+                // }),
             ];
 
         }
@@ -106,13 +106,13 @@ class ContactController extends AbstractController
 
                         'actions' => [
 
-                            'show' => [
-                            'url' => $this->generateUrl('app_gestion_contact_show', ['id' => $value])
-                            , 'ajax' => true
-                            , 'icon' => '%icon% bi bi-eye'
-                            , 'attrs' => ['class' => 'btn-success']
-                            , 'render' => $renders['show']
-                        ],  
+                        //     'show' => [
+                        //     'url' => $this->generateUrl('app_gestion_contact_show', ['id' => $value])
+                        //     , 'ajax' => true
+                        //     , 'icon' => '%icon% bi bi-eye'
+                        //     , 'attrs' => ['class' => 'btn-success']
+                        //     , 'render' => $renders['show']
+                        // ],  
                             'edit' => [
                             'url' => $this->generateUrl('app_gestion_contact_edit', ['id' => $value])
                             , 'ajax' => true

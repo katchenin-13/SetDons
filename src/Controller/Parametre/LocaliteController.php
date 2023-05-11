@@ -32,9 +32,9 @@ class LocaliteController extends AbstractController
         ->setName('dt_app_parametre_localite');
 
         $renders = [
-            'show' =>  new ActionRender(function () {
-                return true;
-            }),
+            // 'show' =>  new ActionRender(function () {
+            //     return true;
+            // }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -106,13 +106,13 @@ class LocaliteController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
-                             'show' => [
-                            'url' => $this->generateUrl('app_parametre_localite_show', ['id' => $value])
-                            , 'ajax' => true
-                            , 'icon' => '%icon% bi bi-eye'
-                            , 'attrs' => ['class' => 'btn-success']
-                            , 'render' => $renders['show']
-                        ],  
+                        //      'show' => [
+                        //     'url' => $this->generateUrl('app_parametre_localite_show', ['id' => $value])
+                        //     , 'ajax' => true
+                        //     , 'icon' => '%icon% bi bi-eye'
+                        //     , 'attrs' => ['class' => 'btn-success']
+                        //     , 'render' => $renders['show']
+                        // ],  
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_localite_edit', ['id' => $value])
                             , 'ajax' => true

@@ -96,29 +96,17 @@ class Menu
     public function listeGroupe()
     {
         $array = [
-            'module'=>'module',
-            'agenda'=>'agenda',
-            'typeClient'=>'typeClient',
-            'groupe'=>'groupe',
-            'parent'=>'parent',
-            'parametre'=>'parametre',
-            'typeSociete'=>'typeSociete',
-            'acteConstitution'=>'acteConstitution',
-            'dossierConstition'=>'dossierConstition',
-            'user'=>'user',
-            'app_utilisateur_user_groupe_index'=>'app_utilisateur_user_groupe_index',
-            'employe'=>'employe',
-            'categorie'=>'categorie',
-            'dossierActeVente'=>'dossierActeVente',
-            'acte'=>'acte',
-            'typeActe'=>'typeActe',
-            'client'=>'client',
-            'workflow'=>'workflow',
-            'courierArrive'=>'courierArrive',
-            'courierDepart'=>'courierDepart',
-            'courierInterne'=>'courierInterne',
-            'calendar'=>'calendar',
-            'documentTypeActe'=>'documentTypeActe',
+            'app_config_parametre_index'=>'Parametre',
+            'app_utilisateur_groupe_index'=>'Groupe utilisateur',
+            'app_utilisateur_utilisateur_index'=>'Utilisateur',
+            'app_gestion_audience_index'=>'Audience',
+            'app_gestion_don_index'=>'Don',
+            'app_gestion_contact_index'=>'Contact',
+            'app_gestion_rapportmission_index'=>'Mission',
+            'app_config_agenda_index'=>'Evènement',
+            'app_gestion_calendrier'=>'Agenda',
+            'app_gestion_admin_dashboad'=>'Statistique',
+            
         ];
 
         return $array ;

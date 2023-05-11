@@ -102,7 +102,7 @@ class ParametreController extends AbstractController
                     'href' => $this->generateUrl('app_parametre_entreprise_index')
                 ],
                 [
-                    'label' => 'Direction',
+                    'label' => 'Départements',
                     'id' => 'param_direction',
                     'href' => $this->generateUrl('app_parametre_service_index')
                 ],

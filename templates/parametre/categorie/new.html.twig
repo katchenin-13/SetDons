@@ -14,7 +14,15 @@
     {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
     <div class="modal-body">
         {{ include('_includes/ajax/response.html.twig') }}
-        {{ form_widget(form) }}
+        {# {{ form_widget(form) }} #}
+        <div class="row">
+            <div class="col-md-3">
+           {{ form_row(form.code)}}
+           </div>
+           <div class="col-md-9">
+               {{ form_row(form.libelle)}}
+           </div>
+       </div>
     </div>
     <div class="modal-footer">
         {# {{ include('_includes/ajax/loader.html.twig') }} #}

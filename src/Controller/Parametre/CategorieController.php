@@ -19,7 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/parametre/categorie')]
 class CategorieController extends AbstractController
-{
+{   /**
+    * Undocumented function
+    *
+    * @param Request $request
+    * @param DataTableFactory $dataTableFactory
+    * @return Response
+    */
     #[Route('/', name: 'app_parametre_categorie_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
@@ -32,9 +38,9 @@ class CategorieController extends AbstractController
         ->setName('dt_app_parametre_categorie');
 
         $renders = [
-            'show' =>  new ActionRender(function () {
-                return true;
-            }),
+            // 'show' =>  new ActionRender(function () {
+            //     return true;
+            // }),
             'edit' =>  new ActionRender(function () {
                 return true;
             }),
@@ -106,13 +112,13 @@ class CategorieController extends AbstractController
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
-                           'show' => [
-                            'url' => $this->generateUrl('app_parametre_categorie_show', ['id' => $value])
-                            , 'ajax' => true
-                            , 'icon' => '%icon% bi bi-eye'
-                            , 'attrs' => ['class' => 'btn-success']
-                            , 'render' => $renders['show']
-                        ],  
+                        //    'show' => [
+                        //     'url' => $this->generateUrl('app_parametre_categorie_show', ['id' => $value])
+                        //     , 'ajax' => true
+                        //     , 'icon' => '%icon% bi bi-eye'
+                        //     , 'attrs' => ['class' => 'btn-success']
+                        //     , 'render' => $renders['show']
+                        // ],  
                             'edit' => [
                             'url' => $this->generateUrl('app_parametre_categorie_edit', ['id' => $value])
                             , 'ajax' => true
@@ -148,7 +154,15 @@ class CategorieController extends AbstractController
             'datatable' => $table
         ]);
     }
-
+    
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param CategorieRepository $categorieRepository
+     * @param FormError $formError
+     * @return Response
+     */ 
     #[Route('/new', name: 'app_parametre_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategorieRepository $categorieRepository, FormError $formError): Response
     {
@@ -207,7 +221,10 @@ class CategorieController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
+    /**
+     * 
+     */
     #[Route('/{id}/show', name: 'app_parametre_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response
     {
@@ -215,7 +232,10 @@ class CategorieController extends AbstractController
             'categorie' => $categorie,
         ]);
     }
-
+    
+    /**
+     * 
+     */
     #[Route('/{id}/edit', name: 'app_parametre_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Categorie $categorie, CategorieRepository $categorieRepository, FormError $formError): Response
     {

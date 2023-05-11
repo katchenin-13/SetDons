@@ -1,0 +1,258 @@
+{% extends 'base-layout.html.twig' %}
+{% block body %}
+    
+          <!--begin::Row-->
+      {# <div class="row g-5 g-xl-10 mb-5 mb-xl-10 mt-2">
+        <div class="col-md-6 col-lg-4">
+            <a href="{{ path('app_config_parametre_index') }}" class="btn btn-main btn-sm">
+                <i class="bi bi-eye text-light"> </i>
+                Voir les données parametres
+            </a>
+		</div>
+        
+		<!--/.col-->
+        <div class="col-md-6 col-lg-4">
+                           
+                <a href="{{ path('app_utilisateur_groupe_index') }}" class="btn btn-main btn-sm">
+                    <i class="bi bi-eye text-light"> </i>
+                   Gestion des utilisateurs
+                </a>
+        </div>
+
+        <!--/.col-->
+        <div class="col-md-6 col-lg-4">
+                <a href="{{ path('app_utilisateur_utilisateur_index') }}" class="btn btn-main btn-sm">
+                        <i class="bi bi-eye text-light"> </i>
+                        utilisateurs
+                    </a>                     
+        </div>
+       	<!--/.col-->
+       
+		<div class="col-md-6 col-lg-3">
+			<div class="card bg-flat-color-3 text-light">
+				<div class="card-body">
+					<div class="h4 m-0">12.124</div>
+					<div>Lorem ipsum...</div>
+					<div class="progress-bar bg-light mt-2 mb-2" role="progressbar" style="width: 20%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					<small class="text-light">Lorem ipsum dolor sit amet enim.</small>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	
+		<div class="col-md-6 col-lg-3">
+			<div class="card bg-flat-color-4 text-light">
+				<div class="card-body">
+					<div class="h4 m-0">$98.111,00</div>
+					<div>Lorem ipsum...</div>
+					<div class="progress-bar bg-light mt-2 mb-2" role="progressbar" style="width: 20%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					<small class="text-light">Lorem ipsum dolor sit amet enim.</small>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+	
+		<div class="col-md-6 col-lg-3">
+			<div class="card bg-flat-color-2 text-light">
+				<div class="card-body">
+					<div class="h4 m-0">$98.111,00</div>
+					<div>Lorem ipsum...</div>
+					<div class="progress-bar bg-light mt-2 mb-2" role="progressbar" style="width: 20%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					<small class="text-light">Lorem ipsum dolor sit amet enim.</small>
+				</div>
+			</div>
+		</div>
+		<!--/.col-->
+      
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib"><i class="bi bi-droplet-half"></i></div>
+                        <div class="stat-content dib">
+                            <div class="stat-text">Audinece</div>
+                            <div class="stat-digit">{{audience}}</div>
+                            <a href="{{ path('app_config_audience_index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-one">
+                        {# <div class="stat-icon dib"><i class="bi bi-droplet-half"></i></div> #}
+                        <div class="stat-content dib">
+                            <div class="stat-text">Total audinece</div>
+                            <div class="stat-digit">{{audience}}</div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {# </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib"><i class="bi bi-droplet-half"></i></div>
+                        <div class="stat-content dib">
+                            <div class="stat-text">Total Profit</div>
+                            <div class="stat-digit">1,012</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib"><i class="bi bi-droplet-half"></i></div>
+                        <div class="stat-content dib">
+                            <div class="stat-text">Total Profit</div>
+                            <div class="stat-digit">1,012</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-four">
+                        <div class="stat-icon dib">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="text-left dib">
+                                <div class="stat-heading">Audience validées</div>
+                                <div class="stat-text">Total: 765</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-four">
+                        <div class="stat-icon dib">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="text-left dib">
+                                <div class="stat-heading">Audience rejetées</div>
+                                <div class="stat-text">Total: 765</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-four">
+                        <div class="stat-icon dib">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="text-left dib">
+                                <div class="stat-heading">Dons effecté </div>
+                                <div class="stat-text">Total: 765</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="stat-widget-four">
+                        <div class="stat-icon dib">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="text-left dib">
+                                <div class="stat-heading">Promesse realisé</div>
+                                <div class="stat-text">Total: 765</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> #}
+
+  
+
+    {# <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+<div id="kt_docs_google_chart_column" class="h-500px"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 927px; height: 500px;"><div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="927" height="500" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><clipPath id="_ABSTRACT_RENDERER_ID_1"><rect x="162" y="96" width="603" height="309"></rect></clipPath><filter id="_ABSTRACT_RENDERER_ID_2"><feGaussianBlur in="SourceAlpha" stdDeviation="2"></feGaussianBlur><feOffset dx="1" dy="1"></feOffset><feComponentTransfer><feFuncA type="linear" slope="0.1"></feFuncA></feComponentTransfer><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><rect x="0" y="0" width="927" height="500" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="162" y="70.9" font-family="Arial" font-size="14" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">Motivation and Energy Level Throughout the Day</text><rect x="162" y="59" width="603" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><rect x="779" y="96" width="134" height="37" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="779" y="96" width="134" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="812" y="107.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#222222">Motivation Level</text></g><rect x="779" y="96" width="28" height="14" stroke="none" stroke-width="0" fill="#6e4ff5"></rect></g><g><rect x="779" y="119" width="134" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="812" y="130.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#222222">Energy Level</text></g><rect x="779" y="119" width="28" height="14" stroke="none" stroke-width="0" fill="#fe3995"></rect></g></g><g><rect x="162" y="96" width="603" height="309" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(file:///H:/docs/charts/google-charts/column.html#_ABSTRACT_RENDERER_ID_1)"><g><rect x="162" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="192" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="192" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="222" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="252" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="252" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="282" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="313" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="313" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="343" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="373" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="373" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="403" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="433" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="433" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="463" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="493" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="493" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="523" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="553" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="553" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="583" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="614" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="614" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="644" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="674" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="674" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="704" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="734" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="734" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="764" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="404" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="342" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="281" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="219" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="158" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="96" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="373" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="312" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="250" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="188" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="127" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect></g><g><rect x="174" y="374" width="18" height="30" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="234" y="343" width="18" height="61" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="294" y="313" width="18" height="91" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="355" y="282" width="18" height="122" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="415" y="251" width="18" height="153" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="475" y="220" width="18" height="184" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="535" y="189" width="18" height="215" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="595" y="159" width="18" height="245" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="656" y="128" width="18" height="276" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="716" y="97" width="18" height="307" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="193" y="397" width="18" height="7" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="253" y="390" width="18" height="14" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="313" y="374" width="19" height="30" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="374" y="336" width="18" height="68" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="434" y="336" width="18" height="68" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="494" y="313" width="18" height="91" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="554" y="282" width="18" height="122" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="614" y="243" width="19" height="161" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="675" y="174" width="18" height="230" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="735" y="97" width="18" height="307" stroke="none" stroke-width="0" fill="#fe3995"></rect></g><g><rect x="-289" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="162" y="404" width="603" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="192.6" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">8:00</text><text text-anchor="middle" x="192.6" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="252.8" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">9:00</text><text text-anchor="middle" x="252.8" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="313" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">10:00</text><text text-anchor="middle" x="313" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="373.2" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">11:00</text><text text-anchor="middle" x="373.2" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="433.4" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">12:00</text><text text-anchor="middle" x="433.4" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="493.59999999999997" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">1:00</text><text text-anchor="middle" x="493.59999999999997" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="553.8" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">2:00</text><text text-anchor="middle" x="553.8" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="614" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">3:00</text><text text-anchor="middle" x="614" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="674.2" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">4:00</text><text text-anchor="middle" x="674.2" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="734.4" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">5:00</text><text text-anchor="middle" x="734.4" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="end" x="148" y="409.4" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">0</text></g><g><text text-anchor="end" x="148" y="347.79999999999995" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">2</text></g><g><text text-anchor="end" x="148" y="286.2" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">4</text></g><g><text text-anchor="end" x="148" y="224.6" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">6</text></g><g><text text-anchor="end" x="148" y="163" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">8</text></g><g><text text-anchor="end" x="148" y="101.4" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">10</text></g></g></g><g><g><text text-anchor="middle" x="463.5" y="477.9" font-family="Arial" font-size="14" font-style="italic" stroke="none" stroke-width="0" fill="#222222">Time of Day</text><rect x="162" y="466" width="603" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><text text-anchor="middle" x="70.9" y="250.5" font-family="Arial" font-size="14" font-style="italic" transform="rotate(-90 70.9 250.5)" stroke="none" stroke-width="0" fill="#222222">Rating (scale of 1-10)</text><path d="M58.99999999999999,405L59.00000000000001,96L73.00000000000001,96L72.99999999999999,405Z" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></path></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Time of Day</th><th>Motivation Level</th><th>Energy Level</th></tr></thead><tbody><tr><td>8 am</td><td>1</td><td>0.25</td></tr><tr><td>9 am</td><td>2</td><td>0.5</td></tr><tr><td>10 am</td><td>3</td><td>1</td></tr><tr><td>11 am</td><td>4</td><td>2.25</td></tr><tr><td>12 pm</td><td>5</td><td>2.25</td></tr><tr><td>1 pm</td><td>6</td><td>3</td></tr><tr><td>2 pm</td><td>7</td><td>4</td></tr><tr><td>3 pm</td><td>8</td><td>5.25</td></tr><tr><td>4 pm</td><td>9</td><td>7.5</td></tr><tr><td>5 pm</td><td>10</td><td>10</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 510px; left: 937px; white-space: nowrap; font-family: Arial; font-size: 14px; font-weight: bold;">5</div><div></div></div></div>								
+	</div>
+
+<div class="py-5">
+
+
+
+
+	<div id="kt_docs_google_chart_column" class="h-500px"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 927px; height: 500px;"><div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="927" height="500" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><clipPath id="_ABSTRACT_RENDERER_ID_1"><rect x="162" y="96" width="603" height="309"></rect></clipPath><filter id="_ABSTRACT_RENDERER_ID_2"><feGaussianBlur in="SourceAlpha" stdDeviation="2"></feGaussianBlur><feOffset dx="1" dy="1"></feOffset><feComponentTransfer><feFuncA type="linear" slope="0.1"></feFuncA></feComponentTransfer><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><rect x="0" y="0" width="927" height="500" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="162" y="70.9" font-family="Arial" font-size="14" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">Motivation and Energy Level Throughout the Day</text><rect x="162" y="59" width="603" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><rect x="779" y="96" width="134" height="37" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="779" y="96" width="134" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="812" y="107.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#222222">Motivation Level</text></g><rect x="779" y="96" width="28" height="14" stroke="none" stroke-width="0" fill="#6e4ff5"></rect></g><g><rect x="779" y="119" width="134" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="812" y="130.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#222222">Energy Level</text></g><rect x="779" y="119" width="28" height="14" stroke="none" stroke-width="0" fill="#fe3995"></rect></g></g><g><rect x="162" y="96" width="603" height="309" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(file:///H:/docs/charts/google-charts/column.html#_ABSTRACT_RENDERER_ID_1)"><g><rect x="162" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="192" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="192" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="222" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="252" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="252" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="282" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="313" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="313" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="343" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="373" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="373" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="403" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="433" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="433" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="463" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="493" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="493" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="523" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="553" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="553" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="583" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="614" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="614" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="644" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="674" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="674" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="704" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="734" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="734" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="764" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="404" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="342" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="281" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="219" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="158" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="96" width="603" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="162" y="373" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="312" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="250" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="188" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="162" y="127" width="603" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect></g><g><rect x="174" y="374" width="18" height="30" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="234" y="343" width="18" height="61" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="294" y="313" width="18" height="91" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="355" y="282" width="18" height="122" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="415" y="251" width="18" height="153" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="475" y="220" width="18" height="184" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="535" y="189" width="18" height="215" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="595" y="159" width="18" height="245" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="656" y="128" width="18" height="276" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="716" y="97" width="18" height="307" stroke="none" stroke-width="0" fill="#6e4ff5"></rect><rect x="193" y="397" width="18" height="7" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="253" y="390" width="18" height="14" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="313" y="374" width="19" height="30" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="374" y="336" width="18" height="68" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="434" y="336" width="18" height="68" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="494" y="313" width="18" height="91" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="554" y="282" width="18" height="122" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="614" y="243" width="19" height="161" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="675" y="174" width="18" height="230" stroke="none" stroke-width="0" fill="#fe3995"></rect><rect x="735" y="97" width="18" height="307" stroke="none" stroke-width="0" fill="#fe3995"></rect></g><g><rect x="-289" y="96" width="1" height="309" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="162" y="404" width="603" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="192.6" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">8:00</text><text text-anchor="middle" x="192.6" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="252.8" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">9:00</text><text text-anchor="middle" x="252.8" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="313" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">10:00</text><text text-anchor="middle" x="313" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="373.2" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">11:00</text><text text-anchor="middle" x="373.2" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">AM</text></g><g><text text-anchor="middle" x="433.4" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">12:00</text><text text-anchor="middle" x="433.4" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="493.59999999999997" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">1:00</text><text text-anchor="middle" x="493.59999999999997" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="553.8" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">2:00</text><text text-anchor="middle" x="553.8" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="614" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">3:00</text><text text-anchor="middle" x="614" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="674.2" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">4:00</text><text text-anchor="middle" x="674.2" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="middle" x="734.4" y="425.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">5:00</text><text text-anchor="middle" x="734.4" y="443.9" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">PM</text></g><g><text text-anchor="end" x="148" y="409.4" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">0</text></g><g><text text-anchor="end" x="148" y="347.79999999999995" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">2</text></g><g><text text-anchor="end" x="148" y="286.2" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">4</text></g><g><text text-anchor="end" x="148" y="224.6" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">6</text></g><g><text text-anchor="end" x="148" y="163" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">8</text></g><g><text text-anchor="end" x="148" y="101.4" font-family="Arial" font-size="14" stroke="none" stroke-width="0" fill="#444444">10</text></g></g></g><g><g><text text-anchor="middle" x="463.5" y="477.9" font-family="Arial" font-size="14" font-style="italic" stroke="none" stroke-width="0" fill="#222222">Time of Day</text><rect x="162" y="466" width="603" height="14" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect></g><g><text text-anchor="middle" x="70.9" y="250.5" font-family="Arial" font-size="14" font-style="italic" transform="rotate(-90 70.9 250.5)" stroke="none" stroke-width="0" fill="#222222">Rating (scale of 1-10)</text><path d="M58.99999999999999,405L59.00000000000001,96L73.00000000000001,96L72.99999999999999,405Z" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></path></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Time of Day</th><th>Motivation Level</th><th>Energy Level</th></tr></thead><tbody><tr><td>8 am</td><td>1</td><td>0.25</td></tr><tr><td>9 am</td><td>2</td><td>0.5</td></tr><tr><td>10 am</td><td>3</td><td>1</td></tr><tr><td>11 am</td><td>4</td><td>2.25</td></tr><tr><td>12 pm</td><td>5</td><td>2.25</td></tr><tr><td>1 pm</td><td>6</td><td>3</td></tr><tr><td>2 pm</td><td>7</td><td>4</td></tr><tr><td>3 pm</td><td>8</td><td>5.25</td></tr><tr><td>4 pm</td><td>9</td><td>7.5</td></tr><tr><td>5 pm</td><td>10</td><td>10</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 510px; left: 937px; white-space: nowrap; font-family: Arial; font-size: 14px; font-weight: bold;">5</div><div></div></div></div>
+
+	</div>
+
+	
+</div>  #}
+		  
+<div class="row">
+          <div class="col-12 col-sm-12">
+            <div class="card card-primary card-outline card-tabs">
+              <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="{{ path('app_utilisateur_utilisateur_index') }}" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Messages</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">Settings</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-three-tabContent">
+                  <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada lacus ullamcorper dui molestie, sit amet congue quam finibus. Etiam ultricies nunc non magna feugiat commodo. Etiam odio magna, mollis auctor felis vitae, ullamcorper ornare ligula. Proin pellentesque tincidunt nisi, vitae ullamcorper felis aliquam id. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin id orci eu lectus blandit suscipit. Phasellus porta, ante et varius ornare, sem enim sollicitudin eros, at commodo leo est vitae lacus. Etiam ut porta sem. Proin porttitor porta nisl, id tempor risus rhoncus quis. In in quam a nibh cursus pulvinar non consequat neque. Mauris lacus elit, condimentum ac condimentum at, semper vitae lectus. Cras lacinia erat eget sapien porta consectetur. 
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam. 
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                     Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna. 
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+                     Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis. 
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          
+</div>
+
+							
+{% endblock %}

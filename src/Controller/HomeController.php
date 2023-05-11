@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AudienceRepository;
 use App\Repository\ModuleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -29,5 +30,17 @@ class HomeController extends AbstractController
     {
         // dd($rep->afficheModule(1));
         return $this->render('home/index.html.twig');
+    }
+
+    #[Route(path: '/statistique', name: 'app_statistique')]
+    public function showStatique(AudienceRepository $audience): Response
+
+    {
+        
+      $aud = $audience->getNb();
+        // dd($rep->afficheModule(1));
+        return $this->render('home/statistique.html.twig',[
+            'audience'=>$aud
+        ]);
     }
 }

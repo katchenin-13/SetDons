@@ -47,8 +47,7 @@ class Audience
     #[ORM\Column(nullable:true)]
     private ?bool $statusaudience = null;
 
-    #[ORM\Column(nullable:true)]
-    private ?bool $mentions = null;
+  
 
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -187,17 +186,7 @@ class Audience
         return $this;
     }
 
-    public function isMentions(): ?bool
-    {
-        return $this->mentions;
-    }
-
-    public function setMentions(bool $mentions): self
-    {
-        $this->mentions = $mentions;
-
-        return $this;
-    }
+   
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
