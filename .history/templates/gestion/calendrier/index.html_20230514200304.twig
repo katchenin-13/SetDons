@@ -1,0 +1,274 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block stylesheets %}
+<style>
+    #calendrier{
+        width: 80%;
+        margin: auto;
+    }
+</style>
+{% endblock %} 
+
+{% block body %}
+
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Draggable Events</h4>
+            </div>
+            <div class="card-body">
+               
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+    <div class="col-9">
+        <div id="calendrier">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block java %}
+    {# <script src="{{ asset('assets/js/datatables.js') }}"></script>  #}
+   <script> 
+      {#    $(function() { 
+              $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_gestion_agenda_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        }); #}
+         
+//         window.onload = () => {
+//  const element = document.getElementById("kt_docs_fullcalendar_basic");
+
+// var todayDate = moment().startOf("day");
+// var YM = todayDate.format("YYYY-MM");
+// var YESTERDAY = todayDate.clone().subtract(1, "day").format("YYYY-MM-DD");
+// var TODAY = todayDate.format("YYYY-MM-DD");
+// var TOMORROW = todayDate.clone().add(1, "day").format("YYYY-MM-DD");
+
+// var calendarEl = document.getElementById("kt_docs_fullcalendar_basic");
+// var calendar = new FullCalendar.Calendar(calendarEl, {
+//     headerToolbar: {
+//         left: "prev,next today",
+//         center: "title",
+//         right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+//     },
+
+//     height: 800,
+//     contentHeight: 780,
+//     aspectRatio: 3,  // see: https://fullcalendar.io/docs/aspectRatio
+
+//     nowIndicator: true,
+//     now: TODAY + "T09:25:00", // just for demo
+
+//     views: {
+//         dayGridMonth: { buttonText: "month" },
+//         timeGridWeek: { buttonText: "week" },
+//         timeGridDay: { buttonText: "day" }
+//     },
+
+//     initialView: "dayGridMonth",
+//     initialDate: TODAY,
+
+//     editable: true,
+//     dayMaxEvents: true, // allow "more" link when too many events
+//     navLinks: true,
+//     events: [
+//         ...
+//     ],
+
+//     eventContent: function (info) {
+//         var element = $(info.el);
+
+//         if (info.event.extendedProps && info.event.extendedProps.description) {
+//             if (element.hasClass("fc-day-grid-event")) {
+//                 element.data("content", info.event.extendedProps.description);
+//                 element.data("placement", "top");
+//                 KTApp.initPopover(element);
+//             } else if (element.hasClass("fc-time-grid-event")) {
+//                 element.find(".fc-title").append("<div class="fc-description">" + info.event.extendedProps.description + "</div>");
+//             } else if (element.find(".fc-list-item-title").lenght !== 0) {
+//                 element.find(".fc-list-item-title").append("<div class="fc-description">" + info.event.extendedProps.description + "</div>");
+//             }
+//         }
+//     }
+// });
+
+// calendar.render();
+//             calendar.on('eventChange', (e) => {
+//                 let url = `/api/${e.event.id}/edit`
+//                 let donnees = {
+//                     "title": e.event.libelle,
+//                     "description": e.event.extendedProps.description,
+//                     "start": e.event.start,
+//                     "end": e.event.end,
+//                     "backgroundColor": e.event.backgroundColor,
+//                     "borderColor": e.event.borderColor,
+//                     "textColor": e.event.textColor,
+//                     "allDay": e.event.allDay
+//                 }
+                
+//                 let xhr = new XMLHttpRequest
+    
+//                 xhr.open("PUT", url)
+//                 xhr.send(JSON.stringify(donnees))
+//             })
+    
+//             calendar.render()
+//         }
+
+
+var calendarEl = document.getElementById("kt_docs_fullcalendar_selectable");
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+    headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+    },
+    initialDate: "2020-09-12",
+    navLinks: true, // can click day/week names to navigate views
+    selectable: true,
+    selectMirror: true,
+
+    // Create new event
+    select: function (arg) {
+        Swal.fire({
+            html: "<div class="mb-7">Create new event?</div><div class="fw-bold mb-5">Event Name:</div><input type="text" class="form-control" name="event_name" />",
+            icon: "info",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Yes, create it!",
+            cancelButtonText: "No, return",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-active-light"
+            }
+        }).then(function (result) {
+            if (result.value) {
+                var title = document.querySelector("input[name="event_name"]").value;
+                if (title) {
+                    calendar.addEvent({
+                        title: title,
+                        start: arg.start,
+                        end: arg.end,
+                        allDay: arg.allDay
+                    })
+                }
+                calendar.unselect()
+            } else if (result.dismiss === "cancel") {
+                Swal.fire({
+                    text: "Event creation was declined!.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    }
+                });
+            }
+        });
+    },
+
+    // Delete event
+    eventClick: function (arg) {
+        Swal.fire({
+            text: "Are you sure you want to delete this event?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, return",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-active-light"
+            }
+        }).then(function (result) {
+            if (result.value) {
+                arg.event.remove()
+            } else if (result.dismiss === "cancel") {
+                Swal.fire({
+                    text: "Event was not deleted!.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    }
+                });
+            }
+        });
+    },
+    editable: true,
+    dayMaxEvents: true, // allow "more" link when too many events
+    events: [
+        {
+            title: "All Day Event",
+            start: "2020-09-01"
+        },
+        {
+            title: "Long Event",
+            start: "2020-09-07",
+            end: "2020-09-10"
+        },
+        {
+            groupId: 999,
+            title: "Repeating Event",
+            start: "2020-09-09T16:00:00"
+        },
+        {
+            groupId: 999,
+            title: "Repeating Event",
+            start: "2020-09-16T16:00:00"
+        },
+        {
+            title: "Conference",
+            start: "2020-09-11",
+            end: "2020-09-13"
+        },
+        {
+            title: "Meeting",
+            start: "2020-09-12T10:30:00",
+            end: "2020-09-12T12:30:00"
+        },
+        {
+            title: "Lunch",
+            start: "2020-09-12T12:00:00"
+        },
+        {
+            title: "Meeting",
+            start: "2020-09-12T14:30:00"
+        },
+        {
+            title: "Happy Hour",
+            start: "2020-09-12T17:30:00"
+        },
+        {
+            title: "Dinner",
+            start: "2020-09-12T20:00:00"
+        },
+        {
+            title: "Birthday Party",
+            start: "2020-09-13T07:00:00"
+        },
+        {
+            title: "Click for Google",
+            url: "http://google.com/",
+            start: "2020-09-28"
+        }
+    ]
+});
+
+calendar.render();
+    </script>
+{% endblock %}

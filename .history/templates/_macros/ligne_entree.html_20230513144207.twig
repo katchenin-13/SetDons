@@ -1,0 +1,88 @@
+{% macro nompf(nompf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(nompf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+        </div>
+    </div>
+{% endmacro %}
+{% macro numeropf(numeropf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(numeropf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+{% macro emailpf(emailpf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(emailpf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro fieldon(fieldon) %}
+    <div class="row row-line">
+       <div class="row "> 
+           <div class="col-md-2">{{ form_row(fieldon.typedon) }}</div>
+           
+          
+            <div class="col-md-1 " >{{ form_row(fieldon.qte,{'attr':{'class':'qte'}}) }}</div>
+            <div class="col-md-2 " >{{ form_row(fieldon.naturedon,{'attr':{'class':'naturedon'}}) }}</div>
+            <div class="col-md-3 ">{{ form_row(fieldon.motifdon) }}</div>
+            <div class="col-md-2 ">{{ form_row(fieldon.montantdon) }}</div>
+            <div class="col-md-1 del-col">   
+
+            </div>
+        
+
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro fielpromesse(fielpromesse) %}
+    <div class="row row-line">
+       <div class="row "> 
+           <div class="col-md-2">{{ form_row(fielpromesse.typedon) }}</div>
+           
+          
+            <div class="col-md-1 " >{{ form_row(fielpromesse.qte,{'attr':{'class':'qte'}}) }}</div>
+            <div class="col-md-2 " >{{ form_row(fielpromesse.nature,{'attr':{'class':'naturedon'}}) }}</div>
+            <div class="col-md-3 ">{{ form_row(fielpromesse.motif) }}</div>
+            <div class="col-md-2 ">{{ form_row(fielpromesse.montantdon) }}</div>
+            <div class="col-md-1 del-col">   
+
+            </div>
+        
+
+        </div>
+    </div>
+{% endmacro %}
+
+{# {% macro beneficiaire(beneficiaire) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.communaute) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.nom) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.numero) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.email) }}</div>
+      <div class="form-group col-md-1 del-col">
+
+        </div> 
+    </div>
+{% endmacro %} #}
+
+
+
+{% macro lignes_module_groupe(ligne) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(ligne.module) }}</div>
+        <div class="form-group col-md-3">{{ form_row(ligne.groupeModule) }}</div>
+        <div class="form-group col-md-3">{{ form_row(ligne.permition) }}</div>
+        <div class="form-group col-md-1">{{ form_row(ligne.ordre) }}</div>
+        <div class="form-group col-md-1">{{ form_row(ligne.ordreGroupe) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}

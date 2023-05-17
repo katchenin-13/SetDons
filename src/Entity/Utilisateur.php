@@ -50,12 +50,27 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
     private ?Groupe $groupe = null;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Mission::class, orphanRemoval: true)]
+    private Collection $missions;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Promesse::class, orphanRemoval: true)]
+    private Collection $promesses;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Fielpromesse::class, orphanRemoval: true)]
+    private Collection $fielpromesses;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Demande::class, orphanRemoval: true)]
+    private Collection $demandes;
+
 
     public function __construct()
     {
        // $this->groupes = new ArrayCollection();
         // $this->demandes = new ArrayCollection();
         // $this->avis = new ArrayCollection();
+        $this->missions = new ArrayCollection();
+        $this->promesses = new ArrayCollection();
+        $this->fielpromesses = new ArrayCollection();
 
     }
 
@@ -362,6 +377,126 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, 
     public function setGroupe(?Groupe $groupe): self
     {
         $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mission>
+     */
+    public function getMissions(): Collection
+    {
+        return $this->missions;
+    }
+
+    public function addMission(Mission $mission): self
+    {
+        if (!$this->missions->contains($mission)) {
+            $this->missions->add($mission);
+            $mission->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMission(Mission $mission): self
+    {
+        if ($this->missions->removeElement($mission)) {
+            // set the owning side to null (unless already changed)
+            if ($mission->getUtilisateur() === $this) {
+                $mission->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promesse>
+     */
+    public function getPromesses(): Collection
+    {
+        return $this->promesses;
+    }
+
+    public function addPromess(Promesse $promess): self
+    {
+        if (!$this->promesses->contains($promess)) {
+            $this->promesses->add($promess);
+            $promess->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromess(Promesse $promess): self
+    {
+        if ($this->promesses->removeElement($promess)) {
+            // set the owning side to null (unless already changed)
+            if ($promess->getUtilisateur() === $this) {
+                $promess->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Fielpromesse>
+     */
+    public function getFielpromesses(): Collection
+    {
+        return $this->fielpromesses;
+    }
+
+    public function addFielpromess(Fielpromesse $fielpromess): self
+    {
+        if (!$this->fielpromesses->contains($fielpromess)) {
+            $this->fielpromesses->add($fielpromess);
+            $fielpromess->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFielpromess(Fielpromesse $fielpromess): self
+    {
+        if ($this->fielpromesses->removeElement($fielpromess)) {
+            // set the owning side to null (unless already changed)
+            if ($fielpromess->getUtilisateur() === $this) {
+                $fielpromess->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Demande>
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes->add($demande);
+            $demande->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->removeElement($demande)) {
+            // set the owning side to null (unless already changed)
+            if ($demande->getUtilisateur() === $this) {
+                $demande->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

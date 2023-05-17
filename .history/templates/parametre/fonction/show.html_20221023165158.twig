@@ -1,0 +1,35 @@
+{% block page_content %}
+    <div class="modal-header">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">Détails Fonction</h4>
+    </div>
+   
+    <div class="modal-body">
+        <table class="table table-bordered">
+        <tbody>
+                            <tr>
+                    <th>Id</th>
+                    <td>{{ fonction.id }}</td>
+                </tr>
+                            <tr>
+                    <th>Libelle</th>
+                    <td>{{ fonction.libelle }}</td>
+                </tr>
+                            <tr>
+                    <th>Code</th>
+                    <td>{{ fonction.code }}</td>
+                </tr>
+                    </tbody>
+    </table>
+    </div>
+    <div class="modal-footer">
+        
+        <button type="button" class="btn dark btn-outline" data-bs-dismiss="modal">Fermer</button>
+    </div>
+
+{% endblock %}
+{% block javascripts_inline %}
+    <script>
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,668 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Statistique{% endblock %}
+{% block header %}Statistique{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block body %}
+    
+          <!--begin::Row-->
+      <div class="container-fluid">
+       <div class="py-5">
+		        <div id="kt_docs_jkanban_rich">
+                            <div class="kanban-container" style="width: 1250px;">
+                                <div data-id="_backlog" data-order="1" class="kanban-board" style="width: 250px; margin-left: 0px; margin-right: 0px;">
+                                       <header class="kanban-board-header light-dark">
+                                           <div class="kanban-title-board">Backlog</div>
+                                      </header>                     
+                                      <main class="kanban-drag">
+                                               <div class="kanban-item">
+                                                  <div class="d-flex align-items-center">
+                        	                        <div class="symbol symbol-success me-3">
+                        	                             <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-6.jpg">
+                        	                        </div>
+                        	                        <div class="d-flex flex-column align-items-start">
+                        	                                  <span class="text-dark-50 fw-bold mb-1">SEO Optimization</span>
+                        	                                   <span class="badge badge-light-success">In progress</span>
+                        	                        </div>
+                        	                  </div>
+                                               </div>
+                                               <div class="kanban-item">
+                                                     <div class="d-flex align-items-center">
+                        	                         <div class="symbol symbol-success me-3">
+                        	                             <span class="symbol-label fs-4">A.D</span>
+                        	                         </div>
+                        	                         <div class="d-flex flex-column align-items-start">
+                        	                               <span class="text-dark-50 fw-bold mb-1">Finance</span>
+                        	                               <span class="badge badge-light-danger">Pending</span>
+                        	                         </div>
+                        	                    </div>
+                                               </div>
+                                      </main>
+                                       <footer>
+                                       </footer>
+                                 </div>
+                                <div data-id="_todo" data-order="2" class="kanban-board" style="width: 250px; margin-left: 0px; margin-right: 0px;">
+                                           <header class="kanban-board-header light-danger">
+                                                <div class="kanban-title-board">To Do</div>
+                                           </header>
+                                           <main class="kanban-drag">
+                                               <div class="kanban-item">
+                                                  <div class="d-flex align-items-center">
+                        	                     <div class="symbol symbol-success me-3">
+                        	                            <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-1.jpg">
+                        	                     </div>
+                        	                     <div class="d-flex flex-column align-items-start">
+                        	                          <span class="text-dark-50 fw-bold mb-1">Server Setup</span>
+                        	                          <span class="badge badge-light-info">Completed</span>
+                        	                         <div class="kanban-item">
+                                                   <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-success me-3">
+                                                        <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-2.jpg">
+                                                    </div>
+                                                    <div class="d-flex flex-column align-items-start">
+                                                        <span class="text-dark-50 fw-bold mb-1">Report Generation</span>
+                                                        <span class="badge badge-light-warning">Due</span>
+                                                    </div>
+                                                   </div>
+                                               </div></main><footer></footer></div><div data-id="_working" data-order="3" class="kanban-board" style="width: 250px; margin-left: 0px; margin-right: 0px;"><header class="kanban-board-header light-primary"><div class="kanban-title-board">Working</div></header><main class="kanban-drag"><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-success me-3">
+                            	         <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-6.jpg">
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">Marketing</span>
+                        	            <span class="badge badge-light-danger">Planning</span>
+                        	        </div>
+                        	    </div>
+                            </div><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-light-info me-3">
+                        	            <span class="symbol-label fs-4">A.P</span>
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">Finance</span>
+                        	            <span class="badge badge-light-primary">Done</span>
+                        	        </div>
+                        	    </div>
+                            </div></main><footer></footer></div><div data-id="_done" data-order="4" class="kanban-board" style="width: 250px; margin-left: 0px; margin-right: 0px;"><header class="kanban-board-header light-success"><div class="kanban-title-board">Done</div></header><main class="kanban-drag"><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-success me-3">
+                        	            <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-5.jpg">
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">SEO Optimization</span>
+                        	            <span class="badge badge-light-success">In progress</span>
+                        	        </div>
+                        	    </div>
+                            </div><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-success me-3">
+                        	            <img alt="Pic" src="../../assets/index.htmlmedia/avatars/300-20.jpg">
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">Product Team</span>
+                        	            <span class="badge badge-light-danger">In progress</span>
+                        	        </div>
+                        	    </div>
+                            </div></main><footer></footer></div><div data-id="_deploy" data-order="5" class="kanban-board" style="width: 250px; margin-left: 0px; margin-right: 0px;"><header class="kanban-board-header light-primary"><div class="kanban-title-board">Deploy</div></header><main class="kanban-drag"><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-light-warning me-3">
+                        	            <span class="symbol-label fs-4">D.L</span>
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">SEO Optimization</span>
+                        	            <span class="badge badge-light-success">In progress</span>
+                        	        </div>
+                        	    </div>
+                            </div><div class="kanban-item">
+                                <div class="d-flex align-items-center">
+                        	        <div class="symbol symbol-light-danger me-3">
+                        	            <span class="symbol-label fs-4">E.K</span>
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 fw-bold mb-1">Requirement Study</span>
+                        	            <span class="badge badge-light-warning">Scheduled</span>
+                        	        </div>
+                        	    </div>
+                            </div>
+                        </main>
+                        <footer>
+
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+            	<button class="btn btn-light-primary me-5" id="addDefault">Add "Default" board</button>
+            	<button class="btn btn-light-danger me-5" id="addToDo">Add element in "To Do" Board</button>
+            	<button class="btn btn-light-success" id="removeBoard">Remove "Done" Board</button>
+            </div>
+										
+    </div>
+        
+          <div class="row mt-5">
+                <div class="col">
+                     <div class="input-group">
+                    <span class="input-group-text  bg-primary text-light">Date de Début-Fin</span>
+                    <input type="date" aria-label="First name" class="form-control " id="debut">
+                    <input type="date" aria-label="Last name" class="form-control" id="fin">
+                    </div>
+                </div>
+                <div class="col ">
+                     <button type="button" class="btn btn-main position-relative float-end">
+                     Utilisateur
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                    </button>
+                </div>
+               
+               
+                               
+                  <!--/.col-->
+	
+          </div>
+        
+            <div class="row mt-5">
+              <div class="col-md-6 col-lg-6">
+                  <div class="card bg-primary text-light">
+                    <div class="card-body">
+                      <div class="h4 m-0 mb-3 text-light ">{{stats.audiences}}</div>
+                      
+                      <div class="progress-bar bg-light mt-2 mb-2" role="progressbar" style="width: 20%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div>	<small class="text-light">Nombre total audience</small></div>
+                    </div>
+                  </div>
+                </div>
+              <!--/.col-->
+    
+              <div class="col-md-6 col-lg-6">
+                <div class="card bg-primary text-light">
+                  <div class="card-body">
+                    <div class="h4 m-0 mb-3 text-light ">{{stats.dons}}</div>
+                    
+                    <div class="progress-bar bg-light mt-2 mb-2" role="progressbar" style="width: 20%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div><small class="text-light">Nombre total Don et audiences</small></div>
+                  </div>
+                </div>
+              </div>
+              <!--/.col-->
+           </div>
+           
+           <div class="row mt-5">
+                <div class="col-md-6 col-lg-6">
+                    
+                  <div class="row">
+                    <div class="col">
+                     <button type="button" class="btn btn-main position-relative float-start">
+                     Accordé
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                    </button>
+                   
+                    
+                    </div>
+                    <div class="col">
+                             <button type="button" class="btn btn-main position-relative float-center">
+                         en cour de validation 
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                    </button>
+                    </div>
+                    <div class="col">
+                           <button type="button" class="btn btn-main position-relative float-end">
+                       rejeté
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                    </button>
+                    </div>
+                  </div>
+
+               </div>
+            <!--/.col-->
+
+                <div class="col-md-6 col-lg-6">
+                    <div class="row mx-5">
+                        <div class="col">
+                          <button type="button" class="btn btn-main position-relative float-start">
+                               Promesse
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ stats.promesses}}
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
+                        </div>
+                        <div class="col">
+                                <button type="button" class="btn btn-main position-relative float-end">
+                                  Effectue
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                   {{stats.doneffectues}}
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                                </button>
+                        </div>
+                    </div>
+                   
+               </div>
+            <!--/.col-->
+           </div>
+            <!--/.col-->
+        
+             <div class="row mt-5">
+                <div class="col-lg-9 mt-4 mt-lg-0 mt-5">
+                    <div class="tab-content">
+                      
+                        <div class="tab-pane active show" id="tab-2">
+                            <div class="row">
+                                <div class="col-lg-12 details order-2 order-lg-1">
+                                    <h1>Statistiques</h1>
+                                    <canvas id="categories" width="400" height="100"></canvas>
+
+                                </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-3">
+                            <div class="row">
+                                <div class="col-lg-12 details order-2 order-lg-1">
+                                    <h1>Statistiques</h1>
+                                    <canvas id="categories" width="400" height="100"></canvas>
+                            
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab-4">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                                <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-5">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-6">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-7">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-8">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-9">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-5">
+                        <ul class="nav nav-tabs flex-column">
+                    <h3>Période<span class="badge bg-danger mb-3 mx-3">3 Mois</span></h3>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link  active show" data-bs-toggle="tab" href="#tab-2">6 Dermiers mois</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-3"> Communauté</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-4"> Catégorie</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-5"> Localité</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-7"> Motif</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-8">Accordées</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-9">Annulées</a>
+                        </li>
+                        </ul>
+                </div>
+
+                <div class="col-lg-9 mt-4 mt-lg-0 mt-5">
+                    <div class="tab-content">
+                      
+                        <div class="tab-pane active show" id="tab-11">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                               
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-12">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                 {# <canvas id="UsersVsMyUsers" width="100" height="100"></canvas> #}
+                                    <canvas id="categories1" width="400" height="100"></canvas>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-13">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                <canvas id="kt_chartjs_2" class="mh-400px"></canvas>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-14">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-15">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-16">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-5">
+                        <ul class="nav nav-tabs flex-column">
+                         <h3>Période<span class="badge bg-danger mb-3 mx-3">3 Mois</span></h3>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link  active show" data-bs-toggle="tab" href="#tab-11">6 Dermiers mois</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link test" data-bs-toggle="tab" href="#tab-12"> Communauté</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-13"> Catégorie</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-14"> Localité</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-15"> Motif</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-16">Accordées</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-17">Annulées</a>
+                        </li>
+                        </ul>
+                </div>
+
+               
+            </div>
+                
+     </div>
+    
+
+     
+     
+      </div> 
+		  
+
+							
+{% endblock %}
+
+{% block java %}
+  
+
+ <script>
+  $(function () {
+
+
+  
+   
+
+$('body').on('click', '.test', function (e) {
+    e.preventDefault();
+    var data = {};
+      data['debut'] = document.getElementById('debut').value;
+      data['fin'] = document.getElementById('fin').value;
+      const url = this.href;
+
+    $.ajax({
+        url:'/api',
+        type: 'get',
+        data:data,
+        dataType: 'json',
+        success: function (response, status) {
+        console.log(response);
+
+
+              
+           
+
+           
+
+            
+        }
+    });
+});
+
+  });
+
+
+
+ let categories = document.querySelector("#categories")
+    let categGraph = new Chart(categories, {
+        type: "pie",
+        data: {
+            labels:["cat1","cat1","cat3"],
+            datasets: [{
+                label: "Répartition des catégories",
+                data: [4,5,10],
+                backgroundColor:["red","green","bleu"],
+            }]
+        }
+    })
+
+
+    
+// $(window).on("load",(function()
+//   {
+//       var a=$("#categorie1");
+//       new Chart(a,{type:"bar",
+//           options:{responsive:!0,maintainAspectRatio:!1
+//               ,responsiveAnimationDuration:500},
+//           data:{
+//               labels:{{ sdata | raw }},
+//               datasets:[{
+//                   label:{{ sdata | raw }},
+//                   data:[2,5,8,8,9,5,8],
+//                   backgroundColor:["#00A5A8","#626E82","#FF7D4D","#FF4558","#16D39A"]
+//           }]}})
+// }));
+var ctx = document.getElementById("kt_chartjs_1");
+
+
+
+var data = {
+  labels:   {{ sdata | raw }},
+  datasets: [{
+    data: [150, 87, 85, 50, 88, 60, 45],
+    backgroundColor: "#4082c4"
+  },{
+     data: [150, 87, 545, 50, 88, 60, 45],
+    backgroundColor: "red"
+  }]
+
+}
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    "hover": {
+      "animationDuration": 0
+    },
+    "animation": {
+      "duration": 1,
+      "onComplete": function() {
+        var chartInstance = this.chart,
+          ctx = chartInstance.ctx;
+
+        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+
+        this.data.datasets.forEach(function(dataset, i) {
+          var meta = chartInstance.controller.getDatasetMeta(i);
+          meta.data.forEach(function(bar, index) {
+            var data = dataset.data[index];
+            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+          });
+        });
+      }
+    },
+    legend: {
+      "display": false
+    },
+    tooltips: {
+      "enabled": false
+    },
+    scales: {
+      yAxes: [{
+        display: false,
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          max: Math.max(...data.datasets[0].data) + 10,
+          display: false,
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+});
+
+
+
+
+
+
+
+//var ctx = document.getElementById('kt_chartjs_1');
+
+// Define colors
+var primaryColor = KTUtil.getCssVariableValue('--kt-primary');
+var dangerColor = KTUtil.getCssVariableValue('--kt-danger');
+var successColor = KTUtil.getCssVariableValue('--kt-success');
+
+// Define fonts
+var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+
+// Chart labels
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Chart data
+const data = {
+    labels: labels,
+    datasets: [
+      
+   
+    ]
+};
+
+// Chart config
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+        plugins: {
+            title: {
+                display: false,
+            }
+        },
+        responsive: true,
+        interaction: {
+            intersect: false,
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        }
+    },
+    defaults:{
+        global: {
+            defaultFont: fontFamily
+        }
+    }
+};
+
+// Init ChartJS -- for more info, please visit: https://www.chartjs.org/docs/latest/
+var myChart = new Chart(ctx, config);
+ </script>
+{% endblock %}
+

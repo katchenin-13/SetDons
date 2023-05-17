@@ -1,0 +1,69 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block stylesheets %}
+
+{% endblock %} 
+
+{% block body %}
+
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Draggable Events</h4>
+            </div>
+            <div class="card-body">
+               
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+    <div class="col-9">
+        <div id="calendrier">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block java %}
+    {# <script src="{{ asset('assets/js/datatables.js') }}"></script>  #}
+   <script> 
+      {#    $(function() { 
+              $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_gestion_agenda_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        }); #}
+         
+      v
+    
+            calendar.on('eventChange', (e) => {
+                let url = `/api/${e.event.id}/edit`
+                let donnees = {
+                    "title": e.event.libelle,
+                    "description": e.event.extendedProps.description,
+                    "start": e.event.start,
+                    "end": e.event.end,
+                    "backgroundColor": e.event.backgroundColor,
+                    "borderColor": e.event.borderColor,
+                    "textColor": e.event.textColor,
+                    "allDay": e.event.allDay
+                }
+                
+                let xhr = new XMLHttpRequest
+    
+                xhr.open("PUT", url)
+                xhr.send(JSON.stringify(donnees))
+            })
+    
+            calendar.render()
+        }
+    </script>
+{% endblock %}

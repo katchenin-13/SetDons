@@ -1,0 +1,187 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block stylesheets %}
+<style>
+    #calendrier{
+        width: 80%;
+        margin: auto;
+    }
+</style>
+{% endblock %} 
+
+{% block body %}
+
+<div class="row">
+    <!--begin::Draggable heading-->
+<h4 class="mb-3">Draggable Events</h4>
+<!--end::Draggable heading-->
+
+<!--begin::Events listing-->
+<div id="external-events-list" class="d-flex flex-wrap">
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 1</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 2</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 3</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 4</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 5</div>
+    </div>
+</div>
+<!--end::Events listing-->
+
+<!--begin::Checkbox-->
+<div class="mt-2 my-5">
+    <div class="form-check form-check-custom form-check-solid">
+        <input class="form-check-input" type="checkbox" value="" id="drop-remove" />
+        <label class="form-check-label" for="drop-remove">
+            Remove event after drop
+        </label>
+    </div>
+</div>
+<!--end::Checkbox-->
+
+<!--begin::Fullcalendar-->
+<div id="kt_docs_fullcalendar_drag">
+
+</div><!--end::Fullcalendar-->
+   
+di
+{% endblock %}
+
+{% block java %}
+    {# <script src="{{ asset('assets/js/datatables.js') }}"></script>  #}
+   <script> 
+      {#    $(function() { 
+              $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_gestion_agenda_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        }); #}
+         
+//         window.onload = () => {
+//  const element = document.getElementById("kt_docs_fullcalendar_basic");
+
+// var todayDate = moment().startOf("day");
+// var YM = todayDate.format("YYYY-MM");
+// var YESTERDAY = todayDate.clone().subtract(1, "day").format("YYYY-MM-DD");
+// var TODAY = todayDate.format("YYYY-MM-DD");
+// var TOMORROW = todayDate.clone().add(1, "day").format("YYYY-MM-DD");
+
+// var calendarEl = document.getElementById("kt_docs_fullcalendar_basic");
+// var calendar = new FullCalendar.Calendar(calendarEl, {
+//     headerToolbar: {
+//         left: "prev,next today",
+//         center: "title",
+//         right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+//     },
+
+//     height: 800,
+//     contentHeight: 780,
+//     aspectRatio: 3,  // see: https://fullcalendar.io/docs/aspectRatio
+
+//     nowIndicator: true,
+//     now: TODAY + "T09:25:00", // just for demo
+
+//     views: {
+//         dayGridMonth: { buttonText: "month" },
+//         timeGridWeek: { buttonText: "week" },
+//         timeGridDay: { buttonText: "day" }
+//     },
+
+//     initialView: "dayGridMonth",
+//     initialDate: TODAY,
+
+//     editable: true,
+//     dayMaxEvents: true, // allow "more" link when too many events
+//     navLinks: true,
+//     events: [
+//         ...
+//     ],
+
+//     eventContent: function (info) {
+//         var element = $(info.el);
+
+//         if (info.event.extendedProps && info.event.extendedProps.description) {
+//             if (element.hasClass("fc-day-grid-event")) {
+//                 element.data("content", info.event.extendedProps.description);
+//                 element.data("placement", "top");
+//                 KTApp.initPopover(element);
+//             } else if (element.hasClass("fc-time-grid-event")) {
+//                 element.find(".fc-title").append("<div class="fc-description">" + info.event.extendedProps.description + "</div>");
+//             } else if (element.find(".fc-list-item-title").lenght !== 0) {
+//                 element.find(".fc-list-item-title").append("<div class="fc-description">" + info.event.extendedProps.description + "</div>");
+//             }
+//         }
+//     }
+// });
+
+// calendar.render();
+//             calendar.on('eventChange', (e) => {
+//                 let url = `/api/${e.event.id}/edit`
+//                 let donnees = {
+//                     "title": e.event.libelle,
+//                     "description": e.event.extendedProps.description,
+//                     "start": e.event.start,
+//                     "end": e.event.end,
+//                     "backgroundColor": e.event.backgroundColor,
+//                     "borderColor": e.event.borderColor,
+//                     "textColor": e.event.textColor,
+//                     "allDay": e.event.allDay
+//                 }
+                
+//                 let xhr = new XMLHttpRequest
+    
+//                 xhr.open("PUT", url)
+//                 xhr.send(JSON.stringify(donnees))
+//             })
+    
+//             calendar.render()
+//         }
+
+
+// Initialize the external events -- for more info please visit the official site: https://fullcalendar.io/demos
+var containerEl = document.getElementById("kt_docs_fullcalendar_events_list");
+new FullCalendar.Draggable(containerEl, {
+    itemSelector: ".fc-event",
+    eventData: function(eventEl) {
+        return {
+            title: eventEl.innerText.trim()
+        }
+    }
+});
+
+// initialize the calendar -- for more info please visit the official site: https://fullcalendar.io/demos
+var calendarEl = document.getElementById("kt_docs_fullcalendar_drag");
+var calendar = new FullCalendar.Calendar(calendarEl, {
+    headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+    },
+    editable: true,
+    droppable: true, // this allows things to be dropped onto the calendar
+    drop: function(arg) {
+        // is the "remove after drop" checkbox checked?
+        if (document.getElementById("drop-remove").checked) {
+            // if so, remove the element from the "Draggable Events" list
+            arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+        }
+    }
+});
+
+calendar.render();
+    </script>
+{% endblock %}

@@ -38,10 +38,14 @@ class Typedon
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $CreatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'typedon', targetEntity: Fielpromesse::class, orphanRemoval: true)]
+    private Collection $fielpromesses;
+
 
     public function __construct()
     {
         $this->qte = new ArrayCollection();
+        $this->fielpromesses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,6 +140,36 @@ public function getUpdatedAt(): ?\DateTimeInterface
     public function setCreatedAt(\DateTimeInterface $CreatedAt): self
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Fielpromesse>
+     */
+    public function getFielpromesses(): Collection
+    {
+        return $this->fielpromesses;
+    }
+
+    public function addFielpromess(Fielpromesse $fielpromess): self
+    {
+        if (!$this->fielpromesses->contains($fielpromess)) {
+            $this->fielpromesses->add($fielpromess);
+            $fielpromess->setTypedon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFielpromess(Fielpromesse $fielpromess): self
+    {
+        if ($this->fielpromesses->removeElement($fielpromess)) {
+            // set the owning side to null (unless already changed)
+            if ($fielpromess->getTypedon() === $this) {
+                $fielpromess->setTypedon(null);
+            }
+        }
 
         return $this;
     }

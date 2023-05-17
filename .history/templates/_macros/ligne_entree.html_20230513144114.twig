@@ -1,0 +1,52 @@
+{% macro nompf(nompf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(nompf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+        </div>
+    </div>
+{% endmacro %}
+{% macro numeropf(numeropf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(numeropf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+{% macro emailpf(emailpf) %}
+    <div class="row row-line">
+        <div class="form-group col-md-10">{{ form_row(emailpf.libelle) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
+
+{c
+
+{# {% macro beneficiaire(beneficiaire) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.communaute) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.nom) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.numero) }}</div>
+        <div class="form-group col-md-3">{{ form_row(beneficiaire.email) }}</div>
+      <div class="form-group col-md-1 del-col">
+
+        </div> 
+    </div>
+{% endmacro %} #}
+
+
+
+{% macro lignes_module_groupe(ligne) %}
+    <div class="row row-line">
+        <div class="form-group col-md-3">{{ form_row(ligne.module) }}</div>
+        <div class="form-group col-md-3">{{ form_row(ligne.groupeModule) }}</div>
+        <div class="form-group col-md-3">{{ form_row(ligne.permition) }}</div>
+        <div class="form-group col-md-1">{{ form_row(ligne.ordre) }}</div>
+        <div class="form-group col-md-1">{{ form_row(ligne.ordreGroupe) }}</div>
+        <div class="form-group col-md-1 del-col">
+
+        </div>
+    </div>
+{% endmacro %}
