@@ -1,0 +1,83 @@
+{% block page_content %}
+    <div class="modal-header">
+        <h4 class="modal-title">Détails Audience</h4>
+        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+        </div>
+    </div>
+   
+    <div class="modal-body">
+        <table class="table table-bordered">
+        <tbody>
+                 {# <tr>
+                    <th>Id</th>
+                    <td>{{ audience.id }}</td>
+                </tr> #}
+                <tr>
+                    <th>Motif</th>
+                    <td>{{ audience.motif }}</td>
+                </tr>
+                <tr>
+                    <th>Date de rencontre</th>
+                    <td>{{ audience.daterencontre ? audience.daterencontre|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Nom du chef délégation</th>
+                    <td>{{ audience.nomchef }}</td>
+                </tr>
+                <tr>
+                    <th>Numéro</th>
+                    <td>{{ audience.numero }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre de participant</th>
+                    <td>{{ audience.nombreparticipant }}</td>
+                </tr>
+                  <tr>
+                    <th>Communaute</th>
+                    <td>{{ audience.communaute.libelle }}</td>
+                </tr>
+                {# <tr>
+                    <th>Nom desparticipant</th>
+                    <td>{{ audience.nomdesparticipant }}</td>
+                </tr> #}
+                 <tr>
+                    <th>Observation</th>
+                    <td>{{ audience.observation }}</td>
+                </tr>
+                <tr>
+                    <th>Status de l'Audience</th>
+                    <td>{{ audience.statusaudience ? 'Yes' : 'No' }}</td>
+                </tr>
+                {# <tr>
+                    <th>Mentions</th>
+                    <td>{{ audience.mentions ? 'Yes' : 'No' }}</td>
+                </tr> #}
+
+               
+                <tr>
+                    <th>Date de la dernière modtification</th>
+                    <td>{{ audience.UpdatedAt ? audience.UpdatedAt|date('Y-m-d ') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de création</th>
+                    <td>{{ audience.CreatedAt ? audience.CreatedAt|date('Y-m-d ') : '' }}</td>
+                </tr>
+                    </tbody>
+    </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-bs-dismiss="modal">Fermer</button>
+    </div>
+
+{% endblock %}
+{% block java %}
+    <script>
+        
+    </script>
+{% endblock %}

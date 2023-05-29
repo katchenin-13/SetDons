@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Resume</title>
+</head>
+
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+
+        <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for audience in data %}
+
+                     <tr>
+                      <td>{{ audience.motif }}</td>
+                      <td>{{ audience.motif }}</td>
+                      <td>{{ audience.motif }}</td>
+                    
+                    </tr>
+                <th>Motif</th>
+                <td></td>
+                {% endfor %}
+                   
+                  
+                  </tbody>
+                </table>
+        <table widath="100%" border="1">
+            <thead>
+            <tr>
+                <th class="sorting" tabindex="0" aria-controls="dt_app_gestion_audience" rowspan="1" colspan="1" aria-label="Date de la rencontre: activer pour trier la colonne par ordre croissant">Date de la rencontre</th><th class="sorting" tabindex="0" aria-controls="dt_app_gestion_audience" rowspan="1" colspan="1" aria-label="Communauté: activer pour trier la colonne par ordre croissant">Communauté</th><th class="sorting dtr-hidden" tabindex="0" aria-controls="dt_app_gestion_audience" rowspan="1" colspan="1" aria-label="Nom du chef: activer pour trier la colonne par ordre croissant" style="display: none;">Nom du chef</th><th class="sorting dtr-hidden" tabindex="0" aria-controls="dt_app_gestion_audience" rowspan="1" colspan="1" aria-label="Numéro: activer pour trier la colonne par ordre croissant" style="display: none;">Numéro</th><th class="sorting dtr-hidden" tabindex="0" aria-controls="dt_app_gestion_audience" rowspan="1" colspan="1" aria-label="Motif: activer pour trier la colonne par ordre croissant" style="display: none;">Motif</th><th class="grid_row_actions sorting_disabled dtr-hidden" rowspan="1" colspan="1" aria-label="Actions" style="display: none;">Actions</th></tr>
+            <tr class="datatable-filters d-none"><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td></tr>
+        </thead>
+            <tbody>
+
+                
+            </tbody>
+        </table>
+    </div>
+</body>

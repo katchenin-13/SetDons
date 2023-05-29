@@ -1,0 +1,50 @@
+{% block body %}
+<div class="card shadow-sm">
+    <div class="card-header card-header-sm">
+        <h3 class="card-title"> Liste des Profils</h3>
+        <div class="card-toolbar">
+            <a href="{{ path('app_pdf_generator_fonction') }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-plus-square text-light"></i>
+                        imprimer
+                 </a>
+            {# &nbsp; #}
+            <a href="{{ path('app_parametre_fonction_new') }}" class="btn btn-main btn-sm"  
+                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                    <i class="bi bi-plus-square text-light"></i>
+                    Nouveau
+            </a>
+            {# &nbsp; #}
+            {# <a href="{{ path('fonction_addFile_new') }}" class="btn btn-main btn-sm"
+               data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-upload text-light"></i>
+                Nouveau fichier
+            </a> #}
+        </div>
+    </div>
+    <div class="card-body">
+         <div class="row">
+            <div class="col-sm-12">
+                <div id="grid_app_parametre_fonction" class="grid-dt-wrapper">Chargement....</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script> 
+        $(function() { 
+              $('#grid_app_parametre_fonction').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_parametre_fonction_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        });
+    </script>
+{% endblock %}

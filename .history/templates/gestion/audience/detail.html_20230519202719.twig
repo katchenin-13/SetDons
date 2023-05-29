@@ -1,0 +1,16 @@
+{% block page_content %}
+
+<table class="table table-bordered">
+    <tbody>
+        {% for audience in audiences %}
+
+        <th>Motif</th>
+        <td>{{ audience.motif }}</td>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+v

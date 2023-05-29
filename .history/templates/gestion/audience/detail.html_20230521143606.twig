@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Resume</title>
+</head>
+
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+
+        <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Motif</th>
+                      <th>Date de rencontre</th>
+                      <th>Nom du chef délégation</th>
+                      <th>Numéro</th>
+                      <th>Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for audience in data %}
+
+                     <tr>
+                      <td>{{ audience.motif }}</td>
+                      <td>{{ audience.motif }}</td>
+                      <td>{{ audience.motif }}</td>
+                    
+                    </tr>
+              
+                {% endfor %}
+
+                <tr>
+                   
+                    <td>{{ audience.motif }}</td>
+               
+                    
+                    <td>{{ audience.daterencontre ? audience.daterencontre|date('d-m-Y ') : '' }}</td>
+               
+                  
+                    <td>{{ audience.nomchef }}</td>
+                
+                    <td>{{ audience.numero }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre de participant</th>
+                    <td>{{ audience.nombreparticipant }}</td>
+                </tr>
+                  <tr>
+                    <th>Communaute</th>
+                    <td>{{ audience.communaute.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Localité</th>
+                    <td>{{ audience.communaute.localite.libelle }}</td>
+                </tr>
+                {# <tr>
+                    <th>Nom desparticipant</th>
+                    <td>{{ audience.nomdesparticipant }}</td>
+                </tr> #}
+                 <tr>
+                    <th>Observation</th>
+                    <td>{{ audience.observation }}</td>
+                </tr>
+                <tr>
+                    <th>Status de l'Audience</th>
+                    <td>{{ audience.statusaudience ? 'Yes' : 'No' }}</td>
+                </tr>
+                {# <tr>
+                    <th>Mentions</th>
+                    <td>{{ audience.mentions ? 'Yes' : 'No' }}</td>
+                </tr> #}
+                <tr>
+                    <th>Date de création</th>
+                    <td>{{ audience.CreatedAt ? audience.CreatedAt|date('d-m-Y  ') : '' }}</td>
+                </tr>
+
+                <tr>
+                    <th>Date de la dernière modtification</th>
+                    <td>{{ audience.UpdatedAt ? audience.UpdatedAt|date('d-m-Y  ') : '' }}</td>
+                </tr>
+            </tbody>
+                   
+                  
+                  </tbody>
+                </table>
+       
+    </div>
+</body>

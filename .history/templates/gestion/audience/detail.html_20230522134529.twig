@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Resume</title>
+  
+</head>
+<body>
+    
+
+   
+
+     <style>
+        .colon{
+             border: 1px solid;
+              text-align: center;
+              font-size: 12px;
+         }
+     </style>
+
+    <div style="margin: 0 auto;display: block;">
+
+
+        <table class="table table-bordered text-nowrap">
+                  <thead>
+                    <tr>
+                        di
+                      <th class="mb-5">Motif</th>
+                      <th>Date de rencontre</th>
+                      <th>Nom du chef délégation</th>
+                      <th>Numéro</th>
+                      {# <th>Nombre de participant</th> #}
+                      <th>Communaute</th>
+                      <th>Localité</th>
+                      <th>Status de l'Audience</th>
+                     {# <th>Date de création</th>
+                     <th>Date de la dernière modtification</th> #}
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for audience in data %}
+
+                     <tr>
+                    <td>{{ audience.motif }}</td>
+                    <td>{{ audience.daterencontre ? audience.daterencontre|date('d-m-Y ') : '' }}</td>
+                   <td>{{ audience.nomchef }}</td>
+                    <td>{{ audience.numero }}</td>
+                    {# <td>{{ audience.nombreparticipant }}</td> #}
+                    <td>{{ audience.communaute.libelle }}</td>
+                    <td>{{ audience.communaute.localite.libelle }}</td>
+                    {# <td>{{ audience.observation }}</td> #}
+                    <td>{{ audience.statusaudience ? 'Yes' : 'No' }}</td>
+                    {# <td>{{ audience.CreatedAt ? audience.CreatedAt|date('d-m-Y  ') : '' }}</td>
+                    <td>{{ audience.UpdatedAt ? audience.UpdatedAt|date('d-m-Y  ') : '' }}</td> #}
+                    </tr>
+              
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+  
+</body>
+
+
+
+</html>

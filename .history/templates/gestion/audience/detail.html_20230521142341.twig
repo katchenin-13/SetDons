@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Resume</title>
+</head>
+
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+        <table widath="100%" border="1">
+            <tbody>
+                
+                {% for audience in data %}
+
+                <th>Motif</th>
+                <td>{{ audience.motif }}</td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>

@@ -1,0 +1,52 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des contacts{% endblock %}
+{% block header %}contacts{% endblock %}
+{% block breadcrumb %}{% endblock %} 
+{% block body %}
+<div class="card shadow-sm">
+    <div class="card-header card-header-sm">
+        <h3 class="card-title"> Liste des contacts</h3>
+        <div class="card-toolbar">
+            <a href="{{ path('app_pdf_generator_contact') }}" class="btn btn-success btn-sm"  
+                        data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                        <i class="bi bi-plus-square text-light"></i>
+                        imprimer
+                    </a>
+                 <a href="{{ path('app_pdf_generator') }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-plus-square text-light"></i>
+                        imprimer
+            </a>
+                 &nbsp;
+            <a href="{{ path('app_gestion_contact_new') }}" class="btn btn-main btn-sm"  
+                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="grid_app_gestion_contact" class="grid-dt-wrapper">Chargement....</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script> 
+        $(function() { 
+              $('#grid_app_gestion_contact').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_gestion_contact_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        });
+    </script>
+{% endblock %}
