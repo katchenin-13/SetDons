@@ -51,7 +51,7 @@ class MissionController extends AbstractController
                 "format" => 'Y-m-d'
             ])
             ->add('dateretour', DateTimeColumn::class, [
-                'label' => 'Date de fin ',
+                'label' => 'Date de f ',
                 "format" => 'Y-m-d'
             ])
             ->add('ordremission', TextColumn::class, ['label' => 'Titre de la mission'])

@@ -52,8 +52,9 @@ class Mission
     private ?\DateTimeInterface $debut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner la date de fin de la mission')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner la date de retour de la mission')]
     #[Assert\Expression("this.getDateretour() >= this.getDebut()", message: "la date de debut doit être superirieure")]
+
     private ?\DateTimeInterface $dateretour = null;
 
     #[ORM\ManyToOne(inversedBy: 'missions')]
@@ -148,17 +149,7 @@ class Mission
         return $this;
     }
 
-    public function getDateretour(): ?\DateTimeInterface
-    {
-        return $this->dateretour;
-    }
-
-    public function setDateretour(\DateTimeInterface $dateretour): self
-    {
-        $this->dateretour = $dateretour;
-
-        return $this;
-    }
+  c
 
     public function getCommunaute(): ?Communaute
     {

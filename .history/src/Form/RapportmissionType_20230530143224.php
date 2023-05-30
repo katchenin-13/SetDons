@@ -47,15 +47,8 @@ class RapportmissionType extends AbstractType
                 "empty_data" => '',
                 'attr' => ['class' => 'date'],
             ])
-            ->add('justification', TextareaType::class, [
-                'label' => 'Justication de votre retard',
-                'attr' => ['placeholder' => 'Saisir le text']
-            ])
          
-            ->add('action', TextareaType::class, [
-                'label' => 'Action (s) réalisée (s)',
-                'attr' => ['placeholder' => 'Saisir le text']
-            ])
+           c
             ->add('opportunite', TextareaType::class, [
                 'label' => 'Opportunite',
                  'required'=>false,

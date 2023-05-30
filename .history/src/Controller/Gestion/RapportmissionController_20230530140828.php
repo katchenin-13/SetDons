@@ -2,32 +2,37 @@
 
 namespace App\Controller\Gestion;
 
-use App\Entity\Mission;
-use App\Form\MissionType;
-use App\Repository\MissionRepository;
+use App\Entity\Rapportmission;
+use App\Form\RapportmissionType;
+use App\Repository\RapportmissionRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Dompdf\Dompdf;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\BoolColumn;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/gestion/mission')]
-class MissionController extends AbstractController
+#[Route('/gestion/rapportmission')]
+class RapportmissionController extends AbstractController
 {
-
-    #[Route('/pdf/generator/mission', name: 'app_pdf_generator_mision')]
-    public function generatePdf(MissionRepository $mission): Response
+    
+    /**
+     * cette fonction permet de generer un pdf de rapport de mission
+     *
+     * @param RapportmissionRepository $rapportmission
+     * @return Response
+     */
+    #[Route('/pdf/generator/rapportmission', name: 'app_pdf_generator_rapportmision')]
+    public function generatePdf(RapportmissionRepository $rapportmission): Response
     {
-        $data = $mission->findAll();
-        $html =  $this->renderView('gestion/mission/detail.html.twig', [
+        $data = $rapportmission->findAll();
+        $html =  $this->renderView('gestion/rapportmission/detail.html.twig', [
             'data' => $data
         ]);
         $dompdf = new Dompdf();
@@ -41,35 +46,43 @@ class MissionController extends AbstractController
         );
     }
 
-    #[Route('/', name: 'app_gestion_mission_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_gestion_rapportmission_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
         $table = $dataTableFactory->create()
-            ->add('code', TextColumn::class, ['label' => 'code de la mission'])
-            ->add('debut', DateTimeColumn::class, [
-                'label' => 'Date de debut ',
-                "format" => 'Y-m-d'
-            ])
-            ->add('dateretour', DateTimeColumn::class, [
-                'label' => 'Date de fin ',
-                "format" => 'Y-m-d'
-            ])
-            ->add('ordremission', TextColumn::class, ['label' => 'Titre de la mission'])
-            ->add('chefmission', TextColumn::class, ['label' => 'Chef de Mission'])
-            ->add('communaute', TextColumn::class, ['label' => 'Communaute', 'field' =>  'comm.libelle'])
-            ->add('objectif', TextColumn::class, ['label' => 'Objectif (s) de la mission'])
-        ->createAdapter(ORMAdapter::class, [
-            'entity' => Mission::class,
-            'query' => function (ORMQueryBuilder $req) {
-                $req->select('m,comm')
-                    ->from(Mission::class, 'm')
-                    ->join('m.communaute', 'comm')
-                    //  ->join('d.fieldon','f')
+           
 
-                ;
-            }
-        ])
-        ->setName('dt_app_gestion_mission');
+            ->add('code', TextColumn::class, ['label' => 'code de la mission', 'field' => 'm.code'])
+            ->add('dateretour', DateTimeColumn::class, [
+                'label' => 'Date de retour ',
+                "format" => 'Y-m-d'
+            ])
+            // ->add('libelle', TextColumn::class, ['label' => 'Titre de la mission', 'field' => 'm.libelle'])
+            ->add('chefmission', TextColumn::class, ['label' => 'Chef de Mission', 'field' => 'm.chefmission'])
+            //->add('objectif', TextColumn::class, ['label' => 'Objectif (s) de la mission', 'field' => 'm.objectif'])
+            ->add('communaute', TextColumn::class, ['label' => 'Communauté', 'field' => 'm.communaute.libelle'])
+           
+              // ->add('action')
+            // ->add('mission')
+            // ->add('opportunite'
+            // ->add('difficulte')
+            // ->add('prochaineetape')
+           // ->add('action', TextColumn::class, ['label' => 'Action réalisée(s) sur la mission'])
+           // ->add('opportunite', TextColumn::class, ['label' => ' Opportunité(s) de la mission'])
+           // ->add('difficulte', TextColumn::class, ['label' => 'Difficulté(s) de la mission'])
+            ->add('prochaineetape', TextColumn::class, ['label' => 'Prochainé étape'])
+            ->createAdapter(ORMAdapter::class, [
+                'entity' => Rapportmission::class,
+                'query' => function (ORMQueryBuilder $req) {
+                    $req->select('d,m')
+                        ->from(Rapportmission::class, 'd')
+                        ->join('d.mission', 'm')
+                        //  ->join('d.fieldon','f')
+
+                    ;
+                }
+            ])
+        ->setName('dt_app_gestion_rapportmission');
 
         $renders = [
             'show' =>  new ActionRender(function () {
@@ -99,23 +112,17 @@ class MissionController extends AbstractController
                 , 'orderable' => false
                 ,'globalSearchable' => false
                 ,'className' => 'grid_row_actions'
-                , 'render' => function ($value, Mission $context) use ($renders) {
+                , 'render' => function ($value, Rapportmission $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#exampleModalSizeLg2',
 
                         'actions' => [
                             'show' => [
-                                'url' => $this->generateUrl('app_gestion_mission_show', ['id' => $value])
-                                , 'ajax' => true
-                                , 'icon' => '%icon% bi bi-eye'
-                                , 'attrs' => ['class' => 'btn-success']
-                                , 'render' => $renders['edit']
+                                'url' => $this->generateUrl('app_gestion_rapportmission_show', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-eye', 'attrs' => ['class' => 'btn-success'], 'render' => $renders['edit']
                             ],
-
-                            
                             'edit' => [
-                            'url' => $this->generateUrl('app_gestion_mission_edit', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_rapportmission_edit', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-pen'
                             , 'attrs' => ['class' => 'btn-default']
@@ -123,7 +130,7 @@ class MissionController extends AbstractController
                         ],
                         'delete' => [
                             'target' => '#exampleModalSizeNormal',
-                            'url' => $this->generateUrl('app_gestion_mission_delete', ['id' => $value])
+                            'url' => $this->generateUrl('app_gestion_rapportmission_delete', ['id' => $value])
                             , 'ajax' => true
                             , 'icon' => '%icon% bi bi-trash'
                             , 'attrs' => ['class' => 'btn-danger']
@@ -145,18 +152,18 @@ class MissionController extends AbstractController
         }
 
 
-        return $this->render('gestion/mission/index.html.twig', [
+        return $this->render('gestion/rapportmission/index.html.twig', [
             'datatable' => $table
         ]);
     }
 
-    #[Route('/new', name: 'app_gestion_mission_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MissionRepository $missionRepository, FormError $formError): Response
+    #[Route('/new', name: 'app_gestion_rapportmission_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, RapportmissionRepository $rapportmissionRepository, FormError $formError): Response
     {
-        $mission = new Mission();
-        $form = $this->createForm(MissionType::class, $mission, [
+        $rapportmission = new Rapportmission();
+        $form = $this->createForm(RapportmissionType::class, $rapportmission, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestion_mission_new')
+            'action' => $this->generateUrl('app_gestion_rapportmission_new')
         ]);
         $form->handleRequest($request);
 
@@ -167,14 +174,14 @@ class MissionController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestion_mission_index');
+            $redirect = $this->generateUrl('app_gestion_rapportmission_index');
 
 
 
 
             if ($form->isValid()) {
 
-                $missionRepository->save($mission, true);
+                $rapportmissionRepository->save($rapportmission, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -203,28 +210,28 @@ class MissionController extends AbstractController
 
         }
 
-        return $this->renderForm('gestion/mission/new.html.twig', [
-            'mission' => $mission,
+        return $this->renderForm('gestion/rapportmission/new.html.twig', [
+            'rapportmission' => $rapportmission,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_gestion_mission_show', methods: ['GET'])]
-    public function show(Mission $mission): Response
+    #[Route('/{id}/show', name: 'app_gestion_rapportmission_show', methods: ['GET'])]
+    public function show(Rapportmission $rapportmission): Response
     {
-        return $this->render('gestion/mission/show.html.twig', [
-            'mission' => $mission,
+        return $this->render('gestion/rapportmission/show.html.twig', [
+            'rapportmission' => $rapportmission,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_gestion_mission_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Mission $mission, MissionRepository $missionRepository, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestion_rapportmission_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Rapportmission $rapportmission, RapportmissionRepository $rapportmissionRepository, FormError $formError): Response
     {
 
-        $form = $this->createForm(MissionType::class, $mission, [
+        $form = $this->createForm(RapportmissionType::class, $rapportmission, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestion_mission_edit', [
-                    'id' =>  $mission->getId()
+            'action' => $this->generateUrl('app_gestion_rapportmission_edit', [
+                    'id' =>  $rapportmission->getId()
             ])
         ]);
 
@@ -238,12 +245,12 @@ class MissionController extends AbstractController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestion_mission_index');
+            $redirect = $this->generateUrl('app_gestion_rapportmission_index');
 
 
             if ($form->isValid()) {
 
-                $missionRepository->save($mission, true);
+                $rapportmissionRepository->save($rapportmission, true);
                 $data = true;
                 $message       = 'Opération effectuée avec succès';
                 $statut = 1;
@@ -270,21 +277,21 @@ class MissionController extends AbstractController
             }
         }
 
-        return $this->renderForm('gestion/mission/edit.html.twig', [
-            'mission' => $mission,
+        return $this->renderForm('gestion/rapportmission/edit.html.twig', [
+            'rapportmission' => $rapportmission,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_gestion_mission_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Mission $mission, MissionRepository $missionRepository): Response
+    #[Route('/{id}/delete', name: 'app_gestion_rapportmission_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Rapportmission $rapportmission, RapportmissionRepository $rapportmissionRepository): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                'app_gestion_mission_delete'
+                'app_gestion_rapportmission_delete'
                 ,   [
-                        'id' => $mission->getId()
+                        'id' => $rapportmission->getId()
                     ]
                 )
             )
@@ -293,9 +300,9 @@ class MissionController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $missionRepository->remove($mission, true);
+            $rapportmissionRepository->remove($rapportmission, true);
 
-            $redirect = $this->generateUrl('app_gestion_mission_index');
+            $redirect = $this->generateUrl('app_gestion_rapportmission_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -315,8 +322,8 @@ class MissionController extends AbstractController
             }
         }
 
-        return $this->renderForm('gestion/mission/delete.html.twig', [
-            'mission' => $mission,
+        return $this->renderForm('gestion/rapportmission/delete.html.twig', [
+            'rapportmission' => $rapportmission,
             'form' => $form,
         ]);
     }

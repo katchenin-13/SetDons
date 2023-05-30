@@ -51,11 +51,7 @@ class Mission
     #[Assert\GreaterThanOrEqual(value: "today", message: "la date de debut doit être superirieure ou égale a aujourd'hui")]
     private ?\DateTimeInterface $debut = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner la date de fin de la mission')]
-    #[Assert\Expression("this.getDateretour() >= this.getDebut()", message: "la date de debut doit être superirieure")]
-    private ?\DateTimeInterface $dateretour = null;
-
+   c
     #[ORM\ManyToOne(inversedBy: 'missions')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: 'Veuillez seclectionner une communauté')]

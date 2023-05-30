@@ -50,10 +50,7 @@ class MissionController extends AbstractController
                 'label' => 'Date de debut ',
                 "format" => 'Y-m-d'
             ])
-            ->add('dateretour', DateTimeColumn::class, [
-                'label' => 'Date de fin ',
-                "format" => 'Y-m-d'
-            ])
+           c
             ->add('ordremission', TextColumn::class, ['label' => 'Titre de la mission'])
             ->add('chefmission', TextColumn::class, ['label' => 'Chef de Mission'])
             ->add('communaute', TextColumn::class, ['label' => 'Communaute', 'field' =>  'comm.libelle'])

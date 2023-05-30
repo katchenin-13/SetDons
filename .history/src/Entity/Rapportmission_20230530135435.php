@@ -17,9 +17,7 @@ class Rapportmission
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner la date de retour de la mission')]
-    private ?\DateTimeInterface $dateretour = null;
+   :
 
 
     #[ORM\Column( length:300 ,type: Types::TEXT)]
@@ -71,13 +69,6 @@ class Rapportmission
     #[Assert\NotBlank(message: 'Veuillez selectionner le code mission')]
     private ?Mission $mission = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $justification = null;
-
- 
-
-    
-
 
     
 
@@ -103,7 +94,17 @@ class Rapportmission
         return $this;
     }
 
- 
+    public function getDateretour(): ?\DateTimeInterface
+    {
+        return $this->dateretour;
+    }
+
+    public function setDateretour(\DateTimeInterface $dateretour): self
+    {
+        $this->dateretour = $dateretour;
+
+        return $this;
+    }
    
 
     public function getUtilisateur(): ?Utilisateur
@@ -186,31 +187,6 @@ class Rapportmission
     public function setMission(?Mission $mission): self
     {
         $this->mission = $mission;
-
-        return $this;
-    }
-
-  
-    public function getDateretour(): ?\DateTimeInterface
-    {
-        return $this->dateretour;
-    }
-
-    public function setDateretour(\DateTimeInterface $dateretour): self
-    {
-        $this->dateretour = $dateretour;
-
-        return $this;
-    }
-
-    public function getJustification(): ?string
-    {
-        return $this->justification;
-    }
-
-    public function setJustification(string $justification): self
-    {
-        $this->justification = $justification;
 
         return $this;
     }

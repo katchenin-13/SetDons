@@ -48,7 +48,7 @@ class MissionType extends AbstractType
             ])
 
             ->add('dateretour', DateType::class, [
-                "label" => "Date de fin de la mission",
+                "label" => "Date de retour de la mission",
                 "required" => true,
                 "widget" => 'single_text',
                 "input_format" => 'Y-m-d',

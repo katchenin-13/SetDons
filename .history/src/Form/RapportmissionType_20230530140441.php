@@ -38,19 +38,7 @@ class RapportmissionType extends AbstractType
                 'attr' => ['class' => 'has-select2'],
 
             ])
-            ->add('dateretour', DateType::class, [
-                "label" => "Date de retour de la mission",
-                "required" => true,
-                "widget" => 'single_text',
-                "input_format" => 'Y-m-d',
-                "by_reference" => true,
-                "empty_data" => '',
-                'attr' => ['class' => 'date'],
-            ])
-            ->add('justification', TextareaType::class, [
-                'label' => 'Justication de votre retard',
-                'attr' => ['placeholder' => 'Saisir le text']
-            ])
+            
          
             ->add('action', TextareaType::class, [
                 'label' => 'Action (s) réalisée (s)',

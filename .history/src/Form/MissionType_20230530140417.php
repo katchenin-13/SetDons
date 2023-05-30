@@ -47,15 +47,7 @@ class MissionType extends AbstractType
             'attr' => ['class' => 'date'],
             ])
 
-            ->add('dateretour', DateType::class, [
-                "label" => "Date de fin de la mission",
-                "required" => true,
-                "widget" => 'single_text',
-                "input_format" => 'Y-m-d',
-                "by_reference" => true,
-                "empty_data" => '',
-                'attr' => ['class' => 'date'],
-            ])
+        c
 
             ->add('communaute', EntityType::class, [
                 'class'        => Communaute::class,

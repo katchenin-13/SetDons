@@ -30,6 +30,7 @@ class DonType extends AbstractType
             // ->add('numero')
             // ->add('email')
             ->add('communaute', EntityType::class, [
+            'mapped' => false,
                 'class'        => Communaute::class,
                 'label'        => 'Communaute',
                  "required" => true,

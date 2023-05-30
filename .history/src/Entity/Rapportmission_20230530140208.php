@@ -71,9 +71,6 @@ class Rapportmission
     #[Assert\NotBlank(message: 'Veuillez selectionner le code mission')]
     private ?Mission $mission = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $justification = null;
-
  
 
     
@@ -199,18 +196,6 @@ class Rapportmission
     public function setDateretour(\DateTimeInterface $dateretour): self
     {
         $this->dateretour = $dateretour;
-
-        return $this;
-    }
-
-    public function getJustification(): ?string
-    {
-        return $this->justification;
-    }
-
-    public function setJustification(string $justification): self
-    {
-        $this->justification = $justification;
 
         return $this;
     }

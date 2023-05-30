@@ -48,7 +48,7 @@ class RapportmissionType extends AbstractType
                 'attr' => ['class' => 'date'],
             ])
             ->add('justification', TextareaType::class, [
-                'label' => 'Justication de votre retard',
+                'label' => 'Action (s) réalisée (s)',
                 'attr' => ['placeholder' => 'Saisir le text']
             ])
          
