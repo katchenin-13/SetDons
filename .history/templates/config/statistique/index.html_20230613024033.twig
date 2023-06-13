@@ -1,0 +1,66 @@
+{% extends 'base-layout.html.twig' %}
+{% block title %}Tableau de bord{% endblock %}
+{% block header %}Ressources Humaines{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block body %}
+<div class="card card-tabs  card-custom card-sticky">  
+    <div class="card-header card-header-stretch card-header-custom">
+         <h3 class="card-title"> Tableau de bord</h3>
+    </div>
+    <div class="card-body">
+        <div class="row row-10px">
+            <div class="col-xl-3 col-12">
+                <ul class="nav flex-column nav-pills  sw-nav-tabs-vertical" id="chartTabs">
+                    {% for key, _parametre in c %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if key == 0 %}active{% endif %}" data-bs-toggle="tab"
+                                href="#{{ _parametre.id }}" data-href="{{ _parametre.href }}">
+                                <span class="nav-text">{{ _parametre.label }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-xl-9 col-12">
+                <div class="tab-content" id="paramChildContent">
+                    {% for key, _parametre in modules %}
+                            {% set id =  _parametre.id  %}
+                        <div class="tab-pane fade {% if key == 0 %}show active{% endif %}" 
+                            id="{{ id }}" role="tabpanel" aria-labelledby="{{ id }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block java %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+        $(document).ready(function () {
+            load_tab('chartTabs');
+
+            Highcharts.setOptions({
+                lang: {
+                    downloadCSV: 'Export CSV',
+                    downloadJPEG: 'Export JPEG',
+                    downloadPDF: 'Export PDF',
+                    downloadPNG: 'Export PNG',
+                    downloadSVG: 'Export Image V. (SVG)',
+                    downloadXLS: 'Export Excel',
+                    hideData: 'Cacher les données',
+                    viewData: 'Voir les données',
+                    printChart: 'Imprimer',
+                    viewFullscreen: 'Plein Ecran',
+                    exitFullscreen: 'Sortir du plein écran',
+                    noData: 'Aucune Donnée disponible'
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

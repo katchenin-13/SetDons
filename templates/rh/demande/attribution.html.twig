@@ -1,0 +1,209 @@
+{% block page_content %}
+    {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Attribution Employé à la demande</h5>
+         <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+        </div>
+    </div>
+      {% from '_macros/general.html.twig' import  prototype_attribution_personne %}
+    {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
+    <div class="modal-body">
+        {{ include('_includes/ajax/response.html.twig') }}
+        <a href="{{ path('app_utilisateur_employe_new') }}" 
+            class="btn btn-primary btn-sm d-none" data-bs-toggle="modal" data-bs-target="#infoSousDossierModal">
+                Créér un nouvel employé
+        </a>
+       
+        <div class="card card-bordered my-3">
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12"> <p>Nombre d'attributions: {{ demande_personnel.attributions|length}} / {{ demande_personnel.effectif }}</p></div>
+                    </div>
+                 <div class="row">
+                    <div class="col-md-6"> <p class="my-0">Fonction demandée: <span class="text-main">{{ demande_personnel.fonction.libelle }}</span></p></div>
+                    <div class="col-md-3">  <p class="my-0">Durée du contrat: {{ demande_personnel.dureeContrat }}</p></div>
+                    <div class="col-md-3"> <p class="my-0">Qualification: {{ demande_personnel.qualification ? 'Oui': 'Non'}}</p></div>
+                </div>
+            </div>
+        </div>
+       
+       
+      
+       
+        <div class="row">
+            
+            <div class="col-md-6">
+                {{ form_row(form.employe) }}
+            </div>
+              <div class="col-md-3">
+                {{ form_row(form.dateDebut) }}
+            </div>
+              <div class="col-md-3">
+                {{ form_row(form.dateFin) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_row(form.fichier) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_row(form.heurePrevue) }}
+            </div>
+             <div class="col-md-4">
+                {{ form_row(form.montantHoraire) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        {# {{ include('_includes/ajax/loader.html.twig') }} #}
+        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+        {{ form_widget(form.save)}}
+        {% if workflow_can(demande_personnel, 'validation_rh') %}
+            {{ form_widget(form.validate) }}
+        {% endif %}
+    </div>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
+
+{% block javascripts_inline %}
+    <script>
+        $(function () {
+            init_select2('select');
+             $('.no-auto').each(function () {
+                const $this = $(this);
+                const $id = $('#' + $this.attr('id'));
+                init_date_picker($id,  'down', (start, e) => {
+                    //$this.val(start.format('DD/MM/YYYY'));
+                }, null, null, false);
+
+                $id.on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                });
+            });
+        }); 
+
+
+        $(function () {
+            const $container = $('.column-container');
+       
+            var index = $container.length;
+           
+
+            const $addLink = $('.add_line');
+            $addLink.click(function(e) {
+                const $this  = $(this);
+                const proto_class = $this.attr('data-protoclass');
+                const name = $this.attr('data-protoname');
+                const $container = $($this.attr('data-container'));
+                
+               
+
+                addLine($container, name, proto_class);
+
+               
+            
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            });
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            /*if (index == 0) {
+            addimputation($container);
+            } else {*/
+            if (index > 0) {
+                $container.children('.row-colonne').each(function() {
+                    const $this = $(this);
+                    addDeleteLink($this);
+                    $this.find("select").each(function() {
+                        const $this = $(this);
+                        init_select2($this, null, '#exampleModalSizeLg2'); 
+                    });
+                });
+
+            }
+
+            
+
+
+            // La fonction qui ajoute un formulaire Categorie
+            function addLine($container, name, proto_class) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+               
+                var $prototype = $($(proto_class).attr('data-prototype')
+                    .replace(new RegExp(name + 'label__', 'g'), 'Colonne ' + (index+1))
+                    .replace(new RegExp(name, 'g'), index));
+
+
+                init_select2($prototype.find('select'), null, '#exampleModalSizeLg2');
+
+                $prototype.find('.no-auto').each(function () {
+                    const $this = $(this);
+                    const $id = $('#' + $this.attr('id'));
+                    init_date_picker($id,  'down', (start, e) => {
+                        //$this.val(start.format('DD/MM/YYYY'));
+                    }, null, null, false);
+
+                    $id.on('apply.daterangepicker', function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                    });
+                });
+
+              
+                // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+                addDeleteLink($prototype, name);
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                let next_index = index + 1;
+                /*let html_content = `
+                    <input type="hidden" name="form[colonnes][${index}][colonne]" id="form_colonnes_${index}_colonne" value="1" />
+                    <input type="hidden" name="form[colonnes][${index}][valeur]" id="form_colonnes_${index}_colonne" value="0" />
+                     <input type="hidden" name="form[colonnes][${next_index}][colonne]" id="form_colonnes_${next_index}_colonne" value="1" />
+                    <input type="hidden" name="form[colonnes][${next_index}][valeur]" id="form_colonnes_${next_index}_colonne" value="0" />
+                `;
+
+                $container.append(html_content);*/
+            
+                index++;
+            }
+
+
+            function addDeleteLink($prototype, name = null) {
+                // Création du lien
+                $deleteLink = $('<a href="#" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>');
+                // Ajout du lien
+                $prototype.find(".del-col").append($deleteLink);
+
+
+              
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    const $this = $(this);
+                    const $parent = $this.closest($this.parent('div').attr('data-parent'));
+
+                    //console.log($(this).attr('data-parent'), $(this));
+                    $parent.remove();
+
+                    if (index > 0) {
+                        index -= 1;
+                    }
+                    
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                });
+            }
+
+
+        })
+        
+    </script>
+{% endblock %}

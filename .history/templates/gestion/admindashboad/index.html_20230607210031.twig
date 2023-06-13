@@ -1,0 +1,850 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Statistique{% endblock %}
+{% block header %}Statistique{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/assets/fonts/simple-line-icons/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/assets/css/pages/card-statistics.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/assets/css/pages/vertical-timeline.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+
+{% endblock %}
+
+{% block body %}
+			
+      <div class="container-fluid">
+           <!--section 1::Row-->
+           <div class="row gy-5 g-xl-10">
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-2 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+ 
+
+  
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">     
+       
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-compass fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">327</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        Projects                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-success fs-base">
+                            <i class="ki-outline ki-arrow-up fs-5 text-success ms-n1"></i> 
+                                       
+            2.1%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-2 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-chart-simple fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">27,5M</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        Stock Qty                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-success fs-base">
+                            <i class="ki-outline ki-arrow-up fs-5 text-success ms-n1"></i> 
+                                       
+            2.1%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-2 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-abstract-39 fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">149M</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        Stock Value                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-danger fs-base">
+                            <i class="ki-outline ki-arrow-down fs-5 text-danger ms-n1"></i>                  
+                                       
+            0.47%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-2 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-map fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">89M</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        C APEX                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-success fs-base">
+                            <i class="ki-outline ki-arrow-up fs-5 text-success ms-n1"></i> 
+                                       
+            2.1%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+
+     <!--begin::Col-->
+     <div class="col-sm-6 col-xl-2 mb-5 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-abstract-35 fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">72.4%</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        OPEX                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-danger fs-base">
+                            <i class="ki-outline ki-arrow-down fs-5 text-danger ms-n1"></i>                  
+                                       
+            0.647%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-2 mb-5 mb-xl-10">
+        
+<!--begin::Card widget 2-->
+<div class="card h-lg-100">
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+        <!--begin::Icon--> 
+        <div class="m-0">
+                            <i class="ki-outline ki-abstract-26 fs-2hx text-gray-600"></i>                     
+                       
+        </div>                           
+        <!--end::Icon-->
+
+        <!--begin::Section--> 
+        <div class="d-flex flex-column my-7">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">106M</span> 
+            <!--end::Number--> 
+
+            <!--begin::Follower-->
+            <div class="m-0">
+                                    <span class="fw-semibold fs-6 text-gray-400">
+                        Saving                    </span>  
+                 
+            </div>       
+            <!--end::Follower--> 
+        </div>  
+        <!--end::Section-->          
+        
+        <!--begin::Badge--> 
+        <span class="badge badge-light-success fs-base">
+                            <i class="ki-outline ki-arrow-up fs-5 text-success ms-n1"></i> 
+                                       
+            2.1%
+        </span>  
+        <!--end::Badge-->                              
+    </div>
+    <!--end::Body-->
+</div>
+<!--end::Card widget 2-->
+
+
+     </div>
+    <!--end::Col-->
+</div>
+          <div class="row  py-5">
+            <div class="col-3">
+                <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                    <!--begin::Header-->
+				      	  <div class="card-header ">
+                    	<!--begin::Title-->
+                      <span class="text-dark-400 pt-1 fw-semibold fs-6">Audiences(Communaute)</span>
+                    	<div class="card-title d-flex flex-column">
+                    		<!--begin::Info-->
+                    		<div class="d-flex align-items-center">
+                    			<!--begin::Currency-->
+                    			<span class="fs-2hx fw-bold text-primary me-2 lh-1 ls-n2">69,700</span>
+                    			<!--end::Amount-->
+                    		</div>
+                    		<!--end::Info-->
+                    		<!--begin::Subtitle-->
+                        
+                    		<!--end::Subtitle-->
+                    	</div>
+                    	<!--end::Title-->
+                  </div>
+                    <!--end::Header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2 pb-4 d-flex flex-wrap align-items-center mt-5">
+                    	<!--begin::Chart-->
+                    
+                    	<!--end::Chart-->
+                    	<!--begin::Labels-->
+                    
+                    	<!--end::Labels-->
+                    </div>		
+                    <!--end::Card body-->
+			          </div>
+            </div> 
+            <div class="col-3">
+                <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+				           <!--begin::Header-->
+					          <div class="card-header ">
+                    	<!--begin::Title-->
+                        <span class="text-dark-400 pt-1 fw-semibold fs-6">Audience(Personne)</span>
+                    	<div class="card-title d-flex flex-column">
+                    		<!--begin::Info-->
+                    		<div class="d-flex align-items-center">
+                    			<!--begin::Currency-->
+                    			<span class="fs-2hx fw-bold text-primary me-2 lh-1 ls-n2">69,700</span>
+                    			<!--end::Amount-->
+                    		</div>
+                    		<!--end::Info-->
+                    		<!--begin::Subtitle-->
+                        
+                    		<!--end::Subtitle-->
+                    	</div>
+                    	<!--end::Title-->
+                    </div>
+                    <!--end::Header-->
+
+                    <!--begin::Card body-->
+                   <div class="card-body pt-2 pb-4 d-flex flex-wrap align-items-center">
+                            <!--begin::Chart-->
+                            
+                   </div>		
+				          	<!--end::Card body-->							
+			          </div>
+            </div> 
+            <div class="col-3">
+                <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                     <!--begin::Header-->
+					            <div class="card-header ">
+                        	<!--begin::Title-->
+                         <span class="text-dark-400 pt-1 fw-semibold fs-6">Total dons réalisés</span>
+                          <div class="card-title d-flex flex-column">
+                            <!--begin::Info-->
+                            <div class="d-flex align-items-center">
+                              <!--begin::Currency-->
+                              <span class="fs-2hx fw-bold text-primary me-2 lh-1 ls-n2">{{stats.getDonCount}},00</span>
+                              <!--end::Amount-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Subtitle-->
+                            
+                            <!--end::Subtitle-->
+                          </div>
+                          <!--end::Title-->
+                     </div>
+                    <!--end::Header-->
+                   
+                    <!--begin::Card body-->
+                  
+			         </div>
+            </div> 
+            <div class="col-3">
+                <div class="card card-flush h-md-50 mb-5 mb-xl-10 bg-suc">
+                    <!--begin::Header-->
+					          <div class="card-header ">
+                    	<!--begin::Title-->
+                         <span class="text-dark-400 pt-1 fw-semibold fs-6">Total promesses</span>
+                    	<div class="card-title d-flex flex-column">
+                    		<!--begin::Info-->
+                    		<div class="d-flex align-items-center">
+                    			<!--begin::Currency-->
+                    			<span class="fs-2hx fw-bold text-primary me-2 lh-1 ls-n2">{{ stats.getPromesseCount}},00</span>
+                    			<!--end::Amount-->
+                    		</div>
+                    		<!--end::Info-->
+                    		<!--begin::Subtitle-->
+                        
+                    		<!--end::Subtitle-->
+                    	</div>
+                    	<!--end::Title-->
+                       
+                    </div>
+                    <!--end::Header-->
+                   
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2 pb-4 d-flex flex-wrap align-items-center">
+                    	<!--begin::Chart-->
+                    	
+                    	<!--end::Chart-->
+                    	
+                    </div>		
+                    <!--end::Card body-->
+			          </div>
+            </div> 
+          </div>
+          <!--section 1::Row-->
+
+         
+    
+         
+          
+           
+        
+             <div class="row mt-5">
+                <div class="col-lg-9 mt-4 mt-lg-0 mt-5">
+                    <div class="tab-content">
+                      
+                        <div class="tab-pane active show" id="tab-2">
+                           <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">CHIFFRE D'AFFAIRE ANNUEL</h4>
+                                                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                                    <div class="heading-elements">
+                                                        <ul class="list-inline mb-0">
+                                                            <li><a data-action="collapse"><i class="fa fa-window-minimize icon-minus"></i></a></li>
+                                                            <li><a data-action="expand"><i class="fa fa-window-maximize "></i></a></li>
+                                                            <li><a data-action="close"><i class="fa fa-close "></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-content collapse show">
+                                                    <div class="card-body">
+                                                        <div class="height-400"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                                            <canvas id="simple-doughnut-chart_annee" width="697" height="500" class="chartjs-render-monitor" style="display: block; height: 400px; width: 558px;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-3">
+                            <div class="row">
+                                <div class="col-lg-12 details order-2 order-lg-1">
+                                    <h1>Statistiques</h1>
+                                    <canvas id="categories" width="400" height="100"></canvas>
+                            
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab-4">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                                <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-5">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-6">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-7">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-8">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-9">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-5">
+                        <ul class="nav nav-tabs flex-column">
+                  
+                        <li class="nav-item">
+							 <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Périodes
+                       
+                                <select class="form-select " aria-label="Default select exampl">
+                                <option selected>Selectionner la période</option>
+                                <option value="1">les 2 derniers mois</option>
+                                <option value="2">les 4 derniers mois</option>
+                                <option value="3">les 6 derniers mois</option>
+                                <option value="4">les 8 derniers mois</option>
+                                <option value="5">les 10 derniers mois</option>
+							</select>
+                            </a> 
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Communauté 
+							<select class="form-select changer" aria-label="Default select example" id="debut">
+							<option selected>Selectionner la communaute</option>
+							{# <option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option> #}
+							{% for item in stats.ListeCommunaute %}
+								<option value="{{item.id}}">{{item.libelle}}</option>
+							{% endfor %}
+
+							</select>
+                            </a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-4"> Catégorie
+							<label for="">Catégorie</label> 
+							<select class="form-select " aria-label="Default select exampl">
+							<option selected>Selectionner la catégorie</option>
+							
+                            {% for item in stats.ListeDesCategorie %}
+								<option value="{{item.id}}">{{item.libelle}}</option>
+							{% endfor %}
+                        
+							</select>
+                        </li
+                        </li>
+                        <li class="nav-item">
+                            {# <a class="nav-link" data-bs-toggle="tab" href="#tab-5"> Localité</a> #}
+							<label for="">Localité</label> 
+							<select class="form-select " aria-label="Default select exampl">
+							<option selected>Selectionner la localité</option>
+							{% for item in stats.ListedesLocalie %}
+								<option value="{{item.id}}">{{item.libelle}}</option>
+							{% endfor %}
+							</select>
+                        </li>
+                        <li class="nav-item">
+                            {# <a class="nav-link" data-bs-toggle="tab" href="#tab-7"> Motif</a> #}
+							<label for="">Motif</label> 
+							<select class="form-select " aria-label="Default select exampl">
+							<option selected>Selectionner le Motif</option>
+							{% for item in stats.listeDesAudience %}
+								<option value="{{item.id}}">{{item.motif}}</option>
+							{% endfor %}
+                        	</select>
+						</li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-8">Accordées</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-9">Annulées</a>
+                        </li>
+                        </ul>
+                </div>
+
+                <div class="col-lg-9 mt-4 mt-lg-0 mt-5">
+                    <div class="tab-content">
+                      
+                        <div class="tab-pane active show" id="tab-11">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                               
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-12">
+                            <div class="row">
+                             <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                 {# <canvas id="UsersVsMyUsers" width="100" height="100"></canvas> #}
+                                    <canvas id="categories1" width="400" height="100"></canvas>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-13">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                <canvas id="kt_chartjs_2" class="mh-400px"></canvas>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-14">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                           
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-15">
+                            <div class="row">
+                            <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                          
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-16">
+                            <div class="row">
+                           <div class="col-lg-12 details order-2 order-lg-1">
+                               <h1>Statistiques</h1>
+                                  <canvas id="categories" width="400" height="100"></canvas>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-5">
+                        <ul class="nav nav-tabs flex-column">
+                         <h3>Période<span class="badge bg-danger mb-3 mx-3">3 Mois</span></h3>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link  active show" data-bs-toggle="tab" href="#tab-11">6 Dermiers mois</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link test" data-bs-toggle="tab" href="#tab-12"> Communauté</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-13"> Catégorie</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-14"> Localité</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-15"> Motif</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-16">Accordées</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-17">Annulées</a>
+                        </li>
+                        </ul>
+                </div>
+
+               
+            </div>
+                
+     </div>
+    
+
+     
+     
+   
+		  
+
+							
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('dist/assets/js/scripts/charts/chartjs/pie-doughnut/pie.min.js') }}"></script>
+    {#<script src="{{ asset('dist/assets/js/scripts/charts/chartjs/pie-doughnut/pie-simple.min.js') }}"></script>#}
+    <script src="{{ asset('dist/assets/js/scripts/charts/chartjs/pie-doughnut/doughnut.min.js') }}"></script>
+   {# <script src="{{ asset('dist/assets/js/scripts/charts/chartjs/pie-doughnut/doughnut-simple.min.js') }}"></script>#}
+    <script src="{{ asset('dist/assets/vendors/js/extensions/jquery.knob.min.js') }}"></script>
+    <script src="{{ asset('dist/assets/vendors/js/charts/raphael-min.js') }}"></script>
+    <script src="{{ asset('dist/assets/vendors/js/charts/morris.min.js') }}"></script>
+    <script src="{{ asset('dist/assets/vendors/js/charts/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('dist/assets/vendors/js/charts/chart.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script>
+
+    
+$('body').on('click', '.test', function (e) {
+    e.preventDefault();
+    var data = {};
+      data['debut'] = document.getElementById('debut').value;
+      data['fin'] = document.getElementById('fin').value;
+      const url = this.href;
+    var $echanger = $(".changer");
+    $echanger.change((event)=> {
+    event.preventDefault();
+    let $id         = $(".changer").val();
+    console.log($id);
+    $.ajax({
+        url:'/api',
+        type: 'get',
+        data:data,
+        dataType: 'json',
+        success: function (response, status) {
+        console.log(response);
+        }
+    });
+})
+
+ $(document).ready(()=> {
+            //$echanger un variable qui permet de changer les valeurs des champs
+                var $echanger = $(".changer");
+                $echanger.change((event)=> {
+                event.preventDefault();
+                let $id         = $(".changer").val();
+                console.log($id);
+                const url = "/gestion/rapportmission/api/"+$id+"/choix";
+                 $.ajax({
+                    type: 'get',
+                    url: url,
+                    data:{$id},
+                    dataType:'json',
+                    success: (response, status)=>{
+                    if (response.code === 200) {
+                       
+                    
+
+                    }
+                    }
+                
+                });
+           });
+    });
+
+  $(window).on("load",(function()
+  {
+    //   var a=$("#simple-doughnut-chart_annee");
+    //   new Chart(a,{type:"bar",
+    //       options:{responsive:!0,maintainAspectRatio:!1
+    //           ,responsiveAnimationDuration:500},
+    //       data:{
+    //           labels:{{ mois|raw }},
+    //           datasets:[{
+    //               label:{{ mois|raw }},
+    //               data:{{ y|raw }},
+    //               backgroundColor:["#00A5A8","#626E82","#FF7D4D","#FF4558","#16D39A"]
+    //           }]}})
+
+
+        var ctx = document.getElementById("simple-doughnut-chart_annee");
+        var data = {
+        labels:{{ mois|raw }},
+        datasets: [{
+            label:{{ mois|raw }},
+            data:{{ y|raw }},
+            backgroundColor:["#00A5A8","#626E82","#FF7D4D","#FF4558","#16D39A"]
+        }]
+
+        }
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            "hover": {
+            "animationDuration": 0,
+            "responsiveAnimationDuration":500,
+            "responsive":!0,
+            "maintainAspectRatio":!1
+            },
+            "animation": {
+            "duration": 1,
+            "onComplete": function() {
+                var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+
+                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+
+                this.data.datasets.forEach(function(dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function(bar, index) {
+                    var data = dataset.data[index];
+                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                });
+                });
+            }
+            },
+            legend: {
+            "display": false
+            },
+            tooltips: {
+            "enabled": false
+            },
+            scales: {
+            yAxes: [{
+                display: false,
+                gridLines: {
+                display: false
+                },
+                ticks: {
+                max: Math.max(...data.datasets[0].data) + 10,
+                display: false,
+                beginAtZero: true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                display: false
+                },
+                ticks: {
+                beginAtZero: true
+                }
+            }]
+            }
+        }
+        });
+
+        }));
+</script>
+{% endblock %}
+ 

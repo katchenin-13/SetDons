@@ -1,0 +1,129 @@
+{% block page_content %}
+    {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création Rapportmission</h5>
+        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+        </div>
+    </div>
+    {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
+    <div class="modal-body">
+        {{ include('_includes/ajax/response.html.twig') }}
+        <div class="row">
+
+            <div class="col-md-4">{{ form_row(form.mission) }}</div>
+            <div class="col-md-8">{{ form_row(form.dateretour) }}</div>
+            <div class="col-md-12">{{ form_row(form.justification) }}</div>
+            <div class="col-md-12">{{ form_row(form.action) }}</div>
+            <div class="col-md-12">{{ form_row(form.opportunite)}}</div>
+            <div class="col-md-12">{{ form_row(form.difficulte) }}</div>
+            <div class="col-md-12">{{ form_row(form.prochaineetape) }}</div>
+            {# <div class="col-md-12">{{ form_row(form.observation) }}</div> #}
+       </div>
+    </div>
+    <div class="modal-footer">
+        {# {{ include('_includes/ajax/loader.html.twig') }} #}
+        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-main btn-ajax btn-sm"><span class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> Valider</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block java %}
+    <script>
+        $(function () {
+            init_select2('select');
+
+       $( document).ready()= ()=>{   
+              var    
+             var idmission = document.getElementsByClassName("choixMagasin").value;
+             console.log(idmission);
+            if(document.getElementsByClassName("choix").value == "team")
+                affiche_team();
+            /*else if($_POST['choix'] == "sa")
+                //affiche_sa();*/
+            else if(document.getElementById("choix").value=="ut")
+                affiche_ut();
+        }
+ 
+ 
+ 
+        function affiche_team(){
+             
+            document.getElementById("libre").innerHTML=
+            "<select id=\"example\" name=\"example\" multiple=\"multiple\><option value=\"1\">dgsd</option><option value=\"2\">aaaa</option></select>";
+             
+         
+        }
+ 
+        function affiche_ut(){
+            document.getElementById("libre").innerHTML=
+                "<input id=\"user\" type=\"text\" value=\"UT\" />";
+        }
+ 
+ 
+        document.getElementById("ok").onclick = function(){
+        alert("toto");
+ 
+            }
+        });
+    //    $(document).ready(function() {
+        
+    //     var $choix = $(".choixMagasin");
+    //      $choix.change(function () {
+    //        var $id = $choix.val();
+           
+    //     });
+    //      const url = '/api/';
+       
+    //     $.ajax({
+    //         type: 'get',
+    //         url: url,
+    //         data: {id},
+    //         success: function(){
+    //             alert("envoyé");   
+    //         }
+            
+        
+    //     });
+       
+    //   });
+//    window.addEventListener('load', (event) => {
+//     var fields = document.getElementsByClassName('.choixMagsin');
+    
+// });
+
+window.document.onload= ()=>{
+  var fields = document.getElementsByClassName('choixMagsin');
+  console.log('ghhdhgfdfehfcdg');
+}
+
+
+    // function onChangeCheckbon(event) {
+       
+    //     var id = document.getElementsByClassName('choixMagsin');
+       
+        
+    // }
+
+    // var fields = document.getElementsByClassName('.choixMagsin');
+     
+    //  fields.addEventListener('change',function (event) {
+    //             event.preventDefault();
+    //             var idmission = $this.val();
+    //             console.log(idmission);
+    //             const url ="/gestion/rapportmission/api/"+{$idmission}+"/choix";
+    //             axios.get(url).then(function(response){ 
+    //               console.log(response);
+    //             });
+            
+    //     });
+      
+
+    </script>
+{% endblock %}

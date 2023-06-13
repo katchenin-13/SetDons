@@ -1,0 +1,206 @@
+ {% block body %}
+     {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="card card-tabs card-stretch card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+            <h3 class="card-title"> Evolution des effectifs par type de contrat </h3>
+        </div> 
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="filter-block d-flex justify-content-center">
+                       
+                        {{ form_start(form, {attr: {'class': 'w-300px'}})}}
+                            <div class="row">
+                                <div class="col-md-12">{{ form_row(form.communaute) }}</div>
+                            </div>
+                        {{ form_end(form, {render_rest: false}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert-error"></div>
+                    <div id="myChart"></div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+               
+        </div> 
+    </div>
+{% endblock %}
+
+{% block java %}
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+
+      
+      $(function () {
+            init_select2();
+            //load_data();
+
+            const $type_contrat = $('#{{ form.communaute.vars.id }}');
+            const $error = $('.alert-error');
+            $type_contrat.on('change', function () {
+                const $this = $(this);
+                const current_value = $this.find('option:selected').attr('data-value');
+                $error.html('');
+                if ($this.val()) {
+                     load_data(current_value, {communaute: $this.val()});
+                } else {
+                    $error.html('Veuillez sélectionner un type de contrat');
+                }
+               
+            });
+            function load_data(contrat, filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_type_contrat_data') }}", {filters: filters}, function (data) {
+                    console.log(data.mois);
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: null
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        xAxis: [{
+                            categories: data.y,
+                            reversed: false,
+                            labels: {
+                                step: 1
+                            }
+                        }, { // mirror axis on right side
+                            opposite: true,
+                            reversed: false,
+                            categories: data.y,
+                            linkedTo: 0,
+                            labels: {
+                                step: 1
+                            }
+                        }],
+                        yAxis: {
+                            title: {
+                                text: null
+                            },
+                            /*stackLabels: {
+                                enabled: true,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: ( // theme
+                                        Highcharts.defaultOptions.title.style &&
+                                        Highcharts.defaultOptions.title.style.color
+                                    ) || 'gray',
+                                    textOutline: 'none'
+                                }
+                            },*/
+                            labels: {
+                                formatter: function () {
+                                    return Math.abs(this.value);
+                                }
+                            }
+                        },
+
+                        plotOptions: {
+                            series: {
+                                stacking: 'normal'
+                            }
+                        },
+
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                                    'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2);
+                            }
+                        },
+                        series: data.series
+
+                        /*series: [{
+                            name: 'Male',
+                            data: [
+                                -2.2, -2.1, -2.2, -2.4,
+                                -2.7, -3.0, -3.3, -3.2,
+                                -2.9, -3.5, -4.4, -4.1,
+                                -13.4, -2.7, -2.3, -2.2,
+                                -1.6, -0.6, -0.3, -0.0,
+                                -0.0
+                            ]
+                        }, {
+                            name: 'Female',
+                            data: [
+                                2.1, 2.0, 2.1, 2.3, 2.6,
+                                2.9, 3.2, 3.1, 2.9, 3.4,
+                                14.3, 4.0, 3.5, 2.9, 2.5,
+                                2.7, 2.2, 1.1, 0.6, 0.2,
+                                0.0
+                            ]
+                        }]*/
+                    });
+                });
+
+                  var ctx = document.getElementById('kt_chartjs_1');
+
+// Define colors
+var primaryColor = KTUtil.getCssVariableValue('--kt-primary');
+var dangerColor = KTUtil.getCssVariableValue('--kt-danger');
+var successColor = KTUtil.getCssVariableValue('--kt-success');
+
+// Define fonts
+var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+
+// Chart labels
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Chart data
+const data = {
+    labels: labels,
+    datasets: [
+        '12','4','8','12','4','8','12','4','8';
+    ]
+};
+
+// Chart config
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+        plugins: {
+            title: {
+                display: false,
+            }
+        },
+        responsive: true,
+        interaction: {
+            intersect: false,
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        }
+    },
+    defaults:{
+        global: {
+            defaultFont: fontFamily
+        }
+    }
+};
+
+// Init ChartJS -- for more info, please visit: https://www.chartjs.org/docs/latest/
+var myChart = new Chart(ctx, config);
+            
+            }
+
+
+        });
+
+    </script>
+{% endblock %}

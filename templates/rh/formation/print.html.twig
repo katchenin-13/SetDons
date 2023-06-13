@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demande de formation</title>
+    <style>
+      {% block page_css %}
+        @page {
+
+          margin-footer: 0.5cm;
+
+          header: html_headerContent;
+          footer: html_pageFooter;
+          margin-top: 3cm;
+          margin-header: 0cm;
+          /*margin-left: 0.5cm;
+          /*background: ...
+  background-image: ...
+  background-position ...
+  background-repeat ...
+  background-color ...
+  background-gradient: ...*/
+        }
+        .clearfix:after,
+        {% endblock %} .clearfix:before {
+          content: " ";
+          display: table;
+        }
+
+        .clearfix:after {
+          clear: both;
+        }
+
+        /*@page :first {
+   header: html_headerContent;
+}*/
+
+        .table {
+          width: 100%;
+          max-width: 100%;
+
+        }
+        .table {
+          page-break-before: auto;
+        }
+
+        body {
+          font-family: Trebuchet, Arial,Helvetica;
+        }
+
+        .table td,
+        .table th {
+          padding: 2px;
+          vertical-align: top;
+          border-top: 1px solid #191919;
+        }
+
+        .table thead th {
+          vertical-align: bottom;
+          border-bottom: 2px solid #191919;
+        }
+
+        .table tbody + tbody {
+          border-top: 1px solid #191919;
+        }
+
+        .table .table {
+          background-color: #fff;
+        }
+
+        .table-sm td,
+        .table-sm th {
+          padding: 0.3rem;
+        }
+
+        .table-bordered {
+          border: 1px solid #191919;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+          border: 1px solid #191919;
+        }
+
+        .table-bordered thead td,
+        .table-bordered thead th {
+          border-bottom-width: 1px;
+        }
+
+        @media all {
+          /*.content { display: block; page-break-inside: avoid; }*/
+        }
+
+        .content {
+          /*margin-top: 18cm;*/
+        }
+
+        .table-responsive.table-bordered {
+          border: 0;
+        }
+
+        .double_underline {
+            text-decoration:underline;
+            border-bottom: 1px solid #000;
+            text-align:center;
+        }
+    </style>
+  </head>
+  <body style="font-size:11px;">
+   
+    <htmlpageheader name="headerContent">
+        <img src="{{ absolute_url(asset('uploads/logo_ente_kuyo.jpg')) }}" />
+    </htmlpageheader>
+    <h1 style="text-align:center;"><u>Formulaire de demande de formation</u> </h1>
+    <h2>DEMANDEUR DE LA FORMATION</h2>
+    <table class="table table-bordered" style="width:100%;border-collapse:collapse">
+        <tr>
+            <td style="padding-top:5px;padding-bottom:5px;padding-left:3px;">Nom, Prénom: <strong>{{ demande.employe.nomComplet }}</strong></td>
+        </tr>
+        <tr>
+            <td style="padding-top:5px;padding-bottom:5px;padding-left:3px;">Intitulé du poste : <strong>{{ demande.employe.fonction.libelle }}</strong></td>
+        </tr>
+        <tr>
+            <td style="padding-top:5px;padding-bottom:5px;padding-left:3px;">Département/Service : <strong>{{ demande.employe.service.libelle }}</strong></td>
+        </tr>
+        <tr>
+            <td style="padding-top:5px;padding-bottom:5px;padding-left:3px;">Coordonnées: </td>
+        </tr>
+    </table>
+     <h2 style="margin-top:30px;">INFORMATIONS SUR LA FORMATION DEMANDEE</h2>
+      <table class="table table-bordered" style="width:100%;border-collapse:collapse">
+        <tr>
+            <td style="padding-top:10px;padding-bottom:10px;padding-left:3px;">Sujet du module: <br><strong>{{ demande.info.sujet }}</strong></td>
+        </tr>
+        <tr>
+            <td style="padding-top:10px;padding-bottom:10px;padding-left:3px;">Description du module : <br><strong>{{ demande.info.description }}</strong></td>
+        </tr>
+        {% for valeur in demande.valeurLignes %}
+            <tr>
+            <td style="padding-top:10px;padding-bottom:10px;padding-left:3px;">{{ valeur.libelle }} : <br><strong>{{ valeur.valeur }}</strong></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div style="margin-right:auto;margin-left:auto;margin-top:5px;width:100%;margin-bottom:30px;font-size:10px">
+            <table style="width:100%;style:font-style:italic">
+                <tr>
+                    <td style="width:100%">
+                        <table>
+                            <tr>
+                               
+                               
+                                  {% for validation in validations %}
+                                  <td style="width:33%;vertical-align:top">
+                                      <b><u>VALIDATION {{ loop.index }}</u></b><br>
+                                      {{ validation.utilisateur.employe.nomComplet }}<br>
+                                      le {{ validation.dateCreation|date('d/m/Y') }}
+                                  </td>
+                                  {% endfor %}
+                               
+                                
+                            </tr>
+                        </table>
+                    </td>
+                  
+                </tr>
+            </table>
+        </div>
+    <htmlpagefooter name="pageFooter">
+      <img src="{{ absolute_url(asset('uploads/logo_footer.jpg')) }}" />
+    </htmlpagefooter>
+  </body>
+</html>

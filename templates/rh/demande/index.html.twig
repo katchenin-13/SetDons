@@ -1,0 +1,59 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des demandes{% endblock %}
+{% block header %}Ressources Humaines :: Demandes de personnel{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block body %}
+<div class="card card-tabs card-custom card-sticky">  
+    <div class="card-header card-header-stretch card-header-custom">
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs  nav-stretch fs-6 nav-custom sw-nav-tabs"  id="parametre-tabs">
+                {% for key, label in tabs %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if key == 0 %}active{% endif %}" data-bs-toggle="tab" 
+                            href="#{{ label.name }}" data-href="{{ label.url }}">
+                            <span class="nav-text">
+                                {{ label.label }}
+                            </span>
+                            
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="my-2">
+            <a href="{{ path('app_parametre_document_new',{'type':'PER'}) }}" class="btn btn-main btn-sm"
+               data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau document
+            </a>
+            <a href="{{ path('app_rh_demande_new') }}" class="btn btn-main btn-sm"
+               data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+             {% for key, label in tabs %}
+                <div class="tab-pane fade {% if key == 0 %}show active{% endif %}" 
+                    id="{{ label.name }}" role="tabpanel" aria-labelledby="{{ label.name }}">
+                    
+                </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block java %}
+    <script>
+        $(document).ready(function () {
+            load_tab('parametre-tabs');
+        });
+    </script>
+{% endblock %}

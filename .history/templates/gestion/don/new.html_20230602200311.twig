@@ -1,0 +1,320 @@
+{% from '_macros/ligne_entree.html.twig' import  fieldon %}
+{# {% set index = child.vars.value %} #}
+{% block page_content %}
+    {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création Don</h5>
+        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+        </div>
+    </div>
+    {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
+    <div class="modal-body">
+            <div id="list-ligne" data-prototype="{{ fieldon(form.fieldon.vars.prototype, 1)|e }}"></div>
+          {{ include('_includes/ajax/response.html.twig') }}
+            <div class="card card-flush shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Informations sur le (s) beneficiaire (s)</h3>
+                </div>
+                <hr class="separateur">
+                <div class="card-body py-5">
+                       <div class="row doc-container2">
+                             <div class="form-group col-md-3">{{ form_row(form.communaute) }}</div>
+                            <div class="form-group col-md-3">{{ form_row(form.nom) }}</div>
+                            <div class="form-group col-md-3">{{ form_row(form.numero) }}</div>
+                            <div class="form-group col-md-3">{{ form_row(form.email) }}</div>
+                      </div>   
+                </div>
+                
+            </div>
+            <br>
+            <div class="card card-flush shadow-sm">
+                <div class="card-header">
+                   <h3 class="card-title">Informations sur le (s) don (s)</h3>
+                </div>
+               
+                <br>
+                <hr class="separateur">
+                <div class="card-body py-5">
+                       <div class="row doc-container23">
+                            <div class="col-md-5">{{ form_row(form.dateremise) }}</div>
+                            <div class="col-md-5">{{ form_row(form.remispar) }}</div>
+                      </div>   
+                </div>
+                
+            </div>
+            {# <br>
+            <div class="card card-flush shadow-sm">
+                <div class="card-header">
+                    <div class="card-toolbar">
+                        <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne btn-xs" data-container=".doc-container">
+                            <i class="fa fa-plus"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+                <hr class="separateur">
+                <div class="card-body py-5">
+                    <div class="row doc-container">
+                        {% for ligne in form.fieldon %}
+                            {{ fieldon(ligne|e) }}
+                        {% endfor %}
+                    </div>
+                </div>         
+                
+            
+            </div>
+            <br> #}
+
+            <br>
+            <div class="card card-flush shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Ajout un colonne</h3>
+                    <div class="card-toolbar">
+                        <button type="button" data-origine="1" class="btn btn-sm btn-primary add-ligne btn-xs" data-container=".doc-container">
+                            <i class="fa fa-plus"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+                <hr class="separateur">
+                <div class="card-body py-5">
+                    <div class="row">
+                        <div class="form-group col-md-2">type</div>
+                        
+                        <div class="form-group col-md-2 dateretour">Qte</div>
+                        <div class="form-group col-md-2 dateretour">Nature</div>
+                        <div class="form-group col-md-3">Motif</div>
+                        <div class="form-group col-md-2">Montant</div>
+                        <div class="form-group col-md-1 del-col"></div>
+    
+                        
+                    </div>
+                    <div class="doc-container">
+                        {% for ligne in form.fieldon %}
+                            {{ fieldon(ligne|e) }}
+                        {% endfor %}
+                    </div>
+                </div>
+                {#<div class="card-footer">
+                    Footer
+                </div>#}
+            </div>
+            <br>
+       
+    </div>
+    <div class="modal-footer">
+        {# {{ include('_includes/ajax/loader.html.twig') }} #}
+        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-main btn-ajax btn-sm"><span class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> Valider</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+
+{% block java %}
+    <script>
+        $(".del-col").hide();
+
+
+        $(function () {
+            init_select2('select');
+        });
+        
+        // $(document).ready(function() {
+        //     $('.promesse').click(function() {
+                
+        //         if (this.checked) {
+                  
+        //             $("input.remise").prop('disabled', true);
+        //             console.log(this.value);
+        //         }
+        //         else {
+        //             $("input.remise").prop('disabled', false);
+        //             console.log(this.value);
+                    
+        //         }
+        //     });
+        // });
+
+        let $dateretour = $('.dateretour').show();
+        $(document).ready(()=> {
+            //$echanger un variable qui permet de changer les valeurs des champs
+                var $echanger = $(".changer");
+                lo
+                $echanger.change((event)=> {
+                event.preventDefault();
+                let $id         = $echanger.val();
+                console.log($id);
+                if ($id==1) {
+                    let $dateretour = $('.dateretour').hide();
+        
+                }else{
+                    let $dateretour = $('.dateretour').show();
+                }
+                
+           });
+    });
+ 
+
+        $(function () {
+
+          
+
+            const $container = $('.doc-container');
+            const $card = $('.card');
+            var index = $container.find('.row-line').length;
+            /*$container.find('.coutCump').attr('readonly', true)*/
+            const $addLink = $('.add-ligne');
+
+            $addLink.click(function(e) {
+
+                addLine($container);
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            });
+
+            if (index > 0) {
+                $container.children('.row-line').each(function() {
+                    const $this = $(this);
+                    addDeleteLink($this);
+                    $this.find("select").each(function() {
+                        const $this = $(this);
+                        init_select2($this, null);
+                    });
+
+                });
+            }
+            // La fonction qui ajoute un formulaire Categorie
+            function addLine($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "_namelabel_" qu'il contient par le label du champ
+                // - le texte "_name_" qu'il contient par le numéro du champ
+                var $prototype = $($("#list-ligne").attr('data-prototype').replace(/_namelabel/g, 'Pièce ' + (index + 1)).replace(/__name_/g, index));
+                // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+                addDeleteLink($prototype);
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+                init_select2('select');
+                $prototype.find("select").each(function() {
+                    const $this = $(this);
+                    init_select2($this, null);
+                });
+
+                index++;
+
+
+            }
+            
+            
+
+            function addDeleteLink($prototype) {
+
+
+                // Création du lien
+                $deleteLink = $(`<a href="" class="btn btn-danger btn-xs" ><span class="bi bi-trash"></span></a>`);
+
+                // Ajout du lien
+                $prototype.find(".del-col").append($deleteLink);
+                // $prototype.find('.enfant_malade').remove();
+                //$prototype.find('.precisez').addClass("form-group col-md-6");
+                //$('#table1').addClass('table-striped m-3');
+                //$('.enfant_malade').remove();
+                //$('.precisez').addClass("form-group col-md-6");
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    const $parent = $(this).closest('.row-line');
+                    $parent.remove();
+
+
+                    if (index > 0) {
+                        index -= 1;
+                    }
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                });
+            }
+        });
+
+        $(function () {
+
+            const $container2 = $('.doc-container2');
+            const $card = $('.card');
+            var index = $container2.find('.row-line2').length;
+            /*$container.find('.coutCump').attr('readonly', true)*/
+            const $addLink = $('.add-ligne2');
+
+            $addLink.click(function(e) {
+
+                addLine($container2);
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            });
+
+            if (index > 0) {
+                $container2.children('.row-line2').each(function() {
+                    const $this = $(this);
+                    addDeleteLink($this);
+                    $this.find("select").each(function() {
+                        const $this = $(this);
+                        init_select2($this, null);
+                    });
+
+                });
+            }
+            // La fonction qui ajoute un formulaire Categorie
+            function addLine($container2) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "_namelabel_" qu'il contient par le label du champ
+                // - le texte "_name_" qu'il contient par le numéro du champ
+                var $prototype = $($("#list-ligne2").attr('data-prototype').replace(/_namelabel/g, 'Pièce ' + (index + 1)).replace(/__name_/g, index));
+                // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+                addDeleteLink($prototype);
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+                init_select2('select');
+                $prototype.find("select").each(function() {
+                    const $this = $(this);
+                    init_select2($this, null);
+                });
+
+                index++;
+
+
+            }
+
+
+            function addDeleteLink($prototype) {
+
+
+                // Création du lien
+                $deleteLink = $(`<a href="" class="btn btn-danger btn-xs" ><span class="bi bi-trash"></span></a>`);
+
+                // Ajout du lien
+                $prototype.find(".del-col2").append($deleteLink);
+                // $prototype.find('.enfant_malade').remove();
+                //$prototype.find('.precisez').addClass("form-group col-md-6");
+                //$('#table1').addClass('table-striped m-3');
+                //$('.enfant_malade').remove();
+                //$('.precisez').addClass("form-group col-md-6");
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    const $parent = $(this).closest('.row-line2');
+                    $parent.remove();
+
+
+                    if (index > 0) {
+                        index -= 1;
+                    }
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                });
+            }
+        });
+
+    </script>
+{% endblock %}

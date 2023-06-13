@@ -1,0 +1,52 @@
+ {% block body %}
+     {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="card card-tabs card-stretch card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+            <h3 class="card-title"> Evolution des effectifs par type de contrat </h3>
+        </div> 
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="filter-block d-flex justify-content-center">
+                       
+                        {{ form_start(form, {attr: {'class': 'w-300px'}})}}
+                            <div class="row">
+                                <div class="col-md-12">{{ form_row(form.communaute) }}</div>
+                            </div>
+                        {{ form_end(form, {render_rest: false}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert-error"></div>
+                    <div id="kt_chartjs_1"></div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+               
+        </div> 
+    </div>
+{% endblock %}
+
+{% block java %}
+     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+      <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script>
+
+      
+      $(function () {
+            init_select2();
+            //load_data();
+
+            
+};
+
+/
+
+        });
+
+    </script>
+{% endblock %}

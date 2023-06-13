@@ -1,0 +1,77 @@
+ {% block body %}
+    <div class="card card-tabs card-stretch card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+            <h3 class="card-title"> Effectifs par statut</h3>
+        </div> 
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="container"></div>
+                </div>
+                <div class="col-md-4">
+                    
+                </div>
+            </div>
+               
+        </div> 
+    </div>
+{% endblock %}
+
+{% block java %}
+    
+    <script>
+        $(function () {
+            load_data();
+            function load_data(filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_genre_data') }}", {filters: filters}, function (data) {
+                    // Create the chart
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: null/*'Browser market shares. January, 2022'*/
+                        },
+                        /*subtitle: {
+                            text: 'Click the slices to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                        },*/
+
+                        accessibility: {
+                            announceNewData: {
+                                enabled: true
+                            },
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: null,
+                                    formatter: function () {
+                                        return this.point.name + ' (' + this.point.value + ')';
+                                    }
+                                }
+                            }
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                        },
+
+                        series: [
+                            {
+                                name: "Statut",
+                                colorByPoint: true,
+                                data: data
+                            }
+                        ],
+                    })
+                });
+            }
+        });
+    </script>
+{% endblock %}

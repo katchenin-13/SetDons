@@ -1,0 +1,42 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Ressources Humaines{% endblock %}
+{% block header %}Formations{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block body %}
+<div class="card shadow-sm">
+    <div class="card-header card-header-sm">
+        <h3 class="card-title"> Libellés Infos formations</h3>
+        <div class="card-toolbar">
+            <a href="{{ path('app_rh_ligne_info_formation_new') }}" class="btn btn-main btn-sm"  
+                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg4">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="grid_app_rh_ligne_info_formation" class="grid-dt-wrapper">Chargement....</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script> 
+        $(function() { 
+              $('#grid_app_rh_ligne_info_formation').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_rh_ligne_info_formation_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        });
+    </script>
+{% endblock %}

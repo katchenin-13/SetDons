@@ -1,0 +1,169 @@
+ {% block inline_stylesheets %}
+   
+
+            <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+        
+{% endblock %}
+ {% block body %}
+     {% form_theme form 'widget/fields-block.html.twig' %}
+    <div class="card card-tabs card-stretch card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+            <h3 class="card-title"> Evolution des effectifs par type de contrat </h3>
+        </div> 
+        <div class="card-body">
+            {# <div class="row">
+                <div class="col-md-12">
+                    <div class="filter-block d-flex justify-content-center">
+                       
+                        {{ form_start(form, {attr: {'class': 'w-300px'}})}}
+                            <div class="row">
+                                <div class="col-md-12">{{ form_row(form.communaute) }}</div>
+                            </div>
+                        {{ form_end(form, {render_rest: false}) }}
+                    </div>
+                </div>
+            </div> #}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert-error"></div>
+                  
+                   
+                    <div>
+                    <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+               
+        </div> 
+    </div>
+{% endblock %}
+
+{% block java %}
+ 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+<script>
+
+      
+      $(function () {
+            init_select2();
+            //load_data();
+//         var ctx = document.getElementById('kt_chartjs_1');
+
+// // Define colors
+// var primaryColor = KTUtil.getCssVariableValue('--kt-primary');
+// var dangerColor = KTUtil.getCssVariableValue('--kt-danger');
+// var successColor = KTUtil.getCssVariableValue('--kt-success');
+
+// // Define fonts
+// var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+
+// // Chart labels
+// const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// // Chart data
+// const data = {
+//     labels: labels,
+//     datasets: [
+//       '12','4','6','8',  '12','4','6','8',  '12','4','6','8'
+//     ]
+// };
+
+// // Chart config
+// const config = {
+//     type: 'bar',
+//     data: data,
+//     options: {
+//         plugins: {
+//             title: {
+//                 display: false,
+//             }
+//         },
+//         responsive: true,
+//         interaction: {
+//             intersect: false,
+//         },
+//         scales: {
+//             x: {
+//                 stacked: true,
+//             },
+//             y: {
+//                 stacked: true
+//             }
+//         }
+//     },
+//     defaults:{
+//         global: {
+//             defaultFont: fontFamily
+//         }
+//     }
+// };
+
+// Init ChartJS -- for more info, please visit: https://www.chartjs.org/docs/latest/
+
+
+
+  const ctx = document.getElementById('myChart');
+
+  // Define colors
+var primaryColor = KTUtil.getCssVariableValue('--kt-primary');
+var dangerColor = KTUtil.getCssVariableValue('--kt-danger');
+var successColor = KTUtil.getCssVariableValue('--kt-success');
+
+// Define fonts
+var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+   const data = {
+      labels: labels,
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3,12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    }
+
+const data = {
+  labels: labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [12, 19, 3, 5, 2, 3,12, 19, 3, 5, 2, 3],
+      borderWidth: 1,
+      borderColor: '#36A2EB',
+      backgroundColor: '#9BD0F5',
+    },
+    {
+      label: 'Dataset 2',
+      data: [12, 19, 3, 5, 2, 3,12, 19, 3, 5, 2, 3],
+       borderWidth: 1,
+      borderColor: '#FF6384',
+      backgroundColor: '#FFB1C1',
+    }
+  ]
+};
+
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+   });
+
+   
+</script>
+ 
+{% endblock %}

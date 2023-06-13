@@ -1,0 +1,26 @@
+{% block body %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="grid_app_rh_formation_{{ etat | default('') }}" class="grid-dt-wrapper">Chargement....</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('assets/js/datatables.js') }}"></script>
+    <script> 
+        $(function() { 
+            const etat = "{{ etat | default('') }}";
+            $('#grid_app_rh_formation_' + etat).initDataTables({{ datatable_settings(datatable) }}, {
+                searching: true,
+                ajaxUrl: "{{ path(app.request.attributes.get('_route'), {etat: etat|default(null)})|raw }}",
+                language: {
+                    url: asset_base_path + "/js/i18n/French.json"
+                }
+            });
+        });
+    </script>
+{% endblock %}

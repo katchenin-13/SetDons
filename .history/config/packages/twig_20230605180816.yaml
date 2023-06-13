@@ -1,0 +1,8 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        menu: '@App\Service\Menu'
+        : '@App\Service\StatsService'
+when@test:
+    twig:
+        strict_variables: true

@@ -1,0 +1,400 @@
+{% extends 'base-layout.html.twig' %}
+ {% form_theme form 'widget/fields-block.html.twig' %}
+{% block title %}Tableau de bord{% endblock %}
+{% block header %}Ressources Humaines{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block body %}
+<div class="card card-tabs  card-custom card-sticky">  
+    <div class="card-header card-header-stretch card-header-custom">
+         <h3 class="card-title"> Tableau de bord</h3>
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-3">{{ form_row(form.annee) }}</div>
+                <div class="col-md-3">{{ form_row(form.mois) }}</div>
+                 <div class="col-md-3">{{ form_row(form.tranche) }}</div>
+                <div class="col-md-3">{{ form_row(form.genre) }}</div>
+            </div>
+            <div class="row">
+               
+                <div class="col-md-3">{{ form_row(form.anciennete) }}</div>
+                <div class="col-md-3">{{ form_row(form.typeContrat) }}</div>
+                <div class="col-md-3">{{ form_row(form.niveauHierarchique) }}</div>
+                <div class="col-md-3">{{ form_row(form.statut) }}</div>
+            </div>
+             <div class="row">
+                <div class="col-md-3">{{ form_row(form.niveauMaitrise) }}</div>
+                <div class="col-md-3">{{ form_row(form.unite) }}</div>
+            </div>
+            <button type="submit" class="btn btn-main btn-ajax btn-sm"><span class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> Valider</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-7">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Evolution des effectifs par type de contrat</h3>
+            </div>
+            <div class="card-body">
+            
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Effectifs par statut</h3>
+            </div>
+            <div class="card-body">
+                <div id="statuts"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-6">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Pyramide des âges</h3>
+            </div>
+            <div class="card-body">
+            
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Effectifs par sexe</h3>
+            </div>
+            <div class="card-body">
+                <div id="genres"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-6">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Effectifs par niveau hiérarchique et par sexe</h3>
+            </div>
+            <div class="card-body">
+                 <div id="niveau_hierarchique_sexe"></div>
+            </div>
+        </div>
+    </div>
+     <div class="col-md-6">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Pyramide des anciennetés</h3>
+            </div>
+            <div class="card-body">
+            
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Effectif par temps de travail</h3>
+            </div>
+            <div class="card-body">
+            
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="card card-tabs card-stretch card-custom card-sticky">  
+            <div class="card-header card-header-stretch card-header-custom">
+                <h3 class="card-title"> Repartition des effectifs par sexe et par <span class="update-field"> &nbsp; Niveau de maitrise</span></h3>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block java %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        $(document).ready(function () {
+            let $annee = $('#{{ form.annee.vars.id }}');
+            let $mois = $('#{{ form.mois.vars.id }}');
+            let $tranche = $('#{{ form.tranche.vars.id }}');
+            let $genre = $('#{{ form.genre.vars.id }}');
+            let $anciennete = $('#{{ form.anciennete.vars.id }}');
+            let $type_contrat = $('#{{ form.typeContrat.vars.id }}');
+            let $niveau_hierarchique = $('#{{ form.niveauHierarchique.vars.id }}');
+            let $statut = $('#{{ form.statut.vars.id }}');
+            let $niveau_maitrise = $('#{{ form.niveauMaitrise.vars.id }}');
+            let $unite = $('#{{ form.unite.vars.id }}');
+
+            function load_niveau_hierarchique_sexe(filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_hierarchie_sexe') }}", {filters: filters}, function (data) {
+                        Highcharts.chart('niveau_hierarchique_sexe', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: null,
+                            align: 'left'
+                        },
+                        xAxis: {
+                            categories: data.xAxis
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Total'
+                            },
+                            stackLabels: {
+                                enabled: true,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: ( // theme
+                                        Highcharts.defaultOptions.title.style &&
+                                        Highcharts.defaultOptions.title.style.color
+                                    ) || 'gray',
+                                    textOutline: 'none'
+                                }
+                            }
+                        },
+                        legend: {
+                            align: 'left',
+                            x: 70,
+                            verticalAlign: 'top',
+                            y: 70,
+                            floating: true,
+                            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                            borderColor: '#CCC',
+                            borderWidth: 1,
+                            shadow: false
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{point.x}</b><br/>',
+                            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                        },
+                        plotOptions: {
+                            column: {
+                                stacking: 'normal',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        series: data.series
+                    });
+                });
+            }
+
+
+            function  load_pyramide_age(filters = []) {
+
+            }
+
+
+            function load_status(filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_statut') }}", {filters: filters}, function (data) {
+                    // Create the chart
+                    Highcharts.chart('statuts', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: null/*'Browser market shares. January, 2022'*/
+                        },
+                        /*subtitle: {
+                            text: 'Click the slices to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                        },*/
+
+                        accessibility: {
+                            announceNewData: {
+                                enabled: true
+                            },
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: null,
+                                    formatter: function () {
+                                        return this.point.name + ' (' + this.point.value + ')';
+                                    }
+                                }
+                            }
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                        },
+
+                        series: [
+                            {
+                                name: "Statut",
+                                colorByPoint: true,
+                                data: data
+                            }
+                        ],
+                    })
+                });
+            }
+
+
+             function load_genres(filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_genre') }}", {filters: filters}, function (data) {
+                    // Create the chart
+                    Highcharts.chart('genres', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: null/*'Browser market shares. January, 2022'*/
+                        },
+                        /*subtitle: {
+                            text: 'Click the slices to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                        },*/
+
+                        accessibility: {
+                            announceNewData: {
+                                enabled: true
+                            },
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: null,
+                                    formatter: function () {
+                                        return this.point.name + ' (' + this.point.value + ')';
+                                    }
+                                }
+                            }
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                        },
+
+                        series: [
+                            {
+                                name: "Statut",
+                                colorByPoint: true,
+                                data: data
+                            }
+                        ],
+                    })
+                });
+            }
+
+
+            load_status();
+            load_genres();
+            load_niveau_hierarchique_sexe();
+
+            $genre.on('change', function ()  {
+                const $this = $(this);
+                const $form = $this.closest('form');
+                const formData = $form.serializeArray();
+                let params = {};
+                 for (let item of formData) {
+                    let matches = item['name'].match(/\[([a-z]+)\]/i);
+                    if (matches !== null) {
+                        if (matches[1] != '_token') {
+                            params[matches[1]] = item['value'];
+                        }
+                    
+                    }
+                }
+
+                load_status(params);
+                load_genres(params);
+                load_niveau_hierarchique_sexe(params);
+            });
+
+            $statut.on('change', function ()  {
+                const $this = $(this);
+                const $form = $this.closest('form');
+                const formData = $form.serializeArray();
+                let params = {};
+                 for (let item of formData) {
+                    let matches = item['name'].match(/\[([a-z]+)\]/i);
+                    if (matches !== null) {
+                        if (matches[1] != '_token') {
+                            params[matches[1]] = item['value'];
+                        }
+                    
+                    }
+                }
+
+                load_status(params);
+                load_genres(params);
+                load_niveau_hierarchique_sexe(params);
+            });
+
+
+            $tranche.on('change', function ()  {
+                const $this = $(this);
+                const $form = $this.closest('form');
+                const formData = $form.serializeArray();
+                let params = {};
+                 for (let item of formData) {
+                    let matches = item['name'].match(/\[([a-z]+)\]/i);
+                    if (matches !== null) {
+                        if (matches[1] != '_token') {
+                            params[matches[1]] = item['value'];
+                        }
+                    
+                    }
+                }
+
+                load_status(params);
+                load_genres(params);
+                load_niveau_hierarchique_sexe(params);
+            });
+
+
+            $anciennete.on('change', function ()  {
+                const $this = $(this);
+                const $form = $this.closest('form');
+                const formData = $form.serializeArray();
+                let params = {};
+                 for (let item of formData) {
+                    let matches = item['name'].match(/\[([a-z]+)\]/i);
+                    if (matches !== null) {
+                        if (matches[1] != '_token') {
+                            params[matches[1]] = item['value'];
+                        }
+                    
+                    }
+                }
+
+                load_status(params);
+                load_genres(params);
+                load_niveau_hierarchique_sexe(params);
+            })
+        });
+    </script>
+{% endblock %}

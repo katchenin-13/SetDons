@@ -1,0 +1,86 @@
+ {% block body %}
+    <div class="card card-tabs card-stretch card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+            <h3 class="card-title"> Effectifs par sexe et par niveau de maîtrise </h3>
+        </div> 
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="container"></div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+               
+        </div> 
+    </div>
+{% endblock %}
+
+{% block java %}
+    
+    <script>
+        $(function () {
+            load_data();
+            function load_data(filters = []) {
+                $.getJSON("{{ path('app_rh_dashboard_maitrise_sexe_data') }}", {filters: filters}, function (data) {
+                        Highcharts.chart('container', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Effectifs par sexe et par niveau de maîtrise',
+                            align: 'left'
+                        },
+                        xAxis: {
+                            categories: data.xAxis
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Total'
+                            },
+                            stackLabels: {
+                                enabled: true,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: ( // theme
+                                        Highcharts.defaultOptions.title.style &&
+                                        Highcharts.defaultOptions.title.style.color
+                                    ) || 'gray',
+                                    textOutline: 'none'
+                                }
+                            }
+                        },
+                        legend: {
+                            align: 'left',
+                            x: 70,
+                            verticalAlign: 'top',
+                            y: 70,
+                            floating: true,
+                            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                            borderColor: '#CCC',
+                            borderWidth: 1,
+                            shadow: false
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{point.x}</b><br/>',
+                            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                        },
+                        plotOptions: {
+                            column: {
+                                stacking: 'normal',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        series: data.series
+                    });
+                });
+            }
+
+
+        });
+    </script>
+{% endblock %}

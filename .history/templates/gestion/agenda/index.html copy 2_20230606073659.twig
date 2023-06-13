@@ -1,0 +1,165 @@
+{% extends 'base-layout.html.twig' %}
+
+{% block title %}Liste des agendas{% endblock %}
+{% block header %}agendas{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/fonts/simple-line-icons/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/card-statistics.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/vertical-timeline.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+
+{% endblock %}
+
+{% block body %}
+{# <div class="card shadow-sm">
+    <div class="card-header card-header-sm">
+        <h3 class="card-title"> Liste des agendas</h3>
+        <div class="card-toolbar">
+            <a href="{{ path('app_gestion_agenda_new') }}" class="btn btn-main btn-sm"  
+                data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
+                <i class="bi bi-plus-square text-light"></i>
+                Nouveau
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="grid_app_gestion_agenda" class="grid-dt-wrapper">Chargement....</div>
+            </div>
+            
+
+        </div>
+    </div>
+</div> #}
+
+<!--begin::Draggable heading-->
+<!--begin::Draggable heading-->
+
+<!--end::Draggable heading-->
+
+<!--begin::Events listing-->
+<div id="external-events-list" class="d-flex flex-wrap">
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 1</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 2</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 3</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 4</div>
+    </div>
+    <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event badge me-3 my-1">
+        <div class="fc-event-main">Event 5</div>
+    </div>
+</div>
+<!--end::Events listing-->
+
+<!--begin::Checkbox-->
+<div class="mt-2 my-5">
+    <div class="form-check form-check-custom form-check-solid">
+        <input class="form-check-input" type="checkbox" value="" id="drop-remove" />
+        <label class="form-check-label" for="drop-remove">
+            Remove event after drop
+        </label>
+    </div>
+</div>
+<!--end::Checkbox-->
+
+<!--begin::Fullcalendar-->
+
+<!--end::Fullcalendar-->
+
+{% endblock %}
+
+
+{% block java %}
+    <script src="{{ asset('assets/js/datatables.js') }}"></script> 
+    <script> 
+        $(function() { 
+              $('#grid_app_gestion_agenda').initDataTables({{ datatable_settings(datatable) }}, {
+                  searching: true,
+                  ajaxUrl: "{{ path('app_gestion_agenda_index') }}",
+                  language: {
+                      url: asset_base_path + "/js/i18n/French.json"
+                  }
+              });
+        });
+
+        // window.onload = () => {
+        //     let calendarElt = document.querySelector("#module0")
+    
+        //     let calendar = new FullCalendar.Calendar(calendarElt, {
+        //         initialView: 'timeGridWeek',
+        //         locale: 'fr',
+        //         timeZone: 'Europe/Paris',
+        //         headerToolbar: {
+        //             start: 'prev,next today',
+        //             center: 'title',
+        //             end: 'dayGridMonth,timeGridWeek'
+        //         },
+        //         events: {{ data|raw }}, 
+        //         editable: true,
+        //         eventResizableFromStart: true
+        //     })
+    
+        //     calendar.on('eventChange', (e) => {
+        //         let url = `/api/${e.event.id}/edit`
+        //         let donnees = {
+        //             "title": e.event.title,
+        //             "description": e.event.extendedProps.description,
+        //             "start": e.event.start,
+        //             "end": e.event.end,
+        //             "backgroundColor": e.event.backgroundColor,
+        //             "borderColor": e.event.borderColor,
+        //             "textColor": e.event.textColor,
+        //             "allDay": e.event.allDay
+        //         }
+                
+        //         let xhr = new XMLHttpRequest
+    
+        //         xhr.open("PUT", url)
+        //         xhr.send(JSON.stringify(donnees))
+        //     })
+    
+        //     calendar.render()
+        // }
+
+        // Initialize the external events -- for more info please visit the official site: https://fullcalendar.io/demos
+var containerEl = document.getElementById("kt_docs_fullcalendar_events_list");
+new FullCalendar.Draggable(containerEl, {
+    itemSelector: ".fc-event",
+    eventData: function(eventEl) {
+        return {
+            title: eventEl.innerText.trim()
+        }
+    }
+});
+
+// initialize the calendar -- for more info please visit the official site: https://fullcalendar.io/demos
+var calendarEl = document.getElementById("kt_docs_fullcalendar_drag");
+var calendar = new FullCalendar.Calendar(calendarEl, {
+    headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+    },
+    editable: true,
+    droppable: true, // this allows things to be dropped onto the calendar
+    drop: function(arg) {
+        // is the "remove after drop" checkbox checked?
+        if (document.getElementById("drop-remove").checked) {
+            // if so, remove the element from the "Draggable Events" list
+            arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+        }
+    }
+});
+
+calendar.render();
+    </script>
+{% endblock %}
