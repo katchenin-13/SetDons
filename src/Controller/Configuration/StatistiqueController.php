@@ -3,7 +3,6 @@
 namespace App\Controller\Configuration;
 
 use App\Entity\Communaute;
-use App\Form\CommunauteType;
 use App\Repository\CommunauteRepository;
 use App\Service\Breadcrumb;
 use App\Service\Menu;
@@ -26,79 +25,158 @@ class StatistiqueController extends AbstractController
 
     }
 
-    #[Route(path: '/', name: 'app_config_statistique_index')]
+    #[Route(path: '/', name: 'app_config_statistique_index', methods: ['GET', 'POST'])]
     public function index(Request $request, Breadcrumb $breadcrumb): Response
     {
+       /* if($this->menu->getPermission()){
+            $redirect = $this->generateUrl('app_default');
+            return $this->redirect($redirect);
+            //dd($this->menu->getPermission());
+        }*/
         $modules = [
             [
-                'label' => 'Effectifs par statut',
-                'id' => 'chart_statut',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_statut')
+                'label' => 'Parentrages',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_config_statistique_ls', ['module' => 'config'])
+            ],
+
+            [
+                'label' => 'Audience',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_config_statistique_ls', ['module' => 'blacklist'])
             ],
             [
-                'label' => 'Effectifs par sexe',
-                'id' => 'chart_genre',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_genre')
+                'label' => 'Don',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_config_statistique_ls', ['module' => 'blacklist'])
             ],
             [
-                'label' => 'Effectifs par niveau hierarchique et Sexe',
-                'id' => 'chart_h_sexe',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_hierarchie_sexe')
+                'label' => 'Autres éléments',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_config_statistique_ls', ['module' => 'blacklist'])
             ],
             [
-                'label' => 'Evolution des effectifs par type de contrat',
-                'id' => 'chart_contrat',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_type_contrat')
+                'label' => 'Graphiques',
+                'icon' => 'bi bi-people',
+                'href' => $this->generateUrl('app_config_statistique_ls', ['module' => 'graphiques'])
             ],
-            [
-                'label' => 'Pyramide des âges',
-                'id' => 'chart_py_age',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_pyramide_age')
-            ],
-            [
-                'label' => 'Pyramide des anciennetés',
-                'id' => 'chart_py_anc',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_pyramide_anc')
-            ],
-            [
-                'label' => 'Effectifs par sexe et par niveau de maîtrise',
-                'id' => 'chart_maitrise',
-                'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_rh_dashboard_maitrise_sexe')
-            ],
-            //
+
 
         ];
 
-       
+        $breadcrumb->addItem([
+            [
+                'route' => 'app_default',
+                'label' => 'Tableau de bord'
+            ],
+            [
+                'label' => 'Paramètres'
+            ]
+        ]);
+
         return $this->render('config/statistique/index.html.twig', [
             'modules' => $modules,
-         
-           
+            'breadcrumb' => $breadcrumb
         ]);
     }
 
 
-   
-
-
-    
-
-    #[Route('/statut', name: 'app_rh_dashboard_statut')]
-    public function indexStatut(Request $request, EmployeRepository $employeRepository)
+    #[Route(path: '/{module}', name: 'app_config_statistique_ls', methods: ['GET', 'POST'])]
+    public function liste(Request $request, string $module): Response
     {
-        return $this->render('rh/dashboard/statut.html.twig');
+        /**
+         * @todo: A déplacer dans un service
+         */
+        $parametres = [
+
+            'graphiques' => [
+                [
+                    'label' => 'Effectifs par statut',
+                    'id' => 'chart_statut',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_statut')
+                ],
+                [
+                    'label' => 'Effectifs par sexe',
+                    'id' => 'chart_genre',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_genre')
+                ],
+                [
+                    'label' => 'Effectifs par niveau hierarchique et Sexe',
+                    'id' => 'chart_h_sexe',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_hierarchie_sexe')
+                ],
+                [
+                    'label' => 'Evolution des effectifs par type de contrat',
+                    'id' => 'chart_contrat',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_type_contrat')
+                ],
+                [
+                    'label' => 'Pyramide des âges',
+                    'id' => 'chart_py_age',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_pyramide_age')
+                ],
+                [
+                    'label' => 'Pyramide des anciennetés',
+                    'id' => 'chart_py_anc',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_pyramide_anc')
+                ],
+                [
+                    'label' => 'Effectifs par sexe et par niveau de maîtrise',
+                    'id' => 'chart_maitrise',
+                    'icon' => 'bi bi-list',
+                    'href' => $this->generateUrl('app_config_statistique_maitrise_sexe')
+                ]
+
+            ],
+
+
+            'config' => [
+                [
+                    'label' => 'Catétgories',
+                    'id' => 'param_categorie',
+                    'href' => $this->generateUrl('app_parametre_categorie_index')
+                ],
+                [
+                    'label' => 'Localités',
+                    'id' => 'param_localite',
+                    'href' => $this->generateUrl('app_parametre_localite_index')
+                ],
+                [
+                    'label' => 'Communautés',
+                    'id' => 'param_communaute',
+                    'href' => $this->generateUrl('app_parametre_communaute_index')
+                ],
+                [
+                    'label' => 'Types de dons',
+                    'id' => 'param_typedon',
+                    'href' => $this->generateUrl('app_parametre_typedon_index')
+                ]
+
+            ],
+
+        ];
+
+
+        return $this->render('config/statistique/liste.html.twig', ['links' => $parametres[$module] ??[]]);
     }
 
 
 
-    #[Route('/data-statut', name: 'app_rh_dashboard_statut_data')]
+    #[Route('/statut', name: 'app_config_statistique_statut')]
+    public function indexStatut(Request $request, EmployeRepository $employeRepository)
+    {
+        return $this->render('config/statistique/statut.html.twig');
+    }
+
+
+
+    #[Route('/data-statut', name: 'app_config_statistique_statut_data')]
     public function dataStatut(Request $request, EmployeRepository $employeRepository)
     {
         $all = $request->query->all();
@@ -121,14 +199,14 @@ class StatistiqueController extends AbstractController
 
 
 
-    #[Route('/genre', name: 'app_rh_dashboard_genre')]
+    #[Route('/genre', name: 'app_config_statistique_genre')]
     public function indexGenre(Request $request, EmployeRepository $employeRepository)
     {
-        return $this->render('rh/dashboard/genre.html.twig');
+        return $this->render('config/statistique/genre.html.twig');
     }
 
 
-    #[Route('/data-genre', name: 'app_rh_dashboard_genre_data')]
+    #[Route('/data-genre', name: 'app_config_statistique_genre_data')]
     public function dataGenre(Request $request, EmployeRepository $employeRepository)
     {
         $all = $request->query->all();
@@ -150,13 +228,13 @@ class StatistiqueController extends AbstractController
         return $this->json($results);
     }
 
-    #[Route('/hierarchie-sexe', name: 'app_rh_dashboard_hierarchie_sexe')]
+    #[Route('/hierarchie-sexe', name: 'app_config_statistique_hierarchie_sexe')]
     public function indexHierarchiqueSexe(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
-        return $this->render('rh/dashboard/hierarchie_sexe.html.twig');
+        return $this->render('config/statistique/hierarchie_sexe.html.twig');
     }
 
-    #[Route('/data-hierarchie-sexe', name: 'app_rh_dashboard_hierarchie_sexe_data')]
+    #[Route('/data-hierarchie-sexe', name: 'app_config_statistique_hierarchie_sexe_data')]
     public function dataHierarchiqueSexe(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
         $all = $request->query->all();
@@ -238,13 +316,13 @@ class StatistiqueController extends AbstractController
     }
 
 
-    #[Route('/maitrise-sexe', name: 'app_rh_dashboard_maitrise_sexe')]
+    #[Route('/maitrise-sexe', name: 'app_config_statistique_maitrise_sexe')]
     public function indexMaitriseSexe(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
-        return $this->render('rh/dashboard/maitrise_sexe.html.twig');
+        return $this->render('config/statistique/maitrise_sexe.html.twig');
     }
 
-    #[Route('/data-maitrise-sexe', name: 'app_rh_dashboard_maitrise_sexe_data')]
+    #[Route('/data-maitrise-sexe', name: 'app_config_statistique_maitrise_sexe_data')]
     public function dataMaitriseSexe(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauMaitriseRepository $niveauMaitriseRepository)
     {
         $all = $request->query->all();
@@ -325,15 +403,15 @@ class StatistiqueController extends AbstractController
     }
 
 
-    #[Route('/pyramide-age', name: 'app_rh_dashboard_pyramide_age')]
+    #[Route('/pyramide-age', name: 'app_config_statistique_pyramide_age')]
     public function indexPyramideAge(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
-        return $this->render('rh/dashboard/pyramide_age.html.twig');
+        return $this->render('config/statistique/pyramide_age.html.twig');
     }
 
 
 
-    #[Route('/pyramide-age-data', name: 'app_rh_dashboard_pyramide_age_data')]
+    #[Route('/pyramide-age-data', name: 'app_config_statistique_pyramide_age_data')]
     public function dataPyramideAge(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
         $all = $request->query->all();
@@ -410,15 +488,15 @@ class StatistiqueController extends AbstractController
 
 
 
-    #[Route('/pyramide-anc', name: 'app_rh_dashboard_pyramide_anc')]
+    #[Route('/pyramide-anc', name: 'app_config_statistique_pyramide_anc')]
     public function indexPyramideAnciennete(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
-        return $this->render('rh/dashboard/pyramide_anc.html.twig');
+        return $this->render('config/statistique/pyramide_anc.html.twig');
     }
 
 
 
-    #[Route('/pyramide-anc-data', name: 'app_rh_dashboard_pyramide_anc_data')]
+    #[Route('/pyramide-anc-data', name: 'app_config_statistique_pyramide_anc_data')]
     public function dataPyramideAnciennete(Request $request, EmployeRepository $employeRepository, GenreRepository $genreRepository, NiveauHierarchiqueRepository $niveauHierarchiqueRepository)
     {
         $all = $request->query->all();
@@ -576,11 +654,11 @@ class StatistiqueController extends AbstractController
         return $formBuilder->getForm();
     }
 
-    #[Route('/data-type-contrat', name: 'app_rh_dashboard_type_contrat_data', condition: "request.query.has('filters')")]
-    public function dataTypeContrat(Request $request,StatsService $statsService, CommunauteRepository $communauteRepository)
+    #[Route('/data-type-contrat', name: 'app_config_statistique_type_contrat_data', condition: "request.query.has('filters')")]
+    public function dataTypeContrat(Request $request, StatsService $statsService, CommunauteRepository $communauteRepository)
     {
         $all = $request->query->all();
-    
+
         $filters = $all['filters'] ?? [];
         $typeContratId = $filters['communaute'];
         $data =   $statsService->getAudienceMoisCom($typeContratId);
@@ -592,7 +670,7 @@ class StatistiqueController extends AbstractController
         // $somme = [];
         // $somme_annee = [];
         // if($this->statsService->getAudienceMoisCom(1))
-      
+
 
         // dd($dataAnnees);
         // $annees = range($dataAnnees['min_year'], $dataAnnees['max_year']);
@@ -601,7 +679,7 @@ class StatistiqueController extends AbstractController
         // $typeContrat = $communauteRepository->find($typeContratId);
 
 
-       // $series = [['name' => $communauteRepository->getLibelle(), 'data' => []]];
+        // $series = [['name' => $communauteRepository->getLibelle(), 'data' => []]];
 
         foreach ($data as $cam) {
             $mois[] = $cam['mois'];
@@ -611,16 +689,16 @@ class StatistiqueController extends AbstractController
 
         return $this->json(['mois' => $mois, 'y' => $y]);
     }
-   
-
-  
 
 
-    #[Route('/type-contrat', name: 'app_rh_dashboard_type_contrat')]
+
+
+
+    #[Route('/type-contrat', name: 'app_config_statistique_type_contrat')]
     public function indexTypeContrat()
     {
         $formBuilder = $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_rh_dashboard_type_contrat'))
+            ->setAction($this->generateUrl('app_config_statistique_type_contrat'))
             ->setMethod('POST');
 
         $formBuilder->add('communaute', EntityType::class, [
@@ -642,29 +720,5 @@ class StatistiqueController extends AbstractController
             'form' => $form
         ]);
     }
-
-    // #[Route('/data-type-contrat', name: 'app_rh_dashboard_type_contrat_data')]
-    // public function dataTypeContrat(Request $request, EmployeRepository $employeRepository, CommunauteRepository $communauteRepository)
-    // {
-    //     dd('soro');
-    //     $all = $request->query->all();
-    //     $filters = $all['filters'] ?? [];
-    //     $communauteId = $filters['communaute'];
-    //    // $dataAnnees = $employeRepository->getAnneeRangeContrat($communauteId);
-    //    // $annees = range($dataAnnees['min_year'], $dataAnnees['max_year']);
-    //     $data = $employeRepository->getDataTypeContrat($communauteId);
-
-    //     $typeContrat = $communauteRepository->find();
-
-    //     $series = [['name' => $typeContrat->getLibelle(), 'data' => []]];
-
-    //     foreach ($data as $_row) {
-    //         $series[0]['data'][] = $_row['_total'];
-    //     }
-
-
-    //     return $this->json(['series' => $series, 'annees' => $annees]);
-    // }
+    
 }
-
-   
