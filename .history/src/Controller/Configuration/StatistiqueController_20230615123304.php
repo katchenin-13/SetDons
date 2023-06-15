@@ -165,5 +165,5 @@ class StatistiqueController extends AbstractController
         return $this->render('config/statistique/liste.html.twig', ['links' => $parametres[$module] ??[]]);
     }
 
-}
+]
 

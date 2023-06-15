@@ -93,43 +93,43 @@ class StatistiqueController extends AbstractController
                     'label' => 'Effectifs par statut',
                     'id' => 'chart_statut',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_statut')
+                    'href' => $this->generateUrl('app_config_statistique_statut')
                 ],
                 [
                     'label' => 'Effectifs par sexe',
                     'id' => 'chart_genre',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_genre')
+                    'href' => $this->generateUrl('app_config_statistique_genre')
                 ],
                 [
                     'label' => 'Effectifs par niveau hierarchique et Sexe',
                     'id' => 'chart_h_sexe',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_hierarchie_sexe')
+                    'href' => $this->generateUrl('app_config_statistique_hierarchie_sexe')
                 ],
                 [
                     'label' => 'Evolution des effectifs par type de contrat',
                     'id' => 'chart_contrat',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_type_contrat')
+                    'href' => $this->generateUrl('app_config_statistique_type_contrat')
                 ],
                 [
                     'label' => 'Pyramide des âges',
                     'id' => 'chart_py_age',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_pyramide_age')
+                    'href' => $this->generateUrl('app_config_statistique_pyramide_age')
                 ],
                 [
                     'label' => 'Pyramide des anciennetés',
                     'id' => 'chart_py_anc',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_pyramide_anc')
+                    'href' => $this->generateUrl('app_config_statistique_pyramide_anc')
                 ],
                 [
                     'label' => 'Effectifs par sexe et par niveau de maîtrise',
                     'id' => 'chart_maitrise',
                     'icon' => 'bi bi-list',
-                    'href' => $this->generateUrl('app_rh_dashboard_maitrise_sexe')
+                    'href' => $this->generateUrl('app_config_statistique_maitrise_sexe')
                 ]
 
             ],
@@ -165,5 +165,5 @@ class StatistiqueController extends AbstractController
         return $this->render('config/statistique/liste.html.twig', ['links' => $parametres[$module] ??[]]);
     }
 
-}
+
 
